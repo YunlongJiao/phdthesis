@@ -1,0 +1,9 @@
+rm -f *.{blg,bbl,toc,out,log,aux,pdf,dvi}
+rm -f *.{brf,maf,mtc*,nlo}
+
+pdflatex thesis
+bibtex thesis
+# makeindex thesis.nlo -s nomencl.ist -o thesis.nls
+pdflatex thesis
+pdflatex thesis
+pdflatex thesis

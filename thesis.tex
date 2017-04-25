@@ -1,0 +1,89 @@
+\documentclass[a4paper,12pt,twoside]{mystyle}
+
+\include{preamble}
+
+\begin{document}
+
+% frontface
+\author{Yunlong \textsc{Jiao}}
+\title{Thesis title goes here}
+\ED{\'{E}cole doctorale n$^\circ$ 432 : Sciences des m\'{e}tiers de l'ing\'{e}nieur}
+\doctorat{Doctorat ParisTech}
+\specialite{Bio-informatique}
+\directeur{Jean-Philippe \textsc{Vert}}
+\date{xx septembre 2017}
+\jurya{M. xx xx}{Professeur, MINES ParisTech}{Rapporteur}
+\juryb{M. yy yy}{Professeur, MINES ParisTech}{Rapporteur}
+\juryc{M. zz zz}{Charg\'{e} de recherche, ENS Cachan}{Examinateur}
+\juryd{Mme. uu uu}{Danseuse, en freelance}{Examinateur}
+\jurye{M. vv vv}{Ing\'{e}nieur, MIT}{Examinateur}
+\ecole{l'\'{E}cole Nationale Sup\'{e}rieure des Mines de Paris}
+\adresse{
+	\textbf{MINES ParisTech\\ Centre de Bio-informatique (CBIO)}\\	60 boulevard Saint-Michel, 75006 Paris, France
+}
+\pagedegarde
+\cleardoublepage
+
+% prepare
+\dominitoc
+\pagenumbering{roman}
+
+% abstract in english and french
+\include{abstract-en}
+\cleardoublepage
+\include{abstract-fr}
+\cleardoublepage
+
+% acknowledgments
+\include{acknowledgments}
+\cleardoublepage
+
+% contents
+\tableofcontents
+\cleardoublepage
+
+% thesis
+\mainmatter
+\include{ch1intro}
+\cleardoublepage
+
+% appendix
+\appendix
+\include{appendix}
+\cleardoublepage
+
+% bib
+\bibliographystyle{mystyle}
+\bibliography{mybib}
+\cleardoublepage
+
+% postface short abstract
+\begin{vcenterpage}
+	\noindent\rule[2pt]{\textwidth}{0.5pt}
+	\begin{center}
+	{\Large\textbf{Thesis title goes here\\}}
+	\end{center}
+	{\textbf{Abstract:}}
+	Here is the abstract.
+	\\
+	Maybe more than one paragraph.
+	\\\\
+	{\textbf{Keywords:}}
+	Machine learning, Bioinformatics
+	\\
+	\noindent\rule[2pt]{\textwidth}{0.5pt}
+	\begin{center}
+	{\Large\textbf{Titre de thèse ici\\}}
+	\end{center}
+	{\textbf{Résumé:}}
+	Voilà le résumé.
+	\\
+	Peut-être un seconde paragraphe.
+	\\\\
+	{\textbf{Mots clés:}}
+	Apprentissage, bio-informatique
+	\\
+	\noindent\rule[2pt]{\textwidth}{0.5pt}
+\end{vcenterpage}
+
+\end{document}
