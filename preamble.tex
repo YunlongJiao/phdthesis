@@ -1,4 +1,5 @@
-\usepackage{amsmath, amsfonts, amsthm, amssymb, dsfont}
+
+\usepackage{amsmath, amsfonts, amsthm, amssymb, dsfont, stmaryrd}
 % \usepackage[french]{babel}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
@@ -13,7 +14,7 @@
 \usepackage[intoc]{nomencl}
 \renewcommand{\nomname}{List of Abbreviations}
 
-\makenomenclature
+% \makenomenclature
 
 % My pdf code
 
@@ -201,7 +202,7 @@ urlcolor=linkcol %couleur des liens pour les url
 {\vspace*{\fill}}
 
 % abstract for each chapter
-\newenvironment{chapabstract}{\leftskip1in\itshape}{}
+\newenvironment{chapabstract}{\itshape\raggedright\leftskip1in}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Page de garde              %
@@ -379,6 +380,7 @@ urlcolor=linkcol %couleur des liens pour les url
 \newcommand{\wh}{\widehat{\wb}}
 \newcommand{\Rh}{\widehat{R}}
 \newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\n}{\llbracket n \rrbracket}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[chapter]
@@ -389,14 +391,11 @@ urlcolor=linkcol %couleur des liens pour les url
 %           Ch 3 kemeny                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{stmaryrd}	% for \llbracket and \rrbracket
-
 \DeclareMathOperator*{\Ima}{Im}
 \newcommand{\FF}{\mathcal{F}}
 \newcommand{\dFF}{d_{\FF}}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\Sphere}{\mathbb{S}}
-\newcommand{\n}{\llbracket n \rrbracket}
 \newcommand{\hollowone}{\mathds{1}}
 \newcommand{\innerprod}[1]{\langle #1 \rangle}
 \newcommand{\norm}[1]{\Vert #1 \Vert}
@@ -410,14 +409,15 @@ urlcolor=linkcol %couleur des liens pour les url
 \newcommand{\CN}{\mathcal{C}_{N}}
 \newcommand{\II}{\mathfrak{I}}	% injection opposed to \Pi
 \newcommand{\Ctil}{\widetilde{C}}
+\newcommand{\kmin}{k_{\min}}
 
 \theoremstyle{plain}
 \newtheorem{proposition}{Proposition}[chapter]
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
-\newtheorem*{question*}{The Question}
-\newtheorem*{method*}{The Method}
+\newtheorem*{question*}{The Question} 	% use once only
+\newtheorem*{method*}{The Method} 	% use once only
 
 \theoremstyle{remark}
 \newtheorem{example}{Example}[chapter]

@@ -228,3 +228,4 @@ TSWLatexianTemp*
 # User-defined
 *temp*
 *.mtc
+*.DS_Store
