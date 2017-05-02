@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt,twoside]{mystyle}
+\documentclass[a4paper,11pt,twoside]{mystyle}
 
 \include{preamble}
 
@@ -40,17 +40,23 @@
 
 % contents
 \tableofcontents
+\listoffigures
+\listoftables
 \cleardoublepage
 
 % thesis
 \mainmatter
 \include{ch1intro}
 \cleardoublepage
-
-% appendix
-\appendix
-\include{appendix}
+\include{ch2kendall}
 \cleardoublepage
+\include{ch3kemeny}
+\cleardoublepage
+
+% % appendix
+%\appendix
+%\include{appendix}
+%\cleardoublepage
 
 % bib
 \bibliographystyle{mystyle}

@@ -1,4 +1,4 @@
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath, amsfonts, amsthm, amssymb, dsfont}
 % \usepackage[french]{babel}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
@@ -21,13 +21,17 @@
 
 \ifpdf
   \usepackage[pdftex]{graphicx}
-  \DeclareGraphicsExtensions{.jpg}
+  \DeclareGraphicsExtensions{.pdf, .png, .jpg}
   \usepackage[pagebackref,hyperindex=true]{hyperref}
 \else
   \usepackage{graphicx}
   \DeclareGraphicsExtensions{.ps,.eps}
   \usepackage[dvipdfm,pagebackref,hyperindex=true]{hyperref}
 \fi
+
+\usepackage[labelfont={small,bf},textfont={small}]{caption}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
 
 % Table of contents for each chapter
 
@@ -88,8 +92,6 @@ urlcolor=linkcol %couleur des liens pour les url
 
 % Some useful commands and shortcut for maths:  partial derivative and stuff
 
-\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
-\def\abs{\operatorname{abs}}
 \def\argmax{\operatornamewithlimits{arg\,max}}
 \def\argmin{\operatornamewithlimits{arg\,min}}
 \def\diag{\operatorname{Diag}}
@@ -134,7 +136,7 @@ urlcolor=linkcol %couleur des liens pour les url
   \renewcommand{\headrulewidth}{0pt}
 }
 
-\usepackage{algorithm}
+\usepackage[chapter]{algorithm}
 \usepackage[noend]{algorithmic}
 
 %%% Clear Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -190,7 +192,6 @@ urlcolor=linkcol %couleur des liens pour les url
 	 \setlength{\itemsep}{\parsep}}}%
 { \end{list} }
 
-\newtheorem{definition}{Définition}
 \renewcommand{\epsilon}{\varepsilon}
 
 % centered page environment
@@ -198,6 +199,9 @@ urlcolor=linkcol %couleur des liens pour les url
 \newenvironment{vcenterpage}
 {\newpage\vspace*{\fill}\thispagestyle{empty}\renewcommand{\headrulewidth}{0pt}}
 {\vspace*{\fill}}
+
+% abstract for each chapter
+\newenvironment{chapabstract}{\leftskip1in\itshape}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Page de garde              %
@@ -354,3 +358,66 @@ urlcolor=linkcol %couleur des liens pour les url
   \end{titlepage}
 \restoregeometry  
 }
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Ch 2 kendall               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Sn}{\mathbb{S}_n}
+\newcommand{\fixme}[1]{{\bf [FIXME: #1]}\marginpar{FIX}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand {\br}[1]{\left(#1\right)}
+\newcommand {\sqb}[1]{\left[#1\right]}
+\newcommand {\cbr}[1]{\left\{#1 \right\}}
+\newcommand{\xb}{\mathbf{x}}
+\newcommand{\ub}{\mathbf{u}}
+\newcommand{\wb}{\mathbf{w}}
+\newcommand {\nm}[1]{\left\Vert #1 \right\Vert}
+\newcommand {\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\wh}{\widehat{\wb}}
+\newcommand{\Rh}{\widehat{R}}
+\newcommand{\sgn}{\operatorname{sgn}}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Ch 3 kemeny                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{stmaryrd}	% for \llbracket and \rrbracket
+
+\DeclareMathOperator*{\Ima}{Im}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\dFF}{d_{\FF}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Sphere}{\mathbb{S}}
+\newcommand{\n}{\llbracket n \rrbracket}
+\newcommand{\hollowone}{\mathds{1}}
+\newcommand{\innerprod}[1]{\langle #1 \rangle}
+\newcommand{\norm}[1]{\Vert #1 \Vert}
+\newcommand{\sigstar}{\sigma^{*}}
+\newcommand{\sigstarstar}{\sigma^{**}}
+\newcommand{\sighat}{\hat{\sigma}}
+\newcommand{\Eff}{\operatorname{Eff}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\DN}{\mathcal{D}_{N}}
+\newcommand{\KN}{\mathcal{K}_{N}}
+\newcommand{\CN}{\mathcal{C}_{N}}
+\newcommand{\II}{\mathfrak{I}}	% injection opposed to \Pi
+\newcommand{\Ctil}{\widetilde{C}}
+
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[chapter]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem*{question*}{The Question}
+\newtheorem*{method*}{The Method}
+
+\theoremstyle{remark}
+\newtheorem{example}{Example}[chapter]
