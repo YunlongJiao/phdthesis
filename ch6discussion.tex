@@ -1,0 +1,20 @@
+\chapter{Discussion}
+\label{chap:discussion}
+\minitoc
+
+% thèse, définir
+
+% ch2-3 embedding for permutations ?!
+% other embedding - just (1,\dots,n) or permutation matrix - high-order embedding
+% what is the convex hull of Kendall embedding for
+%Check Fogel (NIPS, 2013) and Stephen Wright (NIPS, 2014) for two embeddings of symmetric group $\mathbb{S}_n$ into Euclidean spaces, former into dim $n^2$ while latter into dim $n-1$ (or a hyperplane in dim $n$), thus facilitating the convex relaxation to seriation problems by solving an optimization problem constrained in a convex hull, former in Birkhoff polytope
+%$$\mathcal{B}:=\{\mathbf{X}\in \mathbb{R}^{n\times n}:\mathbf{X}\succeq 0,\mathbf{X}\mathbf{1}=\mathbf{1},\mathbf{X}^T \mathbf{1}=\mathbf{1}\}$$
+%while latter in permutahedron
+%$$\mathcal{PH}:=\{x\in \mathbb{R}^n:\sum_{i=1}^n x_i=\frac{n(n+1)}{2},\sum_{i\in S}x_i \leq \sum_{i=1}^{|S|}(n+1-i)\mbox{ for all }S\subset [n]\}.$$
+%Kendall kernel comes with another embedding into Euclidean space of dim $O(n^2)$. Several questions are
+%\begin{enumerate}
+%\item What is the convex hull induced by our embedding? What is the projection of any vector onto the convex hull (to facilitate optimization algorithm using projections)?
+%\item On the other way round, what are the explicit embedding, kernel function and distance induced by those two well-known embeddings?
+%\item Is it a better embedding compared to those two embeddings to introduce a convex hull for solving seriation problem, when we convert it into an optimization problem by following the same idea as Fogel (NIPS, 2013) after the embedding?
+%\end{enumerate}
+
