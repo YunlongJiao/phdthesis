@@ -12,43 +12,13 @@
 \end{chapabstract}
 
 
+
 \section{Introduction}
 \label{sec5:intro}
 
-Breast cancer is one of the most common malignancy for women and breast cancer prognosis is currently one of the leading problems of great interest. The advent of high-throughput platforms for gene expression profiling motivates the popular trend of using molecular biomarkers for clinical decision making regarding prognosis improvement assisting therapeutic strategies. It has been widely recognized as a very promising yet challenging problem to extract potentially valuable information from genomic data. The relatively small number of clinical samples, the inherent measurement noise in high-throughput experimental data and the heterogeneity across patients make it demanding to detect reliable biomarkers.
+Over the past decades, many efforts have been addressed to the identification of gene-based signatures to predict  patient prognosis using gene expression data \cite{VantVeer2002Gene, Paik2004multigene, Wang2005Gene, Sotiriou2009Gene, Reis-Filho2011Gene}. Despite the success of its use, gene expression signatures have not been exempt of problems \cite{Ein-Dor2006Thousands, Iwamoto2010Predicting}. Specifically, one major drawback of multi-gene biomarkers is that they often lack proper interpretation in terms of mechanistic link to the fundamental cell processes responsible for disease progression or therapeutic response \cite{VantVeer2008Enabling, Dopazo2010Functional}. Actually, it is increasingly recognized that complex traits, such as disease or drug response, are better understood as alterations in the operation of functional modules caused by different combinations of gene perturbations \cite{Barabasi2004Network, Oti2007modular, Barabasi2011Network}. To address this inherent complexity different methodologies have tried to exploit several functional module conceptual representations, such as protein interaction networks or pathways, to interpret gene expression data within a systems biology context \cite{Barabasi2011Network, Vidal2011Interactome, Hood2013Systems, Fryburg2014Systems}.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Over the past decades, many efforts have been addressed to the identification of gene-based signatures to predict  patient prognosis using gene expression data [1-4]. Despite the success of its use, gene expression signatures have not been exempt of problems [5, 6]. Specifically, one major drawback of multi-gene biomarkers is that they often lack proper interpretation in terms of mechanistic link to the fundamental cell processes responsible for disease progression or therapeutic response [7, 8]. Actually, it is increasingly recognized that complex traits, such as disease or drug response, are better understood as alterations in the operation of functional modules caused by different combinations of gene perturbations [9-11]. To address this inherent complexity different methodologies have tried to exploit several functional module conceptual representations, such as protein interaction networks or pathways, to interpret gene expression data within a systems biology context  [10, 12-14]. Actually, it has recently been shown that the pathway-level representation generates clinically relevant stratifications and outcome predictors for glioblastoma and colorectal cancer [15] and also breast cancer [16]. Moreover, mathematical models of the activity of a pathway have demonstrated a significantly better association to poor prognosis in neuroblastoma patients than the activity of their constituent genes, including MICN, a conventional biomarker [17]. This observation has recently been extended to other cancers [18] and to the prediction of drug effects [19].
-
-Given that the inferred activity of the pathway should be closely related to its cellular mechanism for disease progression, its use to guide cancer prognosis seems promising. Recently, a number of pathway activity inference methods have been proposed [18, 20-22]. Here, we use the canonical circuit activity analysis method, which has demonstrated to have a superior performance [18] finding significant associations of specific circuit activities, directly responsible for triggering the prominent cancer hallmarks [23], to patient survival. This method recodes gene expression values into measurements of signaling circuit activities that ultimately account for cell responses to specific stimuli. Such activity values can be considered multigenic mechanistic biomarkers that can be used as features for cancer prognosis. 
-We demonstrate that the activity of signaling circuits yields comparable or even better prediction in breast cancer prognosis than the expression of individual genes, while detected mechanistic biomarkers enjoy the compelling advantage of readily available interpretation in terms of the corresponding cellular functions they trigger. Moreover, we show that the proposed prediction scheme can even suggest, in addition to interesting signaling circuits related to disease outcome, a list of prognostic genes that do not code for signaling proteins whose contribution to cancer prognosis potentially supplements the mechanism included in the pathways modeled. 
-
-We demonstrate that the activity of signaling circuits yields comparable or even better prediction in breast cancer prognosis than the expression of individual genes, while detected mechanistic biomarkers enjoy the compelling advantage of readily available interpretation in terms of the corresponding cellular functions they trigger. Moreover, we show that the proposed prediction scheme can even suggest, in addition to interesting signaling circuits related to disease outcome, a list of prognostic genes that do not code for signaling proteins whose contribution to cancer prognosis potentially supplements the mechanism included in the pathways modeled. 
-
-
-
-
-
-
-
-
-
-
-Over the past decades several groups have pursued to identify gene-based signatures to classify patients with good or poor prognosis with gene expression data of breast tumors from large cohorts \cite{VantVeer2002Gene, Paik2004multigene, Wang2005Gene, Sotiriou2009Gene, Reis-Filho2011Gene}. Despite the vast success of such traditional analysis, although many detected prognostic genes are known to be related to cell cycle and proliferation for instance, multi-gene biomarkers often lack proper interpretation in terms of mechanistic link to the fundamental cell processes responsible for disease progression or therapeutic response.
-
-To address this problem, there is a pressing need to develop methods that integrate \textit{a priori} known biological information in the process of genomic data analysis. It is well understood that cell signaling is a system of within-cell communication and signal transduction process between gene products, mostly proteins, that coordinates cell activities to perceive and correctly respond to microenvironment, resulting in signaling pathways that form a particular type of functional gene modules and play a key role in disease progression (Figure \ref{fig:cellsignaling}). Consequently as a tempting solution to the limitation of conventional analysis at the level of individual genes, analysis at the level of pathways renders great interest in providing informative insights into cellular functions that facilitates understanding of the disease mechanism. Furthermore, oncogenic pathways are usually dysregulated at different levels along cancer progression, and thus pathway-guided prognosis has the potential to achieve comparable or even better performance compared to traditional gene-based prognosis. The recent demonstration by \cite{Fey2015Signaling} constitutes an elegant confirmation of this concept that the activity of a pathway presents a significantly better association to poor prognosis in neuroblastoma patients than the activity of their constituent genes (among them MICN, a conventional biomarker). As another example, \cite{Drier2013Pathway} introduced Pathifier, an algorithm that infers pathway deregulation levels for each tumor sample on the basis of expression data, and showed that the pathway-level representation generates clinically relevant stratifications and outcome predictors for glioblastoma and colorectal cancer.
+Here we focus on consulting prior knowledge of signaling pathways to guide cancer prognosis. It is well understood that cell signaling is a system of within-cell communication and signal transduction process between gene products, mostly proteins, that coordinates cell activities to perceive and correctly respond to microenvironment, resulting in signaling pathways that form a particular type of functional gene modules and play a key role in disease progression (Figure \ref{fig5:cellsignaling}). Consequently as a tempting solution to the limitation of conventional analysis at the level of individual genes, analysis at the level of pathways renders great interest in providing informative insights into cellular functions that facilitates understanding of the disease mechanism. Actually, it has recently been shown that the pathway-level representation generates clinically relevant stratifications and outcome predictors for glioblastoma and colorectal cancer \cite{Drier2013Pathway} and also breast cancer \cite{Livshits2015Pathway}. Moreover, mathematical models of the activity of a pathway have demonstrated a significantly better association to poor prognosis in neuroblastoma patients than the activity of their constituent genes, including MICN, a conventional biomarker \cite{Fey2015Signaling}. This observation has recently been extended to other cancers \cite{Hidalgo2017High} and to the prediction of drug effects \cite{Amadoz2015Using}.
 
 \begin{figure}[!htbp]
 	\centering
@@ -57,7 +27,261 @@ To address this problem, there is a pressing need to develop methods that integr
 	\label{fig5:cellsignaling}
 \end{figure}
 
-To use signaling pathways to guide cancer prognosis, we first need a way to infer the activity level of a given pathway based on the expression of the constituent genes. The inferred activity of the pathway should be closely related to its cellular mechanism for disease progression. Recently, a number of pathway activity inference methods have been proposed \cite{Jacob2012More, Martini2013Along, Li2015Subpathway, Hidalgo2016High}, and in this study we apply the canonical circuit activity analysis (CCAA) method introduced by \cite{Hidalgo2016High}. In fact, CCAA is a method that estimates the level of activity within a pathway by modeling cell signaling process in order to recode gene expression values into measurements that ultimately account for cell responses caused by the activity of the pathway. Essentially the CCAA method computes an activity value for each stimulus-response sub-pathway, called canonical circuit, within signaling pathways. The canonical circuits which associate naturally with cell functionalities can be considered as pathway-level mechanistic features that are modularized from multigenic signatures, and their activity values connected to the activation or deactivation of specific cellular functions thus provide quantitative clues to understand disease mechanisms when related to phenotypes of interest. In particular, \cite{Hidalgo2016High} showed that the CCAA method can be used to find significant association of specific pathway activities to patient survival, among which several are directly responsible for triggering the prominent cancer hallmarks \cite{Hanahan2011Hallmarks}. This verifies that the CCAA method is capable of capturing pathway activities and thus cell processes involved in disease outcome.
+Given that the inferred activity of the pathway should be closely related to its cellular mechanism for disease progression, its use to guide cancer prognosis seems promising. Recently, a number of pathway activity inference methods have been proposed \cite{Hidalgo2017High, Jacob2012More, Li2015Subpathway, Martini2013Along}. Here, we use the canonical circuit activity analysis (CCAA) method, which has demonstrated to have a superior performance \cite{Hidalgo2017High} finding significant associations of specific circuit activities, directly responsible for triggering the prominent cancer hallmarks \cite{Hanahan2011Hallmarks}, to patient survival. This method recodes gene expression values into measurements of signaling circuit activities that ultimately account for cell responses to specific stimuli. Such activity values can be considered multigenic mechanistic biomarkers that can be used as features for cancer prognosis.
 
-In this study, we take one step further and study the prognostic power of the pathway-level mechanistic features whose activity levels are inferred by the CCAA method. We demonstrate that the activity of signaling circuits yields comparable or even better prediction in breast cancer prognosis than the expression of individual genes, while detected pathway-level biomarkers enjoy the compelling advantage of readily available interpretation in terms of the corresponding cellular functions. Finally we show that the proposed prediction scheme can even suggest, in addition to interesting signaling circuits related to disease outcome, a list of prognostic genes that do not code for signaling proteins whose contribution to cancer prognosis potentially supplements the mechanism perceived by pathway analysis. All experiments are produced with \texttt{R} and codes are available via \url{https://github.com/YunlongJiao/hipathiaCancerPrognosis}.
+In this chapter, we demonstrate that the activity of signaling circuits yields comparable or even better prediction in breast cancer prognosis than the expression of individual genes, while detected mechanistic biomarkers enjoy the compelling advantage of readily available interpretation in terms of the corresponding cellular functions they trigger. Moreover, we show that the proposed prediction scheme can even suggest, in addition to interesting signaling circuits related to disease outcome, a list of prognostic genes that do not code for signaling proteins whose contribution to cancer prognosis potentially supplements the mechanism included in the pathways modeled. All numerical results are produced with \texttt{R} and codes for reproducing the experiments are available via \url{https://github.com/YunlongJiao/hipathiaCancerPrognosis}.
+
+
+
+
+\section{Methods}
+\label{sec5:methods}
+
+\subsection{Data Source and Processing}
+\label{sec5:data}
+
+Our interest in this study lies in predicting the overall survival outcome of breast cancer patients making use of gene expression data. The breast cancer gene expression and survival data here were downloaded from The Cancer Genome Atlas (TCGA), release No. 20 of the International Cancer Genome Consortium (ICGC) data portal under project name BRCA-US\footnote{More information can be found at \url{https://dcc.icgc.org/releases/release_20/Projects/BRCA-US}.}. This dataset provides the RNA-seq counts of 18,708 genes for 879 tumor samples in which we also have records of the vital status of corresponding donors, namely the overall survival outcome of the cancer patients being alive or deceased at the end of clinical treatment (Table \ref{tab5:survival}). This way we deal with a binary classification problem distinguishing good vs poor prognosis based on gene expression measurements of breast tumor samples. Since TCGA cancer data are collected from different origins and underwent different management processes, non-biological experimental variations, commonly known as batch effect, associated to Genome Characterization Center (GCC) and plate ID must be removed from the RNA-seq data. The COMBAT method \cite{Johnson2007Adjusting} was used for this purpose. We then applied the trimmed mean of M-values normalization method (TMM) method \cite{Robinson2010scaling} for data normalization which is essential in applying the CCAA method. The resulting normalized values were finally entered to the pathway analysis method.
+
+\begin{table}[!htbp]
+	\caption{Summary of survival outcome of the breast cancer patients in the TCGA dataset.}
+	\centering
+	\begin{tabular}{|l|l|r|r|}
+		\hline
+		\bf{Donor vital status} & \bf{Pseudo label} & \bf{No. of samples} & \bf{Percentage} \\
+		\hline
+		Deceased (poor prognosis) & Positive & 124 & 14.1\% \\\hline
+		Alive (good prognosis) & Negative & 755 & 85.9\% \\\hline
+		\multicolumn{2}{|r|}{\bf{Total}} & 879 & 100.0\% \\
+		\hline
+	\end{tabular}
+	\label{tab5:survival}
+\end{table}
+
+In order to explore the potential of utilizing external knowledge of cell signaling to enhance prognosis, we consulted Kyoto Encyclopedia of Genes and Genomes (KEGG) repository \cite{Kanehisa2012KEGG} to retrieve relationships between proteins within signaling pathways. A total of 60 KEGG pathways were used (Table \ref{tab5:kegg}), comprehending 2,212 gene products that participate in 3,379 nodes. Note that most gene products are proteins, and two types of nodes are defined in KEGG: plain nodes which may contain one or more proteins and complex nodes. These pathways each compose into a directed network where nodes are connected with edges labeled by either activation or inhibition depending on the action in transmitting signals along the path. In particular, input nodes that have no incoming edges represent receptor proteins which receive molecular stimuli from cell microenvironment, and output nodes that have no outgoing edges represent effector proteins which carry out specific cellular functions. We will elaborate in the following subsection on how to decompose the complex structure of KEGG pathways in order to effectively apply the CCAA method.
+
+
+\begin{center}
+	\begin{longtable}[H]{|l|l|}
+	\caption{The 60 KEGG pathways for which signaling activity is modeled.}
+	\label{tab5:kegg}\\
+		
+		\hline \multicolumn{1}{|l|}{\bf{KEGG identifier}} & \multicolumn{1}{l|}{\bf{Pathway name}} \\ \hline 
+		\endfirsthead
+		
+		\multicolumn{2}{c}%
+		{{\tablename\ \thetable{} -- continued from previous page}} \\
+		\hline \multicolumn{1}{|l|}{\bf{KEGG identifier}} & \multicolumn{1}{l|}{\bf{Pathway name}} \\ \hline 
+		\endhead
+		
+		\multicolumn{2}{|r|}{\textit{Continued on next page}} \\ \hline
+		\endfoot
+		
+		\hline
+		\endlastfoot
+		
+		hsa04014 &
+		Ras signaling pathway \\\hline
+		hsa04015 &
+		Rap1 signaling pathway \\\hline
+		hsa04010 &
+		MAPK signaling pathway \\\hline
+		hsa04012 &
+		ErbB signaling pathway \\\hline
+		hsa04310 &
+		Wnt signaling pathway \\\hline
+		hsa04330 &
+		Notch signaling pathway \\\hline
+		hsa04340 &
+		Hedgehog signaling pathway \\\hline
+		hsa04350 &
+		TGF-beta signaling pathway \\\hline
+		hsa04390 &
+		Hippo signaling pathway \\\hline
+		hsa04370 &
+		VEGF signaling pathway \\\hline
+		hsa04630 &
+		Jak-STAT signaling pathway \\\hline
+		hsa04064 &
+		NF-kappa B signaling pathway \\\hline
+		hsa04668 &
+		TNF signaling pathway \\\hline
+		hsa04066 &
+		HIF-1 signaling pathway \\\hline
+		hsa04068 &
+		FoxO signaling pathway \\\hline
+		hsa04020 &
+		Calcium signaling pathway \\\hline
+		hsa04071 &
+		Sphingolipid signaling pathway \\\hline
+		hsa04024 &
+		cAMP signaling pathway \\\hline
+		hsa04022 &
+		cGMP-PKG signaling pathway \\\hline
+		hsa04151 &
+		PI3K-Akt signaling pathway \\\hline
+		hsa04152 &
+		AMPK signaling pathway \\\hline
+		hsa04150 &
+		mTOR signaling pathway \\\hline
+		hsa04110 &
+		Cell cycle \\\hline
+		hsa04114 &
+		Oocyte meiosis \\\hline
+		hsa04210 &
+		Apoptosis \\\hline
+		hsa04115 &
+		p53 signaling pathway \\\hline
+		hsa04510 &
+		Focal adhesion \\\hline
+		hsa04520 &
+		Adherens junction \\\hline
+		hsa04530 &
+		Tight junction \\\hline
+		hsa04540 &
+		Gap junction \\\hline
+		hsa04611 &
+		Platelet activation \\\hline
+		hsa04620 &
+		Toll-like receptor signaling pathway \\\hline
+		hsa04621 &
+		NOD-like receptor signaling pathway \\\hline
+		hsa04622 &
+		RIG-I-like receptor signaling pathway \\\hline
+		hsa04650 &
+		Natural killer cell mediated cytotoxicity \\\hline
+		hsa04660 &
+		T cell receptor signaling pathway \\\hline
+		hsa04662 &
+		B cell receptor signaling pathway \\\hline
+		hsa04664 &
+		Fc epsilon RI signaling pathway \\\hline
+		hsa04666 &
+		Fc gamma R-mediated phagocytosis \\\hline
+		hsa04670 &
+		Leukocyte transendothelial migration \\\hline
+		hsa04062 &
+		Chemokine signaling pathway \\\hline
+		hsa04910 &
+		Insulin signaling pathway \\\hline
+		hsa04922 &
+		Glucagon signaling pathway \\\hline
+		hsa04920 &
+		Adipocytokine signaling pathway \\\hline
+		hsa03320 &
+		PPAR signaling pathway \\\hline
+		hsa04912 &
+		GnRH signaling pathway \\\hline
+		hsa04915 &
+		Estrogen signaling pathway \\\hline
+		hsa04914 &
+		Progesterone-mediated oocyte maturation \\\hline
+		hsa04921 &
+		Oxytocin signaling pathway \\\hline
+		hsa04919 &
+		Thyroid hormone signaling pathway \\\hline
+		hsa04916 &
+		Melanogenesis \\\hline
+		hsa04261 &
+		Adrenergic signaling in cardiomyocytes \\\hline
+		hsa04270 &
+		Vascular smooth muscle contraction \\\hline
+		hsa04722 &
+		Neurotrophin signaling pathway \\\hline
+		hsa05200 &
+		Pathways in cancer \\\hline
+		hsa05231 &
+		Choline metabolism in cancer \\\hline
+		hsa05202 &
+		Transcriptional misregulation in cancer \\\hline
+		hsa05205 &
+		Proteoglycans in cancer \\\hline
+		hsa04971 &
+		Gastric acid secretion \\\hline
+		hsa05160 &
+		Hepatitis C
+	\end{longtable}
+\end{center}
+
+\subsection{Modeling Framework for Signaling Pathways}
+\label{sec5:ccaa}
+
+We applied the canonical circuit activity analysis (CCAA) method\footnote{Implementation available at \url{https://github.com/babelomics/hipathia}.} proposed by \cite{Hidalgo2017High} in pursuit of modeling signaling activity. Overall, CCAA is a method that estimates the level of activity within a signaling circuit by modeling cell signaling process in order to recode gene expression values into measurements that ultimately account for cell responses caused by pathway activities. Essentially the CCAA method computes an activity value for each stimulus-response sub-pathway within signaling circuits. This way, the sub-pathways which associate naturally with cell functionalities can be considered as mechanistic features that are modularized from multigenic signatures, and their activity values connected to the activation or deactivation of specific cellular functions thus provide quantitative clues to understand disease mechanisms when further related to phenotypes of interest such as cancer survival.
+
+Recall that in cell signaling process represented in KEGG pathways, cell signal arrives to an initial input node and starts to transmit along any path following the direction of the edges until it reaches an output node that finally triggers a cellular action. In particular, from different input nodes the signal may follow different routes to reach different output nodes. Within the modeling context, a \textit{canonical circuit} is naturally defined as all possible routes the signal can traverse to be transmitted from a particular input node to a particular output node (Figure \ref{fig5:pathway}, A). A total of 6,101 canonical circuits are identified and modeled in this study. Now we take efforts to describe first how CCAA estimates the signaling activity of a canonical circuit.
+
+\begin{figure}[!htpb]
+\centering
+\includegraphics[width=\textwidth]{ch5hipathia/figure/pathway}
+\caption{The different levels of abstraction within pathways: A) Canonical circuits that communicate one receptor to one effector; B) Effector circuits that communicate all the receptors that signal a specific effector; C) Function circuits that collect the signal from all the effectors that trigger a specific function (according to UniProt or GO keywords); D) Cancer hallmarks, a sub-selection of only those functions related to cancer hallmarks.}
+\label{fig5:pathway}
+\end{figure}
+
+In a signaling circuit, the transmission of the signal depends on the integrity of the chain of nodes that connect the receptor to the effector and the capability of transmitting signals of each node involved intuitively depends on two folds: the abundance of the proteins corresponding to that node and its activity status due to the interaction with its parent nodes. First, we need to estimate a value for each node in the pathways in regard to the presence of proteins involved in the node. Following the convention of \cite{Bhardwaj2005Correlation, Efroni2007Identification, Montaner2009Gene, Sebastian-Leon2014Understanding}, the presence of the mRNA (the normalized RNA-seq counts rescaled between 0 and 1) is taken as a proxy for the presence of the proteins involved in each node. Notably, for different types of nodes defined in KEGG, the value of a plain node in the pathways is defined as the ninetieth percentile of the values of the proteins contained, and the value of a complex node is taken as the minimum value of the proteins contained (the limiting component of the complex). Then, the degree of integrity of the circuit is estimated by modeling the signal flow across it, transmitting node-by-node following the path while its intensity value gets propagated along the way taking into account the current node value and the intensity of the signals arriving to it. Specifically, we initialize an incoming signal of intensity value of $1$ received by the input (receptor) node of the circuit, and then for each node $n$ of the circuit, the signal value $s_n$ is updated by the following rule:
+$$
+s_n = v_n \cdot \left( 1 - \prod_{a \in A_n} (1-s_a) \right) \cdot \prod_{i \in I_n} (1-s_i) \,,
+$$
+where $A_n$ denotes the set of signals arriving to the current node $n$ from activation edges, $I_n$ denotes the set of signals arriving to the current node $n$ from inhibition edges, and $v_n$ is the (normalized) value of the current node $n$. In case of loops present in the circuit, a node may be visited multiple times, until the difference in the updates of the signal value at that node is below certain threshold, before the signal exits the loop and continues to propagate down the cascade. Finally, the activity value for the circuit is defined by the signal intensity transmitted through the last (effector) protein of the circuit which quantifies the cell function ultimately activated by the circuit. See Figure \ref{fig5:ccaa} for an example of deducing the activity value of an artificial canonical circuit by the CCAA method.
+
+\begin{figure}[!htpb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{ch5hipathia/figure/pretty_algorithm2}
+	\caption{An example of computing the activity value of an artificial canonical circuit by the CCAA method. In Step 1, node values are derived from the normalized mRNA measurements. In Step 2, signal is propagated along the path while its intensity value gets updated according to the rule of the CCAA method. Finally, The signal value attained after the last protein is visited accounts for the signaling activity of the circuit.}
+	\label{fig5:ccaa}
+\end{figure}
+
+Besides, the CCAA method straightforwardly allows to explore pathway-level analysis at different levels of abstraction by applying to different notions of signaling circuits. As the output nodes at the end of canonical circuits are the ultimate responsible to carry out specific cellular actions, an \textit{effector circuit} is defined from a functional viewpoint as a higher-level signaling entity that compose all canonical circuits ending at the same output node (Figure \ref{fig5:pathway}, B). When applied to an effector circuit, the CCAA method returns the joint intensity of the signal arriving to the corresponding effector node. Furthermore, the known functions triggered in cell by each effector protein can be derived from their functional annotations. Here we use UniProt \cite{Consortium2015UniProt} and Gene Ontology (GO) \cite{Consortium2015Gene} annotations. Finally, inferred signaling activity values of those effector circuits ending at proteins with the same annotated functions are averaged to quantify the activity of the function realized in cell. This way we obtain estimated activity values directly connected to a list of cellular functions (Figure \ref{fig5:pathway}, C). Figure \ref{fig5:pathway} depicts the different levels of abstraction from canonical circuits, to effector circuits and finally functions. Eventually for the sake of interpretation, a subset of curated functions can be used for a specific scenario in which the relevant functions are known to interpret the cancer biology, for which we use cancer hallmarks \cite{Hanahan2011Hallmarks} (Figure \ref{fig5:pathway}, D).
+
+\subsection{Cancer Prognosis with Inferred Signaling Pathway Activity}
+\label{sec5:prognosis}
+
+In this study, we are interested in comparing the prognostic power of pathway-level mechanistic features and gene-based features, both separately and in combination, in order to distinguish good vs poor prognosis. Using the CCAA method, we recoded the list of gene expression values of each tumor sample into the corresponding lists of signaling activity values for the three levels of abstraction: canonical circuits, effector circuits and functions, as described in UniProt and GO annotations. Therefore for each tumor sample, we end up with a profile of gene expression, a profile of canonical circuit signaling activity, a profile of effector circuit signaling activity, a profile of UniProt-based cellular function activity and a profile of GO-based cellular function activity. These profiles are sample-specific, or so-called \textit{personalized}, profiles that can be straightforwardly used as prognostic features for cancer prognosis following any off-the-shelf classification algorithm. Note that pathway-level profiles are derived with no regard to any information provided by the genes whose products do not participate in cell signaling, and the prognostic power of pathway-level profiles may thus be limited by the coverage of genes in known biological pathways. In order to understand the relative contribution to the pathway-level profiles and gene-level profiles to the accurate separation between good vs poor prognosis, we devised 4 artificial profiles: path-gene expression profile containing only genes that are involved in the KEGG signaling pathways, other-gene expression profile containing only genes that are absent from the KEGG pathways, a combined profile consisting of signaling activity of effector circuits and expression of other-genes, and a combined profile consisting of signaling activity of canonical circuits and expression of other-genes. Thus we obtained a total of 9 types of profiles (detailed in Table \ref{tab5:profile}).
+
+\begin{table}[!htpb]
+	\caption{Summary of different types of profiles used as predictive features for breast cancer prognosis.}
+	\centering
+	\begin{tabular}{|p{2cm}|p{3.5cm}|>{\raggedleft\arraybackslash}p{1.5cm}|p{4cm}|}
+		\hline
+		\bf{Alias} & \bf{Profile type} & \bf{No. of features} & \bf{Analysis level} \\\hline
+		fun.vals & UniProt-based functions & 81 & \multirow{2}{*}{\parbox{4.5cm}{\raggedright Pathway-level cellular function values}} \\
+		go.vals & GO-based functions & 370 &  \\
+		\hline
+		eff.vals & Effector circuits & 1,038 & \multirow{2}{*}{\parbox{4.5cm}{\raggedright Pathway-level signaling activity values}} \\
+		path.vals & Canonical circuits & 6,101 &  \\
+		\hline
+		path.genes.vals & Path-genes & 2,212 & \multirow{3}{*}{\parbox{4.5cm}{\raggedright Gene-level expression values}} \\
+		other.genes.vals & Other-genes & 16,496 &  \\
+		genes.vals & All genes & 18,708 &  \\
+		\hline
+		eff.and.other.-genes.vals & Effector circuits and other-genes & 17,534 & \multirow{2}{*}{\parbox{5cm}{\raggedright Combination of pathway-level signaling activity values and gene-level expression values}} \\
+		path.and.other.-genes.vals & Canonical circuits and other-genes & 22,597 &  \\
+		\hline
+	\end{tabular}
+	\label{tab5:profile}
+\end{table}
+
+From the viewpoint of machine learning, this study is formulated as a typical binary classification problem where we determine a positive or negative pseudo label for each sample. Based on the data available in this study (Table \ref{tab5:survival}), we perform a 5-fold cross-validation repeated 10 times on the dataset and report the mean performance over the $5 \times 10 = 50$ splits to assess the prognostic power for each type of profile. The performance is evaluated by the Area Under the ROC Curve (AUROC) criteria \cite{Sing2005ROCR}. Note that usually a classifier returns a continuous prediction between 0 and 1 for each sample denoting the probability of that sample being in the positive class rather than in the negative class, and then assigns either label to the sample according to some cutoff value thresholding the prediction. AUROC is a cutoff-free score that measures the probability that the classifier will score a randomly drawn positive sample higher than a randomly drawn negative sample.
+
+In this study, we considered a total of 12 classification algorithms as candidate classifiers, most of which are state-of-the-art (Table \ref{tab5:classifier}). When we assess the prognosis performance for a specific type of profile on a specific (external) cross-validation split of the data, we perform an internal 5-fold cross-validation on the training set to determine which classifier returns the highest cross-validated performance and the best classifier is then used on the test set to obtain the performance score. The rationale behind the nested cross-validation is that, although any classification algorithm from the machine learning literature can be used to discriminate good vs poor prognosis with any profile type considered as predictive features, in practice, however, we do not have a definitive concept of which classifier suits the best universally for all types of profiles. In other words, it will be a confusing factor if we predetermine just one classifier throughout the study. In fact, the underlying hypotheses of different classifiers vary, for instance linear or non-linear relationships can be assumed between features and labels, and some classifiers can be particularly sensitive to the presence of a large number of noisy features. As a consequence, the procedure of choosing the best suited algorithm for different types of profiles by a nested cross-validation guarantees that the prediction performance is evaluated in an impartial fashion.
+
+\begin{table}[!htpb]
+	\caption{The 12 candidate classifiers used to discriminate prognosis classes for breast tumor samples.}
+	\centering
+	\begin{tabularx}{\textwidth}{|l|X|X|}
+		\hline
+		\bf{Alias} & \bf{Classifier} & \bf{Reference} \\\hline
+		LDA & Linear discriminant analysis & \cite{Venables2002Modern, Ripley2007Pattern} \\\hline
+		LogitLasso & L1-regularized logistic regression & \cite{Friedman2010Regularization} \\\hline
+		LinearSVM & Support Vector Machine with linear kernel & \cite{Chang2011LIBSVM} \\\hline
+		RadialSVM & Support Vector Machine with Gaussian RBF kernel & \cite{Chang2011LIBSVM} \\\hline
+		KendallSVM & Support Vector Machine with Kendall kernel & \cite{Zeileis2004kernlab, Jiao2015Kendall} \\\hline
+		KNN & $k$-nearest neighbor classifier & \cite{Venables2002Modern, Ripley2007Pattern} \\\hline
+		NB & Naive Bayes classifier & \cite{Ripley2007Pattern} \\\hline
+		GBM & Gradient Boosting Machine & \cite{Friedman2001Greedy} \\\hline
+		RF & Random Forest & \cite{Liaw2002Classification, Breiman2001Random} \\\hline
+		SparseSVM & L1-regularized L2-loss Support Vector Machine & \cite{Fan2008LIBLINEAR} \\\hline
+		PAM & Nearest shrunken centroid classifier & \cite{Tibshirani2002Diagnosis} \\\hline
+		Constant & Majority voting classifier & Outputs constant label of the dominant class (negative-control) \\\hline
+	\end{tabularx}
+	\label{tab5:classifier}
+\end{table}
 
