@@ -1,5 +1,5 @@
 rm -f *.{blg,bbl,toc,out,log,aux,pdf,dvi}
-rm -f *.{brf,maf,mtc*,nlo,lof,lot}
+rm -f *.{brf,bak,maf,mtc*,nlo,lof,lot}
 
 pdflatex thesis
 bibtex thesis
