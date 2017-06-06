@@ -19,7 +19,7 @@ Here we focus on consulting prior knowledge of signaling pathways to guide cance
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.6\textwidth]{ch5hipathia/figure/signaling_pathway}
+	\includegraphics[width=0.6\textwidth]{ch-hipathia/figure/signaling_pathway}
 	\caption{An illustration of cell signaling process. Typically the signal transduction begins at receptor proteins that receive molecular stimuli from cell microenvironment and ends at effector proteins that execute specific actions in response to the stimulation.}
 	\label{fig5:cellsignaling}
 \end{figure}
@@ -207,7 +207,7 @@ Recall that in cell signaling process represented in KEGG pathways, cell signal 
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth]{ch5hipathia/figure/pathway}
+\includegraphics[width=\textwidth]{ch-hipathia/figure/pathway}
 \caption{The different levels of abstraction within pathways: A) Circuits that communicate one receptor to one effector; B) Effector circuits that communicate all the receptors that signal a specific effector; C) Function circuits that collect the signal from all the effectors that trigger a specific function (according to UniProt or GO keywords); D) Cancer hallmarks, a sub-selection of only those functions related to cancer hallmarks.}
 \label{fig5:pathway}
 \end{figure}
@@ -220,7 +220,7 @@ where $A_n$ denotes the set of signals arriving to the current node $n$ from act
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.6\textwidth]{ch5hipathia/figure/pretty_algorithm2}
+	\includegraphics[width=0.6\textwidth]{ch-hipathia/figure/pretty_algorithm2}
 	\caption{An example of computing the activity value of an artificial circuit by the \textit{hiPathia} method. In Step 1, node values are derived from the normalized mRNA measurements. In Step 2, signal is propagated along the path while its intensity value gets updated according to the rule of the \textit{hiPathia} method. Finally, The signal value attained after the last protein is visited accounts for the signaling activity of the circuit.}
 	\label{fig5:hipathia}
 \end{figure}
@@ -295,7 +295,7 @@ The performance of using different types of profiles (Table \ref{tab5:profile}) 
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.8\textwidth]{ch5hipathia/results/score}
+	\includegraphics[width=0.8\textwidth]{ch-hipathia/results/score}
 	\caption{The AUROC performance of using different types of profiles as predictive features to classify survival outcome for breast cancer patients. Boxplot represents the variance of the performance on 50 cross-validation splits. Dotted vertical lines separate profiles by the underlying analysis levels.}
 	\label{fig5:score}
 \end{figure}
