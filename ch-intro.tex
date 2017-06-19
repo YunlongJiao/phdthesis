@@ -3,7 +3,7 @@
 
 \begin{chapabstract}
 
-\textrm{{\bf Abstract:}} This thesis work has been driven typically by the development and investigation of machine learning methods in genomic data analysis for improved breast cancer survival prediction and for detecting robust molecular signatures related to cancer prognosis. Towards these goals, two directions in terms of methodologies have been explored for supervised survival prediction and structured feature selection. This chapter serves as a general introduction to the thesis that briefly summarizes the background of breast cancer prognosis and lays out the motivation of our ranked-based and network-guided approaches to address the computational challenges in genomic data analysis for cancer prognosis.
+\textrm{{\bf Abstract:}} This thesis work has been driven typically by the development and investigation of machine learning methods in genomic data analysis for improved breast cancer survival prediction and for detecting robust molecular signatures related to cancer prognosis. Towards these goals, two directions in terms of methodologies have been explored for supervised survival prediction and structured feature selection, which are rank-based and network-guided approaches. This chapter serves as a general introduction to the thesis that briefly summarizes the background of breast cancer prognosis and summarizes the motivation of my thesis research to address the computational challenges in genomic data analysis for cancer prognosis.
 \linebreak
 \vskip 0.1in
 \noindent \textrm{{\bf Résumé:}}
@@ -12,138 +12,106 @@
 
 \section{General Background}
 
-{ % copy
 
-Breast cancer is one of the most common malignancy for women and breast cancer prognosis is currently one of the leading problems of great interest. The advent of high-throughput platforms for gene expression profiling motivates the popular trend of using molecular biomarkers for clinical decision making regarding prognosis improvement assisting therapeutic strategies. It has been widely recognized as a very promising yet challenging problem to extract potentially valuable information from genomic data. The relatively small number of clinical samples, the inherent measurement noise in high-throughput experimental data and the heterogeneity across patients make it demanding to detect reliable biomarkers.
 
-In 2010, 1.6 million women contracted breast cancer globally, almost three times the
-number in 1980, making breast cancer the most common malignancy among women.
-In Sweden, approximately one out of nine women is expected to develop breast cancer
-during their lifetime.
-Traditionally, therapy decisions have been based on primary tumor predictive markers
-such as the estrogen receptor (ER) and human epidermal growth factor receptor 2
-(HER2) assuming these are unchanged in the relapse site.
-The overall aim of this thesis was to investigate if prognostic and predictive factors
-such as ER, progesterone receptor (PR) and HER2 status change during breast cancer
-progression. 
+% copied : Breast cancer is the most commonly diagnosed cancer in women in Europe and it is the first cause of women´s cancer death in Europe. In Finland in 2011 about 4900 new breast cancers were found. The risk of breast cancer in women has increased continuously and the rate of cancer patients is growing further. The incidence of breast cancer is very low among women under 30 years, but the risk of developing cancer increases after 45 years of age. One in nine women will have breast cancer at some point in her life and one in thirty will die from the disease. Even if the number of new breast cancer cases has multiplied during the past decades, breast cancer survival has improved over time possibly due to early diagnosis by effective screening programs and advances in treatment.
 
-A prognostic factor provides information on clinical outcome at the time of surgery,
-independently of systemic adjuvant therapy. Such factors show the intrinsic biologic
-characteristics of tumours which are usually indicators for growth, invasion and
-metastatic potential (Subramaniam and Isaacs, 2005). The classical clinical prognostic
-factors that are considered to be independent variables in breast cancer include age,
-axillary lymph node status, tumour size, histopathologic features including tumour type
-and grade, lymphovascular invasion, expression of proliferation marker Ki-67, estrogen
-receptor (ER) and progesterone receptor (PR) status (Cianfrocca and Goldstein, 2004;
-Subramaniam and Isaacs, 2005; Weigel and Dowsett, 2010; Ly et al., 2012). 
+breast cancer is malignant and complex... many deaths... disease severity example and statistics... % copied : Cancer is one of the leading causes of death worldwide. The main types of cancer are lung, prostate, colorectal and breast cancer (WHO, 2011), the last one being the most common cause of cancer mortality among women worldwide (Chodosh, 2011).
+
+
+The initial treatment for breast cancer patient is usually accomplished by complete removal of tumor by surgery or radiation without damage to the rest of the body. After the initial treatment, many patients are advised to receive systemic treatment including adjuvant chemotherapy, hormone therapy and targeted therapy to lower the risk of relapse. The decision is made based on prognosis, estimation of the risk of relapse or likely course of outcome after initial treatment if no adjuvant treatment is given. it is important to identify those patients who are likely to benefit the most from treatment.\footnote{Difference between prognosis and prediction (responsiveness and effect of certain treatment); usually discussed together but omitted from the present thesis for ease of emphasis.} For example, as the most common type, adjuvant chemotherapy are usually cytotoxic drugs with strong deleterious side effect... as aggressive treatments are most beneficial for high risk of relapse and minimizing the unnecessary intake of adjuvant chemotherapy is of chief importance... therefore accurate prognosis for each individual patient is important so as to personalize the best therapeutic option...
 
 
 
 
-Breast cancer is the most commonly diagnosed cancer in women in Europe and it is the
-first cause of women´s cancer death in Europe. In Finland in 2011 about 4900 new breast
-cancers were found. The risk of breast cancer in women has increased continuously and
-the rate of cancer patients is growing further. The incidence of breast cancer is very
-low among women under 30 years, but the risk of developing cancer increases after
-45 years of age. One in nine women will have breast cancer at some point in her life
-and one in thirty will die from the disease. Even if the number of new breast cancer
-cases has multiplied during the past decades, breast cancer survival has improved over
-time possibly due to early diagnosis by effective screening programs and advances in
-treatment.
-The aim of breast cancer treatment is complete removal of tumour without damage to
-the rest of the body. Surgery is accomplished by radiotherapy and systemic treatment
-including adjuvant chemotherapy, hormone therapy and targeted therapy (sometimes
-called biological therapies). Treatment for breast cancer will depend on a number of
-factors including the size and the grade of the breast cancer, axillary lymph node status,
-hormone receptor status and HER2 status. Several well-established prognostic and
-predictive factors are used to guide the clinical management of breast cancer. Difficulties
-remain in identifying those patients who are likely to benefit the most from treatment.
-Breast cancers are highly heterogenous tumours, which only happen to originate in the
-same anatomical site. Breast tumours of the similar histological type can show remarkably
-different clinical behaviour, response to the therapy and prognosis. A prognostic factor
-is a clinically or biologically measurable variable that correlates with the cancer disease
-in an untreated patient. A prognostic factor can be thought as a measure of the natural
-history of the disease
+due to complexity and diversity of cancer, it is challenging to accurately do prognosis or identify prognostic factors for each particular case... conventionally prognosis of breast cancer is based solely on clinico-pathological features... Several well-established prognostic factors are commonly used to guide the clinical management of breast cancer (ref table)... a few words of subtypes and treatment/survival... well-known 6 prognostic factors used by Adjuvant! Online\footnote{www.adjuvantonline.com} : patient age, tumor size, grade, hormone receptor status, number of positive lymph nodes and comorbidity level... 
 
 
+Table: Clinico-pathological features commonly used as prognostic factors of breast cancer. (saini's thesis table 1.1, pia's thesis table 1)...
 
 
-Cancer is one of the leading causes of death worldwide. The main types of cancer are
-lung, prostate, colorectal and breast cancer (WHO, 2011), the last one being the most
-common cause of cancer mortality among women worldwide (Chodosh, 2011). The
-annual number of cancer cases in females is predicted to increase in Finland and breast
-cancer is responsible for one-third of this increase 
-
-
-
-
-While the amount of new breast cancer cases has increased in many European countries
-during the past decades, breast cancer mortality has declined or remained stable possibly
-due to earlier diagnosis and/or improved treatments. Greater public awareness of breast
-cancer and the promotion of breast self-examination together with effective screening
-mammography have led the detection of the disease at earlier stages (OECD, 2010). 
+however, patients of similar clinico-pathological type can still have remarkably different prognosis... according to a study in \cite{Veer2008Enabling}, in the US approximately up to 70\% of breast cancer patients with negative lymph nodes and a tumour size 1 to 2 cm undergo a toxic therapy that they would very likely not benefit from after they were actually already cured of their disease... indicates that the clinico-pathological information alone is far from sufficient to characterize the outcome of each diseased individual. Difficulties in detecting reliable and efficient prognostic factors for breast cancer remains in the heterogeneity across patients.
 
 
 
 
 
-MammaPrint \cite{Veer2008Enabling}
 
-
-}
-
+\section{Genomic Data Analysis for Cancer Prognosis: Prospects and Challenges}
 
 
 
 
-\section{Genomic Data Analysis for Cancer Prognosis}
+It has been long established that genomic features contain unique characteristics of each patient and offer the opportunity of scrutinizing the individuality of each breast tumor. Often termed by \textit{biomarker} are such molecular-level prognostic factors that characterize intrinsic biological heterogeneity of tumours.  The characterization of such biomarkers for breast cancer prognosis include gene expression, SNPs, etc... many have been associated with breast cancer survival (ref table)...
 
 
+Table: Some important genes whose mutation carriers are associated with high risk for breast cancer. (Pia's thesis table 2)
+
+
+The advancement of genomic profiling technologies in the past decades has been motivating the trend of using genomic information in decision-making regarding prognosis improvement, as millions of genomic features can be efficiently collected from patients and tumors. Take as an example, high-throughput gene expression profiling technologies: DNA microarray and RNA-seq, NGS, WGS...
+
+
+
+Genomic data analysis is a broad topic... In the genre of genomic data analysis for cancer prognosis, two major questions need to be addressed: 
+
+
+1) survival risk prediction via supervised statistical inference...
+
+
+prognosis in the language of machine learning - classification or survival analysis... four types of survival : DMFS, RFS, DFS, OS (saini's thesis table 1.1); binary labels converted from survival... feature selection (2nd aspect below) or not (whole genome)...
+
+
+
+2) biomarker discovery via feature selection...
+
+Promising results with a few genomic tests available... Mammaprint \cite{Veer2008Enabling} and other tests http://www.breastcancer.org/symptoms/testing/types/mammaprint
+
+
+
+
+
+
+Despite the successful stories, it has been widely recognized as a very challenging problem to extract potentially valuable information from genomic data. Besides the complexity and heterogeneity of the disease, relatively small number of clinical samples, the inherent measurement noise in high-throughput experimental data, the heterogeneity of patient data makes it demanding... furthermore, robustness of the identified biomarkers and \textit{a posteriori} interpretation of the findings are also major concerns... literature review???
+
+
+
+
+
+
+\section{Contribution of the Thesis}
 
 
 \subsection{Rank-based Approaches for Improved Survival Risk Prediction}
 
 
-{
-
-The first line of ideas was to perform gene expression data analysis based solely on the ranking of the expression levels of multiple genes while their real-valued measurements are disregarded. It is based on the assumption that the relative ordering of gene expression levels can be more informative than their real-valued measurements when used in some biomedical applications since high-throughput high-dimensional genomic data are often subject to high noise. Hence the majority of my thesis work has been focused on the study of a particular type of structured data, specifically rankings. Learning with such data is equivalent to learning on symmetric group.
-
-}
+This thesis is conceived following the two lines of ideas of performing genomic data analysis for cancer prognosis. The first line of ideas is to perform gene expression data analysis based solely on the ranking of the expression levels of multiple genes while their real-valued measurements are disregarded. It is based on the assumption that the relative ordering of gene expression levels can be potentially more informative than their real-valued measurements when used in some biomedical applications since high-throughput high-dimensional genomic data are often subject to high measurement noise. From the point view of machine learning, it reduces to the study of a particular type of structured data, specifically rankings. It is well-known that kernel methods have found many successful applications where the input data are discrete or structured including strings and graphs. The first project of my doctoral studies was focused on proposing computationally attractive kernels for rank data and applying kernel methods to problems involving rankings. Central to this work was the observation that the widely used Kendall tau correlation and the Mallows similarity measures are indeed computationally attractive positive definite kernels for rankings. These kernels were further tailored for more complex types of rank data that prevail in real-world applications, especially when rankings come from real-valued vectors by keeping simply the relative ordering of the values of multiple features thereof. Thanks to these kernels, many off-the-shelf kernel machines are available to solve various problems at hand. It is worth special mention that, despite that the project was initially motivated by biomedical applications, the prospective contribution of this work concerns applications from many fields of machine learning pertaining to learning from rankings, or learning to rank. This study will be presented in Chapter \ref{chap:kendall}.
 
 
 
+The study of the Kendall kernel for rankings has paved an unprecedented way towards a deeper understanding of a classical problem called Kemeny aggregation from the field of Social Choice Theory. Kemeny aggregation searches for a consensus ranking that best represents a collection of individual rankings in the sense that the sum of the Kendall tau distance between each ranking and the consensus is minimized. Kemeny aggregation is often considered to provide the ideal solution among all ranking aggregation criteria but the Kemeny consensus is known to be NP-hard to find. Many tractable approximations to the Kemeny consensus have therefore been proposed and well studied. Since the Kendall kernel derives from an inner product of a Euclidean space, the Kendall tau distance derives from a squared Euclidean distance and thus the combinatorial problem of Kemeny aggregation is endowed with a novel intuitive interpretation from a geometric point of view. Based on this observation, a tractable upper bound of the estimation error in terms of the distance between the Kemeny consensus and its approximation is established. This upper bound requires little assumption on the approximation procedure or the collection of rankings to aggregate. However, due to its remote connection to cancer prognosis that is the primary objective of the present thesis, this study will be presented in Appendix \ref{chap:kemeny}. 
 
 
-\subsection{Network-guided Approaches for Enhanced Prognostic Biomarker Selection}
+
+\subsection{Network-guided Approaches for Enhanced Biomarker Discovery}
 
 
-{
-
-An important feature of the proposed scheme is the idea of promoting gene-level analysis to pathway-level analysis by applying the \textit{hiPathia} method to obtain patient-specific personalized profiles of signaling circuit activity. Over the past decade, a great deal of efforts have been devoted to analyzing gene expression data in extensively diverse biomedical applications revolving around cancer as well as other diseases. Typical examples include cancer prognosis and subtyping, patient stratification and biomarker detection. Depending on the specific problem at hand, many existing algorithms that were originally designed for gene expression profiles can be easily adapted to signaling circuit activity profiles. Consequently the analysis is made at the level of functional pathways instead of individual genes, often leading to better understanding in terms of biological relevance.
+The second line of ideas of performing genomic data analysis for cancer prognosis is to consult biological networks as domain-specific knowledge to guide our analysis. In fact, biological networks are a common way of depicting functional relationships between genes that have been accumulated from decades of biomedical research, and they can be particularly valuable when incorporated as prior knowledge in order to improve the selection efficacy of prognostic biomarkers related to breast cancer prognosis. Typical examples of biological networks include protein-protein interaction network and signaling pathway network.
 
 
-The second line of ideas was to consult biological networks as domain-specific knowledge to guide genomic data analysis. In fact, biological networks are a common way of depicting functional relationships between genes that have been accumulated from decades of biomedical research, and they can be particularly valuable when incorporated as prior knowledge in order to improve the performance of survival risk prediction and the efficacy of biomarker selection related to breast cancer prognosis. Genes closer on the network tend to be involved in related biological process, and hence should be selected simultaneously.
+Two projects were initiated on network-guided gene expression data analysis for breast cancer prognosis and for identification of genomic signatures related to cancer survival. In one project, we focused on the study of structured regularization in generalized linear models for selecting prognostic genes where the regularization method is designed so that genes closer on the biological network are encouraged to be selected simultaneously. In fact, in order to achieve such simultaneous modularity and sparsity coherent with respect to presumed network structure, a popular method called network-based wavelet smoothing has been successfully applied in many applications from the field of signal processing. Therefore, we were motivated to investigate the potential of this method in biomedical applications, using a breast cancer gene expression dataset and a protein-protein interaction network to guide our analysis albeit the methodology is generally applicable to various types of genomic data and biological networks. In particular, the method allows to designate a few prognostic gene modules with intra-collaborative functionality rendering readily interpretable insights potentially related to cancer survival. Numerical results demonstrated that, compared to several network-free and some established network-based regularization methods, network-based wavelet smoothing was able to improve the selection efficacy of prognostic genes in terms of stability, connectivity and interpretability, while achieving competitive performance of survival risk prediction for breast cancer. This study will be presented in Chapter \ref{chap:wavelet}.
 
-}
+
+In another project, we focused on a particular type of biological network namely signaling pathway network. Based on a modeling framework of cell signaling, gene expression profiles can be translated into personalized profiles of signaling pathway activities by integrating signaling pathway network. When gene-level profiles are replaced by these derived pathway-level profiles as input to many off-the-shelf computational tools, a simple scheme emerges where gene-level analysis is easily promoted to pathway-level analysis. Analysis made at the level of functional pathways consequently leads to better understanding in terms of biological relevance. Notably, when combined with feature selection oriented algorithms, the proposed scheme enables direct identification of pathway-level mechanistic signatures as an alternative to conventional gene-based signatures, which provides more informative insights into the cellular functions involved in cancer survival. This study will be presented in Chapter \ref{chap:hipathia}.
 
 
 
 
+\subsection{Other Contribution}
 
 
-\section{Contribution of the Thesis Work}
-
-This thesis is conceived following the two lines of ideas of performing genomic data analysis for cancer prognosis elaborated in the previous section. The first line of ideas is to perform gene expression data analysis based solely on the ranking of the expression levels of multiple genes while their real-valued measurements are disregarded. From the point view of machine learning, it reduces to the study of a particular type of structured data, specifically rankings. It is well-known that kernel methods have found many successful applications where the input data are discrete or structured including strings and graphs. The first project of my doctoral studies was focused on proposing computationally attractive kernels for rank data and applying kernel methods to problems involving rankings. Central to this work was the observation that the widely used Kendall tau correlation and the Mallows similarity measures are indeed computationally attractive positive definite kernels for rankings. These kernels were further tailored for more complex types of rank data that prevail in real-world applications, especially when rankings come from real-valued vectors by keeping simply the relative ordering of the values of multiple features thereof. Thanks to these kernels, many off-the-shelf kernel machines are readily available to solve various problems at hand. Numerical experiments demonstrated that kernel methods with the proposed kernels achieve state-of-the-art performance on tasks such as clustering heterogeneous rank data and high-dimensional classification problems in biomedical applications. This study is presented in Chapter \ref{chap:kendall}.
-
-
-
-The second line of ideas is to consult biological networks as domain-specific knowledge to guide genomic data analysis. Two projects were initiated to explore the potential of network-guided gene expression data analysis for breast cancer prognosis and for identification of genomic signatures related to cancer survival. In one project, we focused on the study of structured regularization in generalized linear models for selecting prognostic genes where the regularization method is designed so that genes closer on the network are encouraged to be selected simultaneously. In fact, in order to achieve such simultaneous modularity and sparsity coherent with the network structure, a popular method called network-based wavelet smoothing has been widely and successfully applied in many applications from the field of signal processing. We thus investigated the potential of this method in gene expression data analysis assisted by a protein-protein interaction network. Particularly, this method allows to designate a few prognostic gene modules with intra-collaborative functionality related to cancer survival. Numerical results demonstrated that, compared to several network-free and some established network-based regularization methods, network-based wavelet smoothing was able to improve the selection efficacy of prognostic genes in terms of stability, connectivity and interpretability, while achieving competitive performance of survival risk prediction for breast cancer. This study is presented in Chapter \ref{chap:wavelet}. In the other project, based on a modeling framework of cell signaling, gene expression profiles can be translated into personalized profiles of signaling pathway activities by integrating signaling pathway network. When gene-level profiles are replaced by these derived pathway-level profiles as input to any computational tools, a simple and general scheme emerges where gene-level analysis is easily promoted to pathway-level analysis. Notably, when combined with feature selection algorithms, the proposed scheme directly enables the identification of pathway-level mechanistic signatures as an alternative to conventional gene-based biomarkers, which provides more informative insights into the cellular functions involved in cancer biology. This study is presented in Chapter \ref{chap:hipathia}.
+During the course of my doctoral studies, I have undertaken some other projects as well. In 2013, Elsa Bernard, Erwan Scornet, V\'{e}ronique Stoven, Thomas Walter, Jean-Philippe Vert and I from our laboratory participated as a team in an international bioinformatics competition called \textit{DREAM 8 NIEHS--NCATS--UNC Toxicogenetics Challenge}. In the competition, participants were asked to predict the response of human cell lines exposed to various toxic chemical compounds, based on the chemicals' molecular characterization and the cell lines' transcriptome. Finally our team won second place with a kernel bilinear regression model. Oral presentation was accepted to \textit{NIPS Workshop on Machine Learning in Computational Biology (MLCB)} and later invited to \textit{RECOMB Conference on Regulatory and Systems Genomics}. This work has been published as part of the crowd-source collaboration as a result of the competition \cite{Eduati2015Prediction} but excluded from the present thesis.
 
 
 
-During the course of my doctoral studies, I have undertaken some other projects as well. First, the study of the Kendall kernel for rankings has paved an unprecedented way towards a deeper understanding of a classical problem called Kemeny aggregation from the field of Social Choice Theory. Kemeny aggregation searches for a consensus ranking that best represents a collection of individual rankings in the sense that the sum of the Kendall tau distance between each ranking and the consensus is minimized. Kemeny aggregation is often considered to provide the ideal solution among all ranking aggregation criteria but the Kemeny consensus is known to be NP-hard to find. Many tractable approximations to the Kemeny consensus have therefore been proposed and well studied. Since the Kendall kernel derives from an inner product of a Euclidean space, the Kendall tau distance derives from a squared Euclidean distance and thus the combinatorial problem of Kemeny aggregation is endowed with a novel intuitive interpretation from a geometric point of view. Based on this observation, a tractable upper bound of the estimation error in terms of the distance between the Kemeny consensus and its approximation is established. This upper bound requires little assumption on the approximation procedure or the collection of rankings to aggregate. To the best of our knowledge, this is the first of such general results reported in literature. However, due to its remote connection to the primary objective of the present thesis, this study is presented in Appendix \ref{chap:kemeny}. Second, Elsa Bernard, Erwan Scornet, V\'{e}ronique Stoven, Thomas Walter, and Jean-Philippe Vert and I from our laboratory participated as a team in an international bioinformatics competition called \textit{DREAM 8 NIEHS--NCATS--UNC Toxicogenetics Challenge} in 2013. In the competition, participants were asked to predict the response of human cell lines exposed to various toxic chemical compounds, based on the chemicals' molecular characterization and the cell lines' transcriptome. Finally our team won second place with a kernel bilinear regression model. Oral presentation was accepted to \textit{NIPS Workshop on Machine Learning in Computational Biology (MLCB)} and later invited to \textit{RECOMB Conference on Regulatory and Systems Genomics}. This work has been published as part of the crowd-source collaboration as a result of the competition \cite{Eduati2015Prediction}. Third, when I was interning at Roche Diagnostics, Penzberg, Germany, I worked on failure state prediction for automated analyzers for analyzing biological samples, and a European patent application regarding the methodology was filed by Roche in December 2016 and is currently pending approval \cite{Jiao2016Failure}. Due to corporate confidentiality issues, this study will not be included in the present thesis.
+During the spring of 2015 when I was interning at Roche Diagnostics, Penzberg, Germany, I worked on failure state prediction for automated analyzers for analyzing biological samples, and a European patent application regarding the methodology was filed by Roche in December 2016 and is currently pending approval \cite{Jiao2016Failure}. Due to corporate confidentiality issues, this study will not be included in the present thesis.
 
-
-
-
- 
