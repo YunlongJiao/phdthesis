@@ -472,6 +472,7 @@ The biological network we consult in this study to guide the gene selection as w
 
 \begin{table}[!htbp]
 \centering
+\caption{Summary of different regularization methods in our numerical experiments.}
 \small
 	\begin{tabular}{c|c|c|c}
 	\hline
@@ -485,7 +486,6 @@ The biological network we consult in this study to guide the gene selection as w
 	w-synthesis & $\min_{\theta} \|\theta\|_1 \quad \mbox{s.t. } \beta = \Psi \theta$ & $\checkmark$ & $\checkmark$ \\
 	w-analysis & $\min_{\theta} \|\theta\|_1 \quad \mbox{s.t. } \beta = \Omega \theta$ & $\checkmark$ & $\checkmark$ \\\hline
 	\end{tabular}
-\caption{Summary of different regularization methods in our numerical experiments.}
 \label{tab3:methods}
 \end{table}
 
@@ -592,6 +592,7 @@ For \textit{in vivo} experiments, we performed survival analysis for breast canc
 
 \begin{table}[!htbp]
 \centering
+\caption{Mean concordance index (CI) scores ($\pm$ standard deviation) of survival risk prediction over 5-fold cross-validation repeated 10 times of the METABRIC data. Methods are ordered by decreasing mean CI scores.}
 \small
 	\begin{tabular}{c|c|c|c}
 	\hline
@@ -613,7 +614,6 @@ For \textit{in vivo} experiments, we performed survival analysis for breast canc
 	w-synthesis (lift)	&	$0.5587 \, (\pm 0.0232)$	& $\checkmark$	& $\checkmark$ \\
 	\hline
 	\end{tabular}
-\caption{Mean concordance index (CI) scores ($\pm$ standard deviation) of survival risk prediction over 5-fold cross-validation repeated 10 times of the METABRIC data. Methods are ordered by decreasing mean CI scores.}
 \label{tab3:prediction}
 \end{table}
 
