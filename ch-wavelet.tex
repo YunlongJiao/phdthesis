@@ -108,7 +108,7 @@ it recovers logistic regression for binary classification; when $y_i = (T_i, \De
 \begin{equation}\label{eq3:survival}
 \ell(y_1, \dots, y_m, \beta^\top \xb_1, \dots, \beta^\top \xb_m) = -\frac{1}{m} \sum_{i=1}^m \Delta_i \{\beta^\top \xb_i - \log(\sum_{j:T_j>T_i} \exp(\beta^\top \xb_j))\} \,,
 \end{equation}
-it recovers the Cox proportional hazards model for survival analysis. We would like to point out that the choice of the loss function is mostly application-oriented and is primarily not the concern of this study. In particular, the following discussion and our proposed methods will not depend on the choice of the loss function.
+it recovers the Cox proportional hazards model for survival analysis \cite{Cox1972Regression}. We would like to point out that the choice of the loss function is mostly application-oriented and is primarily not the concern of this study. In particular, the following discussion and our proposed methods will not depend on the choice of the loss function.
 
 
 
