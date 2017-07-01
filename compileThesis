@@ -1,6 +1,6 @@
 rm .DS_Store
-rm -f *.{blg,bbl,toc,out,log,aux,pdf,dvi}
-rm -f *.{brf,bak,maf,mtc*,nlo,nls,lof,lot,idx,ilg}
+rm *.{blg,bbl,toc,out,log,aux,pdf,dvi}
+rm *.{brf,bak,maf,mtc*,nlo,nls,lof,lot,idx,ilg}
 
 pdflatex thesis
 bibtex thesis
