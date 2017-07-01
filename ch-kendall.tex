@@ -54,10 +54,10 @@ Given two permutations $\sigma,\sigma'\in\Sn$, the number of concordant and disc
 \begin{equation*}
 	\label{eq2:kdtnc}
 	\begin{split}
-	n_c(\sigma,\sigma') & =  \sum_{i<j} \big[\mathds{1}_{\{\sigma(i)<\sigma(j)\}} \mathds{1}_{\{\sigma'(i)<\sigma'(j)\}}
-	+ \mathds{1}_{\{\sigma(i)>\sigma(j)\}}\mathds{1}_{\{\sigma'(i)>\sigma'(j)\}}\big]\,, \\
-	n_d(\sigma,\sigma') & =  \sum_{i<j} \big[\mathds{1}_{\{\sigma(i)<\sigma(j)\}} \mathds{1}_{\{\sigma'(i)>\sigma'(j)\}} 
-	+ \mathds{1}_{\{\sigma(i)>\sigma(j)\}}\mathds{1}_{\{\sigma'(i)<\sigma'(j)\}}\big] \,.
+	n_c(\sigma,\sigma') & =  \sum_{i<j} \big[\hollowone_{\{\sigma(i)<\sigma(j)\}} \hollowone_{\{\sigma'(i)<\sigma'(j)\}}
+	+ \hollowone_{\{\sigma(i)>\sigma(j)\}}\hollowone_{\{\sigma'(i)>\sigma'(j)\}}\big]\,, \\
+	n_d(\sigma,\sigma') & =  \sum_{i<j} \big[\hollowone_{\{\sigma(i)<\sigma(j)\}} \hollowone_{\{\sigma'(i)>\sigma'(j)\}} 
+	+ \hollowone_{\{\sigma(i)>\sigma(j)\}}\hollowone_{\{\sigma'(i)<\sigma'(j)\}}\big] \,.
 \end{split}
 \end{equation*}
 As their names suggest, $n_c(\sigma,\sigma')$ and $n_d(\sigma,\sigma')$ count how many pairs of items are respectively in the same or opposite order in the two rankings $\sigma$ and $\sigma'$. $n_d$ is frequently used as a distance between permutations, often under the name \emph{Kendall tau distance}, and underlies two popular similarity measures between permutations:
@@ -80,7 +80,7 @@ The Mallows kernel $K_{M}^\lambda$, for any $\lambda\geq 0$, and the Kendall ker
 \begin{proof}
 Consider the Kendall mapping $\Phi:\Sn \rightarrow \RR^{{n \choose 2}}$ defined by
 $$
-\Phi(\sigma)=\bigg( \frac{1}{\sqrt{{n \choose 2}}} (\mathds{1}_{\{\sigma(i)>\sigma(j)\}}-\mathds{1}_{\{\sigma(i)<\sigma(j)\}}) \bigg)_{1\leq i < j \leq n} \,.
+\Phi(\sigma)=\bigg( \frac{1}{\sqrt{{n \choose 2}}} (\hollowone_{\{\sigma(i)>\sigma(j)\}}-\hollowone_{\{\sigma(i)<\sigma(j)\}}) \bigg)_{1\leq i < j \leq n} \,.
 $$
 Then one immediately sees that, for any $\sigma,\sigma'\in\Sn$,
 $$
@@ -377,7 +377,7 @@ The Kendall kernel for quantitative vectors now takes exactly the same form as f
 where $\Phi: \mathbb{R}^n \to \mathbb{R}^{n \choose 2}$ is defined for $\xb=\br{x_1,\ldots,x_n}^\top \in\RR^n$ by
 \begin{equation}
 	\label{eq2:kdtmapping}
-	\Phi(\xb) = \bigg( \frac{1}{\sqrt{{n \choose 2}}} (\mathds{1}_{\{x_i>x_j\}}-\mathds{1}_{\{x_i<x_j\}}) \bigg)_{1\leq i < j \leq n}\,.
+	\Phi(\xb) = \bigg( \frac{1}{\sqrt{{n \choose 2}}} (\hollowone_{\{x_i>x_j\}}-\hollowone_{\{x_i<x_j\}}) \bigg)_{1\leq i < j \leq n}\,.
 \end{equation}
 In this case, the interpretation of the Kendall kernel in terms of concordant and discordant pairs (\ref{eq2:kendall}) is still valid, with the caveats that in the presence of ties between entries of $\xb$, say two coordinates $i$ and $j$ such that $x_i=x_j$, the tied pair $\{x_i,x_j\}$ will be neither concordant nor discordant. This implies in particular that if $\xb$ has ties or so does $\xb'$, then $|K_\tau(\xb,\xb')|<1$ strictly. Notably in the presence of ties, the fast implementation of Kendall kernel still applies to quantitative vectors in $O(n\log n)$ time \cite{Knight1966computer}. However, feature mapping (\ref{eq2:kdtmapping}) is by construction very sensitive to the presence of entry pairs that are ties or almost-ties. In fact, each entry of $\Phi(\xb)$ is, up to a normalization constant, the Heaviside step function which takes discrete values in $\cbr{-1,0,+1}$, and thus can change abruptly even when $\xb$ changes slightly but reverses the ordering of two entries whose values are close. In addition to pairwise relative ordering as defined in~\eqref{eq2:kdtmapping}, it can be wise to also exploit the information given by pairwise absolute difference in the feature values.
 
@@ -511,7 +511,7 @@ Theorem \ref{thm2:approx} then follows from Lemma \ref{lem2:concentration}.
 
 It is known that compared to the exact solution of (\ref{eq2:svm}), an $O(m^{-1/2})$-approximate solution is sufficient to reach the optimal statistical accuracy \cite{Bottou2008Tradeoffs}. This accuracy can be attained in our analysis when $D = O(m/\lambda)$, and since typically $\lambda \sim m^{-1/2}$ \cite{Steinwart2005Consistency}, this suggests that it is sufficient to take $D$ of order $m^{3/2}$. Going back to the comparison strategy of the two alternatives $G$ and $G_D$, we see that the computational cost of computing the full $m\times m$ Gram matrix with the exact evaluation is $O(m^2 n^2)$, while the cost of computing the approximate Gram matrix with $D=O(m^{3/2})$ random samples is $O(m^2 D^2 n \log n) = O(m^5 n \log n)$. This shows that, up to constants and logarithmic terms, the Monte Carlo approximation is interesting when $m = o(n^{1/3})$, otherwise the exact evaluation using explicit computation in the feature space is preferable.
 
-Interestingly we can look at the extended Kendall kernel \eqref{eq2:G} to uncertain rankings from the perspective of Hilbert space embeddings of probability distributions \cite{Smola2007Hilbert}. In fact, for $x$ fixed, the smoothed mapping $\Psi(\xb) = \EE \Phi(\xb+\epsilon)$ is exactly an embedding for the distribution $\mathcal{P}$ of an additive noise $\epsilon$ in the reproducing kernel Hilbert space (RKHS) associated with Kendall kernel. As a consequence, the idea of smoothed kernel $G(\xb,\xb')$ for $\xb,\xb\in \mathcal{X}$ is essentially equivalent to how \cite[Lemma 4]{Muandet2012Learning} defines kernels on two probability distributions from $\{\mathcal{P}+\xb | \xb \in \mathcal{X} \}$ using the Kendall kernel as the level-1 embedding kernel and linear inner product as the level-2 kernel in the feature space. As a result, given a fixed training set $\mathcal{D}$, training an SVM with $G$ in place of $K_\tau$ is equivalent to training a Flex-SVM instead of an ordinary SVM with $K_\tau$ \cite{Muandet2012Learning}. In this case, Theorem~\ref{thm2:approx} provides an error bound in terms of the optimal accuracy for cases when training a Flex-SVM if exact evaluation of $G$ is intractable and its Monte Carlo approximate $G_D$ is employed. This serves to obtain a trade-off between computation complexity and approximation accuracy which is particularly interesting when we are working in high dimensions.
+Interestingly we can look at the extended Kendall kernel \eqref{eq2:G} to uncertain rankings from the perspective of Hilbert space embeddings of probability distributions \cite{Smola2007Hilbert}. In fact, for $x$ fixed, the smoothed mapping $\Psi(\xb) = \EE \Phi(\xb+\epsilon)$ is exactly an embedding for the distribution $\mathcal{P}$ of an additive noise $\epsilon$ in the reproducing kernel Hilbert space (RKHS) associated with Kendall kernel. As a consequence, the idea of smoothed kernel $G(\xb,\xb')$ for $\xb,\xb'\in \mathcal{X}$ is essentially equivalent to how \cite[Lemma 4]{Muandet2012Learning} defines kernels on two probability distributions from $\{\mathcal{P}+\xb | \xb \in \mathcal{X} \}$ using the Kendall kernel as the level-1 embedding kernel and linear inner product as the level-2 kernel in the feature space. As a result, given a fixed training set $\mathcal{D}$, training an SVM with $G$ in place of $K_\tau$ is equivalent to training a Flex-SVM instead of an ordinary SVM with $K_\tau$ \cite{Muandet2012Learning}. In this case, Theorem~\ref{thm2:approx} provides an error bound in terms of the optimal accuracy for cases when training a Flex-SVM if exact evaluation of $G$ is intractable and its Monte Carlo approximate $G_D$ is employed. This serves to obtain a trade-off between computation complexity and approximation accuracy which is particularly interesting when we are working in high dimensions.
 
 
 

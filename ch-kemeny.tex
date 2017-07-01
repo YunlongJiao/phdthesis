@@ -33,7 +33,7 @@ Let $\n = \cbr{1,\dots,n}$ be a set of alternatives to be ranked. In this study,
 \label{eqA:Kemeny-aggregation}
 \min_{\sigma\in\Sn} \sum_{t=1}^{N}d(\sigma,\sigma_{t}) \,,
 \end{equation}
-where $d$ is the Kendall's tau distance defined for $\sigma,\sigma' \in \Sn$ as the number of their pairwise disagreements: $d(\sigma,\sigma') = \sum_{1\leq i < j \leq n}\mathbb{I}\{(\sigma(j)-\sigma(i))(\sigma'(j)-\sigma'(i))<0\}$. The objective function in \eqref{eqA:Kemeny-aggregation} denotes the cost, and a permutation $\sigma^{\ast}$ solving \eqref{eqA:Kemeny-aggregation} is called a Kemeny consensus. We denote by $\KN$ the set of Kemeny consensuses on the dataset $\DN$.
+where $d$ is the Kendall's tau distance defined for $\sigma,\sigma' \in \Sn$ as the number of their pairwise disagreements: $d(\sigma,\sigma') = \sum_{1\leq i < j \leq n}\hollowone\{(\sigma(j)-\sigma(i))(\sigma'(j)-\sigma'(i))<0\}$. The objective function in \eqref{eqA:Kemeny-aggregation} denotes the cost, and a permutation $\sigstar$ solving \eqref{eqA:Kemeny-aggregation} is called a Kemeny consensus. We denote by $\KN$ the set of Kemeny consensuses on the dataset $\DN$.
 
 Exact Kemeny aggregation is NP-hard: it cannot be solved efficiently with a general procedure. This does not mean however that nothing can be done. For example, it is clear that on a dataset where all permutations are equal to a $\sigma_{0}\in\Sn$, the Kemeny consensus is trivially given by $\sigma_{0}$. Many contributions from the literature have thus focused on particular approaches to apprehending some part of the complexity of Kemeny aggregation. The examples given in the introduction generally fall in three categories:
 \begin{itemize}
@@ -44,11 +44,11 @@ Exact Kemeny aggregation is NP-hard: it cannot be solved efficiently with a gene
 In this chapter, we introduce a novel approach, which falls into the second category above, to apprehend the complexity of Kemeny aggregation by considering the following question (henceforth referred to as The Question):
 
 \begin{question*}
-Let $\sigma\in\Sn$ be a permutation, typically output by a computationally efficient aggregation procedure on $\DN$. Can we use tractable quantities to give an upper bound on the distance $d(\sigma,\sigma^{\ast})$ between $\sigma$ and any Kemeny consensus $\sigma^{\ast}$ on $\DN$?
+Let $\sigma\in\Sn$ be a permutation, typically output by a computationally efficient aggregation procedure on $\DN$. Can we use tractable quantities to give an upper bound on the distance $d(\sigma,\sigstar)$ between $\sigma$ and any Kemeny consensus $\sigstar$ on $\DN$?
 \end{question*}
 
 
-The answer to The Question is positive as we will elaborate in this study. We propose an upper bound, guaranteed by Theorem \ref{thmA:method}, thus says: for any $\sigma$ and $\DN$, we have $d(\sigma,\sigma^{\ast})\leq \kmin$ for all consensuses $\sigma^{\ast}\in\mathcal{K}_{n}$, where $\kmin$ is defined in \eqref{eqA:k-min}. We would like to stress a major strength of our method compared to those previously studied in literature that is the generality: it can be applied to any dataset $\DN$ and any permutation $\sigma$ with little assumption on neither. This is because it exploits a powerful geometric framework for the analysis of Kemeny aggregation.
+The answer to The Question is positive as we will elaborate in this study. We propose an upper bound, guaranteed by Theorem \ref{thmA:method}, thus says: for any $\sigma$ and $\DN$, we have $d(\sigma,\sigstar)\leq \kmin$ for all consensuses $\sigstar\in\KN$, where $\kmin$ is defined in \eqref{eqA:k-min}. We would like to stress a major strength of our method compared to those previously studied in literature that is the generality: it can be applied to any dataset $\DN$ and any permutation $\sigma$ with little assumption on neither. This is because it exploits a powerful geometric framework for the analysis of Kemeny aggregation.
 
 
 
@@ -70,13 +70,13 @@ The Kendall embedding is the mapping $\phi : \Sn \rightarrow \RR^{\binom{n}{2}}$
 where the sign function $\sgn(x) = 1$ if $x > 0$ and $-1$ if $x < 0$ and $0$ otherwise.
 \end{definition}
 
-The Kendall embedding $\phi$ maps a permutation to a vector in $\RR^{\binom{n}{2}}$ where each coordinate is indexed by an (unordered) pair $\{i,j\}\subset\n$ (we choose $i<j$ by convention). Though this vector representation is equivalent to representing a permutation as a flow on the complete graph on $\n$, it allows us to perform a geometric analysis of Kemeny aggregation in the Euclidean space $\RR^{\binom{n}{2}}$. Denoting by $\innerprod{\cdot,\cdot}$ the canonical inner product and $\norm{\cdot}$ the Euclidean norm, the starting point of our analysis is the following result, already brought up by \cite{Barthelemy1981median} and rephrased in the proof of Theorem \ref{thm2:main}.
+The Kendall embedding $\phi$ maps a permutation to a vector in $\RR^{\binom{n}{2}}$ where each coordinate is indexed by an (unordered) pair $\{i,j\}\subset\n$ (we choose $i<j$ by convention). Though this vector representation is equivalent to representing a permutation as a flow on the complete graph on $\n$, it allows us to perform a geometric analysis of Kemeny aggregation in the Euclidean space $\RR^{\binom{n}{2}}$. Denoting by $\innerprod{\cdot,\cdot}$ the canonical inner product and $\nm{\cdot}$ the Euclidean norm, the starting point of our analysis is the following result, already brought up by \cite{Barthelemy1981median} and rephrased in the proof of Theorem \ref{thm2:main}.
 
 \begin{proposition}[Background results]
 \label{propA:background-result}
 For all $\sigma,\sigma'\in\Sn$,
 \[
-\norm{\phi(\sigma)} = \sqrt{\frac{n(n-1)}{2}} \;\text{and}\; \norm{\phi(\sigma) - \phi(\sigma')}^2 = 4 d(\sigma,\sigma') \,,
+\nm{\phi(\sigma)} = \sqrt{\frac{n(n-1)}{2}} := R \;\text{and}\; \nm{\phi(\sigma) - \phi(\sigma')}^2 = 4 d(\sigma,\sigma') \,,
 \]
 and for any dataset $\DN=(\sigma_{1},\dots\sigma_{N})\in\Sn^{N}$, Kemeny aggregation \eqref{eqA:Kemeny-aggregation} is equivalent to the minimization problem
 \begin{equation}
@@ -90,7 +90,7 @@ where
 \end{equation}
 \end{proposition}
 
-Proposition \ref{propA:background-result} leads to the following geometric point of view of Kemeny aggregation, illustrated by Figure \ref{figA:geometric-interpretation}. First, as $\norm{\phi(\sigma)} = \sqrt{n(n-1)/2}$ for all $\sigma\in\Sn$, the embeddings of all the permutations in $\Sn$ lie on the sphere $\Sphere$ of center $0$ and radius $R := \sqrt{n(n-1)/2}$. Notice that $\norm{\phi(\sigma) - \phi(\sigma')}^2 = 4 d(\sigma,\sigma')$ for all $\sigma,\sigma'\in\Sn$ implies that $\phi$ is injective, in other words that it maps two different permutations to two different points on the sphere. A dataset $\DN = (\sigma_{1},\dots,\sigma_{N})\in\Sn^{N}$ is thus mapped to a weighted point cloud on this sphere, where for any $\sigma\in\Sn$, the weight of $\phi(\sigma)$ is the number of times $\sigma$ appears in $\DN$. The vector $\phi(\DN)$, defined by \eqref{eqA:mean-embedding}, is then equal to the barycenter of this weighted point cloud. We call it the \textit{mean embedding} of $\DN$. Now, the reformulation of Kemeny aggregation given by \eqref{eqA:reformulation} means that a Kemeny consensus is a permutation $\sigma^{\ast}$ whose embedding $\phi(\sigma^{\ast})$ is closest to $\phi(\DN)$, \textit{with respect} to the Euclidean norm in $\RR^{\binom{n}{2}}$.
+Proposition \ref{propA:background-result} leads to the following geometric point of view of Kemeny aggregation, illustrated by Figure \ref{figA:geometric-interpretation}. First, as $\nm{\phi(\sigma)} = \sqrt{n(n-1)/2}$ for all $\sigma\in\Sn$, the embeddings of all the permutations in $\Sn$ lie on a sphere centered at $0$ with radius $R = \sqrt{n(n-1)/2}$. Notice that $\nm{\phi(\sigma) - \phi(\sigma')}^2 = 4 d(\sigma,\sigma')$ for all $\sigma,\sigma'\in\Sn$ implies that $\phi$ is injective, in other words that it maps two different permutations to two different points on the sphere. A dataset $\DN = (\sigma_{1},\dots,\sigma_{N})\in\Sn^{N}$ is thus mapped to a weighted point cloud on this sphere, where for any $\sigma\in\Sn$, the weight of $\phi(\sigma)$ is the number of times $\sigma$ appears in $\DN$. The vector $\phi(\DN)$, defined by \eqref{eqA:mean-embedding}, is then equal to the barycenter of this weighted point cloud. We call it the \textit{mean embedding} of $\DN$. Now, the reformulation of Kemeny aggregation given by \eqref{eqA:reformulation} means that a Kemeny consensus is a permutation $\sigstar$ whose embedding $\phi(\sigstar)$ is closest to $\phi(\DN)$, \textit{with respect} to the Euclidean norm in $\RR^{\binom{n}{2}}$.
 
 \begin{figure}[!htbp]
 	\begin{center} 
@@ -101,7 +101,7 @@ Proposition \ref{propA:background-result} leads to the following geometric point
 \end{figure}
 
 
-From an algorithmic point of view, Proposition \ref{propA:background-result} naturally decomposes problem \eqref{eqA:Kemeny-aggregation} of Kemeny aggregation in two steps: first compute the mean embedding $\phi(\DN)$ in the space $\RR^{\binom{n}{2}}$, and then find a consensus $\sigma^{\ast}$ as a solution of problem \eqref{eqA:reformulation}. The first step is naturally performed in $O(Nn^{2})$ operations. The NP-hardness of Kemeny aggregation thus stems from the second step. In this regard, one may argue that having $\phi(\DN)$ does not greatly alleviate the complexity in identifying an exact Kemeny consensus. However, a closer look at the problem leads us to asserting that $\phi(\DN)$ contains rich information about the location of the Kemeny consensuses. More specifically, we show in Theorem \ref{thmA:method} that the knowledge of $\phi(\DN)$ helps to provide an upper bound for the distance between a given permutation $\sigma\in\Sn$ and any Kemeny consensus $\sigma^{\ast}$.
+From an algorithmic point of view, Proposition \ref{propA:background-result} naturally decomposes problem \eqref{eqA:Kemeny-aggregation} of Kemeny aggregation in two steps: first compute the mean embedding $\phi(\DN)$ in the space $\RR^{\binom{n}{2}}$, and then find a consensus $\sigstar$ as a solution of problem \eqref{eqA:reformulation}. The first step is naturally performed in $O(Nn^{2})$ operations. The NP-hardness of Kemeny aggregation thus stems from the second step. In this regard, one may argue that having $\phi(\DN)$ does not greatly alleviate the complexity in identifying an exact Kemeny consensus. However, a closer look at the problem leads us to asserting that $\phi(\DN)$ contains rich information about the location of the Kemeny consensuses. More specifically, we show in Theorem \ref{thmA:method} that the knowledge of $\phi(\DN)$ helps to provide an upper bound for the distance between a given permutation $\sigma\in\Sn$ and any Kemeny consensus $\sigstar$.
 
 
 In fact, Proposition \ref{propA:background-result} implies that Kemeny's rule is a ``Mean Proximity Rule'', a family of voting rules introduced in \cite{Zwicker2008Consistency} and further studied in \cite{Lahaie2014Neutrality}. Our approach actually applies more generally to other voting rules from this class but we focus our discussion on Kemeny's rule in this study for the sake of clarity.
@@ -113,7 +113,7 @@ In fact, Proposition \ref{propA:background-result} implies that Kemeny's rule is
 In this section, we now state our main results and demonstrate with an illustrative example how our proposed method addresses The Question. For a permutation $\sigma\in\Sn$, let us define the angle $\theta_{N}(\sigma)$ between $\phi(\sigma)$ and $\phi(\DN)$ by 
 \begin{equation}
 \label{eqA:cosinus}
-\cos(\theta_{N}(\sigma)) = \frac{\innerprod{\phi(\sigma),\phi(\DN)}}{{\norm{\phi(\sigma)}\norm{\phi(\DN)}}},
+\cos(\theta_{N}(\sigma)) = \frac{\innerprod{\phi(\sigma),\phi(\DN)}}{{\nm{\phi(\sigma)}\nm{\phi(\DN)}}},
 \end{equation}
 with $0 \leq \theta_{N}(\sigma)\leq \pi$ by convention.
 
@@ -121,7 +121,7 @@ with $0 \leq \theta_{N}(\sigma)\leq \pi$ by convention.
 \label{thmA:method}
 Let $\DN\in\Sn^N$ be a dataset and $\sigma\in\Sn$ a permutation. For any integer $0 \leq k \leq \binom{n}{2}-1$, one has the following implication:
 \[
-\cos(\theta_{N}(\sigma)) > \sqrt{1-\frac{k+1}{\binom{n}{2}}}\quad\Longrightarrow\quad \max_{\sigma^{\ast}\in\KN}d(\sigma,\sigma^{\ast}) \leq k.
+\cos(\theta_{N}(\sigma)) > \sqrt{1-\frac{k+1}{\binom{n}{2}}}\quad\Longrightarrow\quad \max_{\sigstar\in\KN}d(\sigma,\sigstar) \leq k.
 \]
 \end{thm}
 
@@ -142,7 +142,7 @@ where $\lfloor x\rfloor$ denotes the integer part of the real $x$. We formalize 
 Let $\DN\in\Sn^{N}$ be a dataset and let $\sigma\in\Sn$ be a permutation considered as an approximation of Kemeny's rule. In practice $\sigma$ is the consensus returned by a tractable voting rule.
 \begin{enumerate}
 	\item Compute $\kmin(\sigma;\DN)$ by \eqref{eqA:k-min}.
-	\item Then by Theorem \ref{thmA:method}, $d(\sigma,\sigma^{\ast}) \leq \kmin(\sigma;\DN)$ for any Kemeny consenus $\sigma^{\ast}\in\KN$.
+	\item Then by Theorem \ref{thmA:method}, $d(\sigma,\sigstar) \leq \kmin(\sigma;\DN)$ for any Kemeny consenus $\sigstar\in\KN$.
 \end{enumerate}
 \end{method*}
 
@@ -191,27 +191,35 @@ This section details the proof of Theorem \ref{thmA:method} based the geometric 
 
 Recall that the Kemeny consensuses of a dataset $\DN$ are the solutions of the problem \eqref{eqA:reformulation}:
 \[
-\min_{\sigma\in\Sn}C_{N}(\sigma) = \norm{\phi(\sigma)-\phi(\DN)}^{2} \,.
+\min_{\sigma\in\Sn}C_{N}(\sigma) = \nm{\phi(\sigma)-\phi(\DN)}^{2} \,.
 \]
-This is an optimization problem on the discrete set $\Sn$, naturally hard to analyze. In particular the shape of the cost function $C_{N}$ is not easy to understand. However, since all the vectors $\phi(\sigma)$ for $\sigma\in\Sn$ lie on the sphere $\Sphere = \{x\in\RR^{\binom{n}{2}} \vert \nm{x} = R\}$ with $R = \sqrt{n(n-1)/2}$, it is natural to consider the relaxed problem on $\Sphere$ that reads
+This is an optimization problem on the discrete set $\Sn$, naturally hard to analyze. In particular the shape of the cost function $C_{N}$ is not easy to understand. However, since all the vectors $\phi(\sigma)$ for $\sigma\in\Sn$ lie on the sphere
 \[
-\min_{x\in\Sphere}\CN(x):=\norm{x-\phi(\DN)}^{2} \,.
+\Sphere := \{x\in\RR^{\binom{n}{2}} \vert \nm{x} = R\} \,,
+\]
+where radius $R$ is the equal norm of the embedded point of any permutation and by Proposition \ref{propA:background-result},
+\[
+R = \sqrt{n(n-1)/2} \,.
+\]
+It is natural to consider the relaxed problem on $\Sphere$ that reads
+\[
+\min_{x\in\Sphere}\CN(x):=\nm{x-\phi(\DN)}^{2} \,.
 \]
 We call $\CN$ the extended cost function with domain $\Sphere$. The advantage of $\CN$ is that it has a very simple shape. We denote by $\theta_{N}(x)$ the angle between a vector $x\in\Sphere$ and $\phi(\DN)$ (with the slight abuse of notations that $\theta_{N}(\phi(\sigma)) \equiv \theta_{N}(\sigma)$). For any $x\in\Sphere$, one has
 \[
-\CN(x) = R^{2}+\norm{\phi(\DN)}^{2} - 2R\norm{\phi(\DN)}\cos(\theta_{N}(x)) \,.
+\CN(x) = R^{2}+\nm{\phi(\DN)}^{2} - 2R\nm{\phi(\DN)}\cos(\theta_{N}(x)) \,.
 \]
 This means that the extended cost $\CN(x)$ of a vector $x\in\Sphere$ only depends on the angle $\theta_{N}(x)$. The level sets of $\CN$ are thus of the form $\{x\in\Sphere \;\vert\; \theta_{N}(x) = \alpha \}$, for $0\leq \alpha \leq \pi$. If $n=3$, these level sets are circles in planes orthogonal to $\phi(\DN)$, each centered around the projection of the latter on the plane (Figure \ref{figA:level-sets}). This property implies the following result.
 
 \begin{lemma}
 \label{lemA:angles}
-A Kemeny consensus of a dataset $\DN$ is a permutation $\sigma^{\ast}$ such that:
+A Kemeny consensus of a dataset $\DN$ is a permutation $\sigstar$ such that:
 \[
-\theta_{N}(\sigma^{\ast}) \leq \theta_{N}(\sigma) \qquad\text{for all }\sigma\in\Sn \,.
+\theta_{N}(\sigstar) \leq \theta_{N}(\sigma) \qquad\text{for all }\sigma\in\Sn \,.
 \]
 \end{lemma}
 
-Lemma \ref{lemA:angles} means that the problem of Kemeny aggregation translates into finding permutations $\sigma^{\ast}$ that have minimal angle $\theta_{N}(\sigma^{\ast})$. This reformulation is crucial to our approach.
+Lemma \ref{lemA:angles} means that the problem of Kemeny aggregation translates into finding permutations $\sigstar$ that have minimal angle $\theta_{N}(\sigstar)$. This reformulation is crucial to our approach.
 
 \begin{figure}[!htbp]
 	\begin{center}
@@ -223,7 +231,7 @@ Lemma \ref{lemA:angles} means that the problem of Kemeny aggregation translates 
 
 \subsection{Interpretation of the Condition in Theorem \ref{thmA:method}}
 
-The second element of our approach is motivated by the following observation. Let $x\in\Sphere$ be a point on the sphere and let $r \geq 0$. If $r$ is large enough, then all the points $x'\in\Sphere$ on the sphere that have distance $\norm{x'-x}$ greater than $r$ will have a greater angle $\theta_{N}(x')$. Formally, we denote by $\mathcal{B}(x,r) = \{x'\in\RR^{\binom{n}{2}} \;\vert\; \norm{x'-x} < r\}$ the (open) ball of center $x$ and radius $r$. Then one has the following result.
+The second element of our approach is motivated by the following observation. Let $x\in\Sphere$ be a point on the sphere and let $r \geq 0$. If $r$ is large enough, then all the points $x'\in\Sphere$ on the sphere that have distance $\nm{x'-x}$ greater than $r$ will have a greater angle $\theta_{N}(x')$. Formally, we denote by $\mathcal{B}(x,r) = \{x'\in\RR^{\binom{n}{2}} \;\vert\; \nm{x'-x} < r\}$ the (open) ball of center $x$ and radius $r$. Then one has the following result.
 
 \begin{lemma}
 \label{lemA:condition}
@@ -249,7 +257,7 @@ $$
 $$
 Straightforwardly one can verify that $\Sphere \cap \partial \mathcal{B}(x,r)$ is in fact a $\br{{n \choose 2}-1}$-dimensional sphere lying in $\mathbb{L}$, centered at $c = \frac{2R^2-r^2}{2R^2} x$ with radius $\gamma = r \sqrt{1-\frac{r^2}{4R^2}} \,.$ Now we take effort to identify:
 $$
-x^* = \argmin_{x' \in \Sphere \cap \partial \mathcal{B}(x,r)} \theta_N(x') = \argmin_{x' \in \Sphere \cap \partial \mathcal{B}(x,r)} \mathcal{C}_N(x') \,.
+x^* = \argmin_{x' \in \Sphere \cap \partial \mathcal{B}(x,r)} \theta_N(x') = \argmin_{x' \in \Sphere \cap \partial \mathcal{B}(x,r)} \CN(x') \,.
 $$
 Note that $\phi(\DN)$ projected onto $\mathbb{L}$ is the vector $(\phi(\DN))_{\mathbb{L}} := \phi(\DN) - \frac{\innerprod{\phi(\DN),x}}{R^2}x.$ One can easily verify by Pythagoras rule that, for any set $\mathbb{K}\subseteq\mathbb{L}$,
 $$
@@ -312,7 +320,7 @@ which implies by Lemma \ref{lemA:ball-embedding} that
 \[
 \min_{\sigma'\in\Sn\setminus B(\sigma,k)}\theta_{N}(\sigma') > \theta_{N}(\sigma) \,.
 \]
-This means that for all $\sigma'\in\Sn$ with $d(\sigma,\sigma') > k$, $\theta_{N}(\sigma') > \theta_{N}(\sigma)$. Now, by Lemma \ref{lemA:angles}, any Kemeny consensus $\sigma^{\ast}$ necessarily satisfies $\theta_{N}(\sigma^{\ast}) \leq \theta_{N}(\sigma)$. One therefore has $d(\sigma,\sigstar) \leq k$, and the proof is concluded.
+This means that for all $\sigma'\in\Sn$ with $d(\sigma,\sigma') > k$, $\theta_{N}(\sigma') > \theta_{N}(\sigma)$. Now, by Lemma \ref{lemA:angles}, any Kemeny consensus $\sigstar$ necessarily satisfies $\theta_{N}(\sigstar) \leq \theta_{N}(\sigma)$. One therefore has $d(\sigma,\sigstar) \leq k$, and the proof is concluded.
 \end{proof}
 
 
@@ -342,15 +350,15 @@ Notably, Pick-a-Random is expected as a negative control experiment. To intuitiv
 
 \subsection{Tightness of the Bound}
 
-Recall that we denote by $n$ the number of alternatives, by $\DN\in\Sn^N$ any dataset, by $r$ any voting rule, and by $r(\DN)$ a consensus of $\DN$ given by $r$. For ease of notation convenience, we assume that $\KN$ contains a single consensus (otherwise we pick one randomly as we do in all experiments). The approximation efficiency of $r$ to Kemeny's rule is exactly measured by $d(r(\DN),\mathcal{K}_N)$. Applying our method with $r(\DN)$ would return an upper bound for $d(r(\DN),\mathcal{K}_N)$, that is: 
+Recall that we denote by $n$ the number of alternatives, by $\DN\in\Sn^N$ any dataset, by $r$ any voting rule, and by $r(\DN)$ a consensus of $\DN$ given by $r$. For ease of notation convenience, we assume that $\KN$ contains a single consensus (otherwise we pick one randomly as we do in all experiments). The approximation efficiency of $r$ to Kemeny's rule is exactly measured by $d(r(\DN),\KN)$. Applying our method with $r(\DN)$ would return an upper bound for $d(r(\DN),\KN)$, that is: 
 $$
-d(r(\DN),\mathcal{K}_N) \leq \kmin \,.
+d(r(\DN),\KN) \leq \kmin \,.
 $$
 Notably here we are not interested in studying the approximation efficiency of a particular voting rule, but we are rather interested in studying the approximation efficiency specific to our method indicated by the tightness of the bound, i.e.,
 $$
-s \br{r,\DN,n} := \kmin - d(r(\DN), \mathcal{K}_N) \,.
+s \br{r,\DN,n} := \kmin - d(r(\DN), \KN) \,.
 $$
-In other words, $s \br{r,\DN,n}$ quantifies how confident we are when we use $\kmin$ to ``approximate'' the approximation efficiency $d(r(\DN), \mathcal{K}_N)$ of $r$ to Kemeny's rule on a given dataset $\DN$. The smaller $s \br{r,\DN,n}$ is, the better our method works when it is combined with the voting rule $r$ to pinpoint the Kemeny consensus on a given dataset $\DN$. Note that our notation stresses on the fact that $s$ depends typically on $\br{r,\DN,n}$. 
+In other words, $s \br{r,\DN,n}$ quantifies how confident we are when we use $\kmin$ to ``approximate'' the approximation efficiency $d(r(\DN), \KN)$ of $r$ to Kemeny's rule on a given dataset $\DN$. The smaller $s \br{r,\DN,n}$ is, the better our method works when it is combined with the voting rule $r$ to pinpoint the Kemeny consensus on a given dataset $\DN$. Note that our notation stresses on the fact that $s$ depends typically on $\br{r,\DN,n}$. 
 
 
 We empirically investigate the efficiency of our proposed method by experimenting $s \br{r,\DN,n}$ with various voting rules $r$, on different datasets $\DN$, implicitly involving $n$ as well. For that purpose, in each experiment we test six prevalent voting rules plus one negative-control method as approximate candidates to Kemeny's rule: three scoring rules that are Borda Count, $k$-approval, Copeland; two algorithmic approaches that are QuickSort and Pick-a-Perm; one statistical approach based on Plackett-Luce ranking model; one baseline method serving a negative control that is Pick-a-Random.
@@ -398,11 +406,11 @@ We finally study how the $s \br{n;r,\DN}$ grows with the size of the alternative
 
 \subsection{Applicability of The Method} 
 
-We have so far focused on small $n$ $(n \leq 5)$ case, and verified that our method is efficient in using $\kmin$ to approximate $d(r(\DN),\mathcal{K}_N)$. We are now mostly interested in the usefulness of our method when $\kmin$ is directly combined with voting rules in pinpointing Kemeny consensus $\mathcal{K}_N$ particularly when $n$ is large. Now we employ our method by using $\kmin$ for each dataset to upper bound the approximation performance of $r(\DN)$ to Kemeny's rule. Moreover, suppose that we are still interested in finding the exact Kemeny consensus despite a good approximation $r(\DN)$. Once we have computed an approximated ranking $r(\DN)$ and $\kmin$ is identified via our method, the search scope for the exact Kemeny consensuses can be narrowed down to those permutations within a distance of $\kmin$ to $r(\DN)$. Notably \cite[Lemma 1]{Wang2013rate} proved that the total number of such permutations in $\Sn$ is upper bounded by ${n + \kmin -1 \choose \kmin}$ which can be smaller than $\abs{\Sn} = n!$ by orders.
+We have so far focused on small $n$ $(n \leq 5)$ case, and verified that our method is efficient in using $\kmin$ to approximate $d(r(\DN),\KN)$. We are now mostly interested in the usefulness of our method when $\kmin$ is directly combined with voting rules in pinpointing Kemeny consensus $\KN$ particularly when $n$ is large. Now we employ our method by using $\kmin$ for each dataset to upper bound the approximation performance of $r(\DN)$ to Kemeny's rule. Moreover, suppose that we are still interested in finding the exact Kemeny consensus despite a good approximation $r(\DN)$. Once we have computed an approximated ranking $r(\DN)$ and $\kmin$ is identified via our method, the search scope for the exact Kemeny consensuses can be narrowed down to those permutations within a distance of $\kmin$ to $r(\DN)$. Notably \cite[Lemma 1]{Wang2013rate} proved that the total number of such permutations in $\Sn$ is upper bounded by ${n + \kmin -1 \choose \kmin}$ which can be smaller than $\abs{\Sn} = n!$ by orders.
 
 
 
-We took the original sushi dataset consisting of $N=5000$ individual votes on $n=10$ sushi dishes and created $500$ bootstrapped pseudo-samples following the same empirical distribution. Note that $\kmin$ should also depend on $\br{r,\DN,n}$. Since our bound is established in general with any $\sigma\in\Sn$ and does take into consideration the approximation efficiency of specific voting rules to Kemeny's rule, the predicted $\kmin$ should significantly rely on the approximate voting rules utilized and should be biased more in favor to voting rules with good approximation to Kemeny's rule since $\kmin$ can never be inferior to $d(r(\DN),\mathcal{K}_N)$. As shown in Figure \ref{figA:applicability}, Pick-a-Random and Pick-a-Perm typically performs poorly, but this is largely due to the fact that the two voting rules are too naive to well approximate Kemeny's rule \textit{per se}. On the contrary, we observe that Borda, Copeland and QuickSort combined with our method best pinpoint Kemeny consensuses with $\kmin$ of a median distance $14$. This further means that in order to obtain all the exact Kemeny consensuses now, on average we need to search through at most ${10 + 14 -1 \choose 14} = 817,190$ permutations instead of $10! = 3,628,800$ permutations, where 77\% of permutations in $\mathbb{S}_{10}$ are removed from consideration.
+We took the original sushi dataset consisting of $N=5000$ individual votes on $n=10$ sushi dishes and created $500$ bootstrapped pseudo-samples following the same empirical distribution. Note that $\kmin$ should also depend on $\br{r,\DN,n}$. Since our bound is established in general with any $\sigma\in\Sn$ and does take into consideration the approximation efficiency of specific voting rules to Kemeny's rule, the predicted $\kmin$ should significantly rely on the approximate voting rules utilized and should be biased more in favor to voting rules with good approximation to Kemeny's rule since $\kmin$ can never be inferior to $d(r(\DN),\KN)$. As shown in Figure \ref{figA:applicability}, Pick-a-Random and Pick-a-Perm typically performs poorly, but this is largely due to the fact that the two voting rules are too naive to well approximate Kemeny's rule \textit{per se}. On the contrary, we observe that Borda, Copeland and QuickSort combined with our method best pinpoint Kemeny consensuses with $\kmin$ of a median distance $14$. This further means that in order to obtain all the exact Kemeny consensuses now, on average we need to search through at most ${10 + 14 -1 \choose 14} = 817,190$ permutations instead of $10! = 3,628,800$ permutations, where 77\% of permutations in $\mathbb{S}_{10}$ are removed from consideration.
 
 
 \begin{figure}[!htbp]
@@ -421,4 +429,4 @@ In this chapter, we have established a theoretical result that allows to control
 
 Our results rely on the geometric properties of the Kendall embedding. Though it has rarely been used in the literature, it provides a powerful framework to analyze Kemeny aggregation. We therefore believe that it could pave way to other profound results. In particular, we deem that an analysis of how the embeddings of the permutation spread on the sphere could lead to a finer condition in Theorem \ref{thmA:method}, which is left as future work.
 
-Another interesting direction would certainly be to extend our method to rank aggregation from partial orders, such as pairwise comparisons or top-$k$ rankings. Two main approaches can be followed. In the first one, a partial order would be identified with the set $S\subset\Sn$ of its linear extensions and its distance to a permutation $\sigma\in\Sn$ defined by the average $(1/\vert S\vert)\sum_{\sigma'\in S}d(\sigma,\sigma')$. The Kendall embedding would then naturally be extended to $S$ as $(1/\vert S\vert)\sum_{\sigma'\in S}\phi(\sigma')$, the barycenter of embeddings of its linear extensions. In the second approach, one would see a partial order as a collection of pairwise comparisons $\{i_{1}\succ j_{1}, \dots, i_{m}\succ j_{m}\}$ and define its distance to a permutation $\sigma\in\Sn$ by the average number of pairwise disagreements $(1/m)\sum_{r=1}^{m}\mathbb{I}\{\sigma(i_{r}) > \sigma(j_{r})\}$. The Kendall embedding would then naturally be extended to $\{i_{1}\succ j_{1}, \dots, i_{m}\succ j_{m}\}$ as the embedding of any linear extension $\sigma$ where the coordinate on $\{i,j\}$ is put equal to $0$ if $\{i,j\}$ does not appear in the collection. In both cases, our approach would apply with slight changes to exploit related geometric properties.
+Another interesting direction would certainly be to extend our method to rank aggregation from partial orders, such as pairwise comparisons or top-$k$ rankings. Two main approaches can be followed. In the first one, a partial order would be identified with the set $S\subset\Sn$ of its linear extensions and its distance to a permutation $\sigma\in\Sn$ defined by the average $(1/\vert S\vert)\sum_{\sigma'\in S}d(\sigma,\sigma')$. The Kendall embedding would then naturally be extended to $S$ as $(1/\vert S\vert)\sum_{\sigma'\in S}\phi(\sigma')$, the barycenter of embeddings of its linear extensions. In the second approach, one would see a partial order as a collection of pairwise comparisons $\{i_{1}\succ j_{1}, \dots, i_{m}\succ j_{m}\}$ and define its distance to a permutation $\sigma\in\Sn$ by the average number of pairwise disagreements $(1/m)\sum_{r=1}^{m}\hollowone\{\sigma(i_{r}) > \sigma(j_{r})\}$. The Kendall embedding would then naturally be extended to $\{i_{1}\succ j_{1}, \dots, i_{m}\succ j_{m}\}$ as the embedding of any linear extension $\sigma$ where the coordinate on $\{i,j\}$ is put equal to $0$ if $\{i,j\}$ does not appear in the collection. In both cases, our approach would apply with slight changes to exploit related geometric properties.

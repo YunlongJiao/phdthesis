@@ -15,8 +15,8 @@
   Mme Prénom Nom\\
   Établissement, Président
 
-  M Prénom Nom\\
-  Établissement, Rapporteur
+  M Risi KONDOR\\
+  University of Chicago, Rapporteur
 
   M Prénom Nom\\
   Établissement, Rapporteur
@@ -27,22 +27,16 @@
   M Prénom Nom\\
   Établissement, Membre du jury
 
-  M Prénom Nom\\
-  Établissement, Membre du jury
-
-  M Prénom Nom\\
-  Établissement, Membre du jury
-
-  M Prénom Nom\\
-  Établissement, Membre du jury
+  M Jean-Philippe VERT\\
+  MINES ParisTech, Membre du jury
 }
 
 \frabstract{
-  Cuius acerbitati uxor grave accesserat incentivum, germanitate Augusti turgida supra modum.
+  Voilà le résumé!
 }
 
 \enabstract{
-  Verum ad istam omnem orationem brevis est defensio.
+  Here goes the abstract!
 }
 
 \frkeyword{Bio-informatique.}
@@ -52,8 +46,9 @@
 
 \maketitle
 
-% abstract in english and french
 \pagenumbering{roman}
+
+% abstract in english and french
 \input{abstract-en}
 \cleardoublepage
 \input{abstract-fr}
@@ -66,26 +61,85 @@
 % contents
 \dominitoc
 \tableofcontents
+\cleardoublepage
+
+% list of figures
 \listoffigures
+\cleardoublepage
+
+% list of tables
 \listoftables
 \cleardoublepage
 
-% nomenclature
-% \makenomenclature
-% \nomenclature{DTI}{Diffusion Tensor Imaging} DTI
-% \printnomenclature
-% \cleardoublepage
+% list of symbols
+\renewcommand{\nomgroup}[1]{%
+	\item[\bfseries
+	\ifstrequal{#1}{A}{Learning Setup}{%
+	\ifstrequal{#1}{B}{Permutation and Ranking}{%
+	\ifstrequal{#1}{C}{Kernel Learning}{%
+	\ifstrequal{#1}{D}{Learning on Graphs}{%
+	\ifstrequal{#1}{E}{Kemeny Aggregation}{%
+	\ifstrequal{#1}{F}{Other Notations}{%
+	}}}}}}%
+]}
+\nomenclature[A, 01]{$\XX$}{Input Space}
+\nomenclature[A, 02]{$\xb$}{Input Vector or Uncertain Ranking}
+\nomenclature[A, 03]{$\YY$}{Output Space}
+\nomenclature[A, 04]{$y$}{Output Response of Interest}
+\nomenclature[A, 05]{$\mathcal{D}$}{Training Set}
+\nomenclature[A, 06]{$m,N$}{Number of Observations}
+\nomenclature[A, 07]{$n$}{Dimensionality}
+
+\nomenclature[B, 01]{$\n$}{Item Set or $\{1, 2, \dots, n\}$}
+\nomenclature[B, 02]{$\Sn$}{Symmetric Group on $\n$}
+\nomenclature[B, 03]{$n_c$}{Number of Concordant Pairs}
+\nomenclature[B, 04]{$n_d,d$}{Number of Discordant Pairs or Kendall Tau Distance}
+\nomenclature[B, 05]{$\sigma,\pi,\tau$}{Permutation or Total Ranking}
+\nomenclature[B, 06]{$R$}{Partial Ranking}
+\nomenclature[B, 07]{$\mathbf{R}$}{Multivariate Ranking}
+
+\nomenclature[C, 01]{$\mathcal{F}$}{Feature Space}
+\nomenclature[C, 02]{$K$}{Positive Definite Kernel}
+\nomenclature[C, 03]{$K_\tau$}{Kendall Kernel}
+\nomenclature[C, 04]{$K_M$}{Mallows Kernel}
+\nomenclature[C, 05]{$\Phi,\phi$}{Kendall Embedding}
+
+\nomenclature[D, 01]{$\GG$}{Graph}
+\nomenclature[D, 02]{$\VV$}{Vertex Set}
+\nomenclature[D, 03]{$\EEc$}{Edge Set}
+\nomenclature[D, 04]{$L$}{Graph Laplacian}
+\nomenclature[D, 05]{$\Psi$}{Graph Wavelets}
+\nomenclature[D, 06]{$\Omega$}{Graph Dual Wavelets}
+\nomenclature[D, 07]{$P$}{Regularization Penalty Function}
+\nomenclature[D, 08]{$\beta$}{Linear Prediction Coefficients}
+
+\nomenclature[E, 01]{$\sigstar$}{Kemeny consensus}
+\nomenclature[E, 02]{$\mathcal{K}$}{Set of Kemeny consensuses}
+\nomenclature[E, 03]{$\theta$}{Euclidean Angle}
+\nomenclature[E, 04]{$r$}{Approximate Voting Rule}
+
+\nomenclature[F, 01]{$\RR$}{Set of Real Numbers}
+\nomenclature[F, 02]{$\mathbb{P}$}{Probability}
+\nomenclature[F, 03]{$\EE$}{Expectation}
+
+\printnomenclature
+\cleardoublepage
 
 % thesis
 \mainmatter
+
 \input{ch-intro}
 \cleardoublepage
+
 \input{ch-kendall}
 \cleardoublepage
+
 \input{ch-wavelet}
 \cleardoublepage
+
 \input{ch-hipathia}
 \cleardoublepage
+
 \input{ch-discussion}
 \cleardoublepage
 
@@ -99,8 +153,6 @@
 \bibliography{mybib}
 
 % index
-% \usepackage{imakeidx}
-% \makeindex
 % \printindex
 % \cleardoublepage
 

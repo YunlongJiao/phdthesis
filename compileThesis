@@ -1,10 +1,10 @@
 rm .DS_Store
 rm -f *.{blg,bbl,toc,out,log,aux,pdf,dvi}
-rm -f *.{brf,bak,maf,mtc*,nlo,lof,lot}
+rm -f *.{brf,bak,maf,mtc*,nlo,nls,lof,lot,idx,ilg}
 
 pdflatex thesis
 bibtex thesis
-# makeindex thesis.nlo -s nomencl.ist -o thesis.nls
+makeindex thesis.nlo -s nomencl.ist -o thesis.nls
 pdflatex thesis
 pdflatex thesis
 pdflatex thesis

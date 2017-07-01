@@ -8,15 +8,21 @@
 \usepackage[left=1.5in,right=1.3in,top=1.1in,bottom=1.1in,includefoot,includehead,headheight=13.6pt]{geometry}
 \renewcommand{\baselinestretch}{1.05}
 
-% Glossary / list of abbreviations
+% Nomenclature / List of symbols (double column)
 
-\usepackage[intoc]{nomencl}
-\renewcommand{\nomname}{List of Abbreviations}
+\usepackage{nomencl}
+\usepackage{etoolbox}
+\renewcommand{\nomname}{List of Symbols}
+\newcommand{\nomunit}[1]{%
+\renewcommand{\nomentryend}{\hspace*{\fill}#1}}
+\renewcommand{\nompreamble}{\begin{multicols}{2}}
+\renewcommand{\nompostamble}{\end{multicols}}
+\makenomenclature
 
-% \makenomenclature
+% Glossary / Index
 
-% \usepackage{imakeidx}
-% \makeindex
+\usepackage{imakeidx}
+\makeindex
 
 % My pdf code
 
@@ -226,7 +232,6 @@ urlcolor=linkcol %couleur des liens pour les url
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\Sn}{\mathbb{S}_n}
-\newcommand{\fixme}[1]{{\bf [FIXME: #1]}\marginpar{FIX}}
 \newcommand{\RR}{\mathbb{R}}
 \newcommand {\br}[1]{\left(#1\right)}
 \newcommand {\sqb}[1]{\left[#1\right]}
@@ -240,6 +245,7 @@ urlcolor=linkcol %couleur des liens pour les url
 \newcommand{\wh}{\widehat{\wb}}
 \newcommand{\Rh}{\widehat{R}}
 \newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\hollowone}{\mathds{1}}
 \newcommand{\n}{\llbracket n \rrbracket}
 
 \theoremstyle{plain}
@@ -251,25 +257,13 @@ urlcolor=linkcol %couleur des liens pour les url
 %           Ch kemeny                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\DeclareMathOperator*{\Ima}{Im}
-\newcommand{\FF}{\mathcal{F}}
-\newcommand{\dFF}{d_{\FF}}
-\newcommand{\PP}{\mathbb{P}}
 \newcommand{\Sphere}{\mathbb{S}}
-\newcommand{\hollowone}{\mathds{1}}
 \newcommand{\innerprod}[1]{\langle #1 \rangle}
-\newcommand{\norm}[1]{\Vert #1 \Vert}
-\newcommand{\sigstar}{\sigma^{*}}
-\newcommand{\sigstarstar}{\sigma^{**}}
-\newcommand{\sighat}{\hat{\sigma}}
-\newcommand{\Eff}{\operatorname{Eff}}
-\newcommand{\Span}{\operatorname{span}}
 \newcommand{\DN}{\mathcal{D}_{N}}
 \newcommand{\KN}{\mathcal{K}_{N}}
 \newcommand{\CN}{\mathcal{C}_{N}}
-\newcommand{\II}{\mathfrak{I}}	% injection opposed to \Pi
-\newcommand{\Ctil}{\widetilde{C}}
 \newcommand{\kmin}{k_{\min}}
+\newcommand{\sigstar}{\sigma^{\ast}}
 
 \theoremstyle{plain}
 \newtheorem{proposition}{Proposition}[chapter]
@@ -289,10 +283,7 @@ urlcolor=linkcol %couleur des liens pour les url
 \newcommand{\GG}{\mathcal{G}}
 \newcommand{\VV}{\mathcal{V}}
 \newcommand{\EEc}{\mathcal{E}}
-%\newcommand{\RR}{\mathbb{R}}
-%\newcommand{\xb}{\mathbf{x}}
 \newcommand{\fb}{\mathbf{f}}
-%\newcommand{\wb}{\mathbf{w}}
 \newcommand{\wsynspec}{w-synthesis (spec)}
 \newcommand{\wanaspec}{w-analysis (spec)}
 \newcommand{\wsynspecnorm}{w-synthesis (spec, norm)}
