@@ -217,14 +217,23 @@ FUNCTION {format.names}
     { namesleft #0 > }
     { s nameptr "{ff~}{vv~}{ll}{~jj}" format.name$ 't :=
       nameptr #1 >
-	{ namesleft #1 >
+	{ 
+	nameptr #5
+	#1 + =
+	numnames #8
+	> and
+		{ "others" 't :=
+			#1 'namesleft := }
+		'skip$
+	if$
+	namesleft #1 >
 	    { ", " * t * }
 	    { numnames #2 >
 		{ "" * }
 		'skip$
 	      if$
 	      t "others" =
-		{ " et~al." emphasize * }
+		{ "~et~al." emphasize * }
 		{ " and " * t * }
 	      if$
 	    }
