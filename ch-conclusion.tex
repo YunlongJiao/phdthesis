@@ -1,46 +1,35 @@
 \chapter{Conclusion and Perspectives}
 \label{chap:conclusion}
 
-Thesis contributions:
+To summarize, the work presented in this thesis has been driven typically by the development and investigation of machine learning methods to address the computational challenges confronted in genomic data analysis: ranked-based approaches for improved breast cancer prognosis and network-guided approaches for enhanced biomarker discovery related to cancer survival. In fact, it is noteworthy that the theoretical and methodological contribution lies fundamentally in several branches of machine learning concerning applications across (but not limited to) cancer biology and social choice theory, specifically:
 
-- Theory
+\paragraph{Learning with Rank Data.}
 
-- Methodology
+We have proposed two computationally attractive positive definite kernels between permutations, namely the Kendall and Mallows kernels, and further extended these kernels to rank data of complex structure that prevail in real-world applications including partial rankings, multivariate rankings and uncertain rankings (Chapter \ref{chap:kendall}). The significance of this work is of at least two folds: 
+\begin{bulletList}
+\item[1.] Thanks to these kernels, many kernel machines serve as off-the-shelf alternatives available to solve various problems pertaining to learning from rankings, or learning to rank, and can yield state-of-the-art performance that were demonstrated with an unsupervised cluster analysis of heterogeneous voting data and supervised biomedical classification tasks (Chapter \ref{chap:kendall}).
+\item[2.] The Kendall embedding of the symmetric group brings forth novel incentives of learning on the symmetric group from unprecedented aspects. For instance, the Kendall embedding has motivated a geometric interpretation of the combinatorial problem of Kemeny aggregation based on which a tractable approximation bound was derived (Appendix \ref{chap:kemeny}) and can offer the opportunity of studying permutation problems such as seriation with yet another embedding following \cite{Fogel2013Convex, Lim2014Beyond}.
+\end{bulletList}
 
-- Software
+\paragraph{Learning on Graphs.}
+
+Given a network, we focused on network-guided feature selection coherent with the presumed network structure in two cases:
+\begin{bulletList}
+\item[1.] In case that the network is represented by an undirected graph and it encodes codependent relationships between features, assuming that neighboring features are encouraged to be selected simultaneously, we formalized the use of network-based wavelet smoothing as a regularization method for inducing structured sparsity with network-adaptive modularity in linear predictive models (Chapter \ref{chap:wavelet}).
+\item[2.] In case that the network is represented by a directed graph and each circuit in it encodes the transduction of signal between features, assuming that circuit-level groups of features, if selected, are always selected simultaneously, we investigated the idea of first transforming the original representation of feature data into a circuit-level representation based on mathematical modeling of the network structure and then applying any standard feature selection algorithm which now becomes viable straightforwardly at the level of circuits (Chapter \ref{chap:hipathia}).
+\end{bulletList}
+Proof-of-methodology survival analysis of breast cancer was performed guided by a protein-protein interaction network (undirected) or a signaling pathway network (directed), and in both cases empirical superiority was demonstrated where biomarker discovery is enhanced by performing feature selection guided by a biological network as prior knowledge.
+
+
+
 
 Research perspectives:
 
-- machine learning
-
-* theoretical guarantees on rankings
-* constitutes an elegant confirmation of the concept of using ranking-related methods for bioinformatics but more ideas to motivate by social choice theory etc
-* other cross-subject directions of future research such as pure math (geometric group theory, algebraic group theory, etc) and other biomedical application
-
-- bioinformatics
-
-* far from clinical... In fact, a voluminous literature of $>$150,000 papers documenting thousands of claimed biomarkers has been produced in medicine, of which fewer than 100 have been validated for routine clinical practice \cite{Poste2011Bring}. The very few number of gene expression-based breast cancer prognostic predictors successfully implemented in clinics compared to the number of research findings in this area raises controversies on the practical validity of molecular signatures. issues include: a large number of identified signatures failed to add significantly incremental values to assist prognosis assessment and therapeutic decision making upon the use of conventional clinical covariates; lack of proper validation and clinical utility; cost-effectiveness; etc \cite{Michiels2016Statistical}.
+* far from clinical... wet-lab experimental validation and meta-analysis with multiple datasets or cross-study validation
+In fact, a voluminous literature of $>$150,000 papers documenting thousands of claimed biomarkers has been produced in medicine, of which fewer than 100 have been validated for routine clinical practice \cite{Poste2011Bring}. The very few number of gene expression-based breast cancer prognostic predictors successfully implemented in clinics compared to the number of research findings in this area raises controversies on the practical validity of molecular signatures. issues include: a large number of identified signatures failed to add significantly incremental values to assist prognosis assessment and therapeutic decision making upon the use of conventional clinical covariates; lack of proper validation and clinical utility; cost-effectiveness; etc \cite{Michiels2016Statistical}.
 * opportunities come with caveats... overfitting or overly exaggeration of trivial findings... random genes associated to prognosis \cite{Venet2011Most}
 * subtyping of breast cancers and prognosis/treatment for each subtype
 * integrative data analysis, multi-view multi-omics analysis, incorporating with clinical variables (quote Sage-DREAM BCC)
-* meta-analysis with multiple datasets or cross-study validation
-* pan-cancer - attractor metagenes
-* wet-lab experimental validation
 * section 6.3.6 of JP book pitfalls in biomarker discovery
 
 Our knowledge towards cancer biology is still far from complete but we are given the extraordinary opportunity in the era of big data to study cancer.
-
-% ch2-3 embedding for permutations ?!
-% other embedding - just (1,\dots,n) or permutation matrix - high-order embedding
-% what is the convex hull of Kendall embedding for
-%Check Fogel (NIPS, 2013) and Stephen Wright (NIPS, 2014) for two embeddings of symmetric group $\mathbb{S}_n$ into Euclidean spaces, former into dim $n^2$ while latter into dim $n-1$ (or a hyperplane in dim $n$), thus facilitating the convex relaxation to seriation problems by solving an optimization problem constrained in a convex hull, former in Birkhoff polytope
-%$$\mathcal{B}:=\{\mathbf{X}\in \mathbb{R}^{n\times n}:\mathbf{X}\succeq 0,\mathbf{X}\mathbf{1}=\mathbf{1},\mathbf{X}^T \mathbf{1}=\mathbf{1}\}$$
-%while latter in permutahedron
-%$$\mathcal{PH}:=\{x\in \mathbb{R}^n:\sum_{i=1}^n x_i=\frac{n(n+1)}{2},\sum_{i\in S}x_i \leq \sum_{i=1}^{|S|}(n+1-i)\mbox{ for all }S\subset [n]\}.$$
-%Kendall kernel comes with another embedding into Euclidean space of dim $O(n^2)$. Several questions are
-%\begin{enumerate}
-%\item What is the convex hull induced by our embedding? What is the projection of any vector onto the convex hull (to facilitate optimization algorithm using projections)?
-%\item On the other way round, what are the explicit embedding, kernel function and distance induced by those two well-known embeddings?
-%\item Is it a better embedding compared to those two embeddings to introduce a convex hull for solving seriation problem, when we convert it into an optimization problem by following the same idea as Fogel (NIPS, 2013) after the embedding?
-%\end{enumerate}
-

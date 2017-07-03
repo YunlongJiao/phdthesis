@@ -36,11 +36,11 @@ Let $\n = \cbr{1,\dots,n}$ be a set of alternatives to be ranked. In this study,
 where $d$ is the Kendall's tau distance defined for $\sigma,\sigma' \in \Sn$ as the number of their pairwise disagreements: $d(\sigma,\sigma') = \sum_{1\leq i < j \leq n}\hollowone\{(\sigma(j)-\sigma(i))(\sigma'(j)-\sigma'(i))<0\}$. The objective function in \eqref{eqA:Kemeny-aggregation} denotes the cost, and a permutation $\sigstar$ solving \eqref{eqA:Kemeny-aggregation} is called a Kemeny consensus. We denote by $\KN$ the set of Kemeny consensuses on the dataset $\DN$.
 
 Exact Kemeny aggregation is NP-hard: it cannot be solved efficiently with a general procedure. This does not mean however that nothing can be done. For example, it is clear that on a dataset where all permutations are equal to a $\sigma_{0}\in\Sn$, the Kemeny consensus is trivially given by $\sigma_{0}$. Many contributions from the literature have thus focused on particular approaches to apprehending some part of the complexity of Kemeny aggregation. The examples given in the introduction generally fall in three categories:
-\begin{itemize}
+\begin{bulletList}
 	\item \textbf{General guarantees for approximate procedures.} These results provide a bound on the cost of a specific voting rule, valid for any dataset \cite{Diaconis1977Spearmans, Coppersmith2006Ordering, VanZuylen2007Deterministic, Ailon2008Aggregating, Freund2015Rank}.
 	\item \textbf{Bounds on the approximation cost computed from the dataset.} These results provide a bound, either on the cost of a consensus or on the cost of the outcome of a specific voting rule, that depends on a quantity computed from the dataset \cite{Davenport2004computational, Conitzer2006Improved, Sibony2014Borda}.
 	\item \textbf{Conditions for the exact Kemeny aggregation to become tractable.} These results ensure the tractability of exact computation of Kemeny aggregation if the dataset satisfies some condition or if some quantity is known from the dataset \cite{Betzler2008Fixed, Betzler2009How, Cornaz2013Kemeny, Brandt2015Bypassing}.
-\end{itemize}
+\end{bulletList}
 In this chapter, we introduce a novel approach, which falls into the second category above, to apprehend the complexity of Kemeny aggregation by considering the following question (henceforth referred to as The Question):
 
 \begin{question*}
@@ -139,11 +139,7 @@ The proof of Theorem \ref{thmA:method} along with its geometric interpretation a
 where $\lfloor x\rfloor$ denotes the integer part of the real $x$. We formalize this method (henceforth referred to as The Method) in the following description.
 
 \begin{method*}
-Let $\DN\in\Sn^{N}$ be a dataset and let $\sigma\in\Sn$ be a permutation considered as an approximation of Kemeny's rule. In practice $\sigma$ is the consensus returned by a tractable voting rule.
-\begin{enumerate}
-	\item Compute $\kmin(\sigma;\DN)$ by \eqref{eqA:k-min}.
-	\item Then by Theorem \ref{thmA:method}, $d(\sigma,\sigstar) \leq \kmin(\sigma;\DN)$ for any Kemeny consenus $\sigstar\in\KN$.
-\end{enumerate}
+Let $\DN\in\Sn^{N}$ be a dataset and let $\sigma\in\Sn$ be a permutation considered as an approximation of Kemeny's rule. In practice $\sigma$ is the consensus returned by a tractable voting rule. Then by Theorem \ref{thmA:method}, we have $d(\sigma,\sigstar) \leq \kmin(\sigma;\DN)$ for any Kemeny consenus $\sigstar\in\KN$, where $\kmin(\sigma;\DN)$ is obtained by \eqref{eqA:k-min}.
 \end{method*}
 
 The following proposition ensures that The Method has tractable complexity.
@@ -334,14 +330,14 @@ This means that for all $\sigma'\in\Sn$ with $d(\sigma,\sigma') > k$, $\theta_{N
 
 In this section we study the tightness of the bound in Theorem \ref{thmA:method} and the applicability of The Method through numerical experiments. We first elaborate in detail the voting rules used in the chapter to approximate Kemeny's rule. Note that if multiple consensuses are returned from a rule on a given dataset, we always randomly pick one from these consensuses.
 
-\begin{itemize}
+\begin{bulletList}
 \item {\bf Positional scoring rules}. Given a scoring vector $w = (w_1,...,w_n) \in \RR^n$ of weights respectively for each alternative in $\n$, the $i$th alternative in a vote scores $w_i$. A total ranking is given by sorting the averaged scores over all votes, for example, the winner is the alternative with highest total score over all the votes. The \textbf{plurality} rule has the weight vector $(1,0,...,0)$, the \textbf{$k$-approval} rule has $(1,...,1,0...,0)$ containing 1s in the first $k$ positions, and the \textbf{Borda} rule \cite{Borda1781Memoire} has $(n, n-1, . . . , 1)$.
 \item {\bf Copeland} \cite{Copeland1951reasonable}. A total ranking is given by sorting the Copeland scores averaged over all votes, for which the score of alternative $i$ is the number of pairwise beats, or $\#\{j \neq i: i \mbox{ beats } j\}$. For example, the Copeland winner is the alternative that wins the most pairwise elections.
 \item {\bf QuickSort} \cite{Ali2012Experiments}. QuickSort recursively divides an unsorted list into two lists -- one list comprising alternatives that occur before a chosen index (called the \textit{pivot}), and another comprising alternatives that occur after, and then sorts each of the two lists. The pivot is always chosen as the first alternative.
 \item {\bf Pick-a-Perm} \cite{Ali2012Experiments}. A total ranking is picked randomly from $\Sn$ according to the empirical distribution of the dataset $\DN$.
 \item {\bf Plackett-Luce}. A Plackett-Luce ranking model defined for any $\sigma\in\Sn$ by $p_w(\sigma) = \prod_{i=1}^n w_{\sigma(i)}/\br{\sum_{j=i}^n w_{\sigma(j)}}$ parameterized by $w = (w_1,\dots,w_n)\in\RR^n$, fitted to $\DN$ by means of the MM algorithm \cite{Hunter2004MM}. A total ranking is then given by sorting $w$.
 \item {\bf Pick-a-Random}. A total ranking is picked randomly from $\Sn$ according to uniform law (independent from $\DN$).
-\end{itemize}
+\end{bulletList}
 
 
 Notably, Pick-a-Random is expected as a negative control experiment. To intuitively understand the rationale behind Pick-a-Random, let us consider the case conditioned on that the output of a voting rule has (at least) certain Kendall's tau distance to the Kemeny consensus. Compared to what Pick-a-Random would blindly pick any permutation without accessing to the dataset $\DN$ at all, a sensible voting rule should have a better chance to output one permutation with a smaller angle $\theta$ with $\phi(\DN)$ among all the permutations that share the same distance to Kemeny consensus. As we have reasoned in the geometric proof of The Method that the smaller the angle $\theta$ is, the more applicable our method will be, Pick-a-Random is expected to perform worse than other voting rules in terms of applicability of our method.

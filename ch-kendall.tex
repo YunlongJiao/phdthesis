@@ -30,7 +30,7 @@ In this context, it is surprising that relatively little attention has been paid
 
 Here we study new computationally attractive positive definite kernels for permutations and rankings. Our main contribution is to show that two widely-used and computationally efficient measures of similarity between permutations, the Kendall tau correlation coefficient and the Mallows kernel, are positive definite. Although these measures compare two permutations of $n$ items in terms of $n\choose 2$ pairwise comparisons, they can be computed in $O(n \log n)$, which allows us to use kernel methods for problems involving rank data over a large number of items. We show how these kernels can be extended to partial rankings, multivariate rankings, and uncertain rankings which are particularly relevant when the rankings are obtained by sorting a real-valued vector where ties or almost-ties occur. We illustrate the benefit of kernel learning with the new kernels on two applications, one concerning the unsupervised clustering of rank data with kernel $k$-means, one focusing on the supervised classification of genomic data with Support Vector Machines (SVMs), reaching in both cases state-of-the-art performances. 
 
-The chapter is organized as follows. In Section~\ref{sec2:kernel}, we prove our main theorem showing that the Kendall and Mallows kernels are positive definite. We extend them to partial, multivariate and uncertain rankings respectively in Section~\ref{sec2:partial}, \ref{sec2:multivariate} and~\ref{sec2:uncertain}. We highlight the relation to the diffusion kernel of \cite{Kondor2010Ranking} in Section~\ref{sec2:group}. Finally we illustrate the relevance of kernel methods for unsupervised (Section~\ref{sec2:clustering}) and supervised (Section~\ref{sec2:classification}) tasks. Data and \texttt{R} codes for generating all the plots in this chapter and reproducing more experiments are available via \url{https://github.com/YunlongJiao/kendallkernel_demo}. I have also developed \texttt{kernrank}, an \texttt{R} package implementing kernel functions and kernel methods for analyzing rank data, publicly available at \href{https://github.com/YunlongJiao/kernrank}{https://github.com/YunlongJiao/kernrank}.
+The chapter is organized as follows. In Section \ref{sec2:kernel}, we prove our main theorem showing that the Kendall and Mallows kernels are positive definite. We extend them to partial, multivariate and uncertain rankings respectively in Section \ref{sec2:partial}, \ref{sec2:multivariate} and \ref{sec2:uncertain}. We highlight the relation to the diffusion kernel of \cite{Kondor2010Ranking} in Section \ref{sec2:group}. Finally we illustrate the relevance of kernel methods for unsupervised (Section \ref{sec2:clustering}) and supervised (Section \ref{sec2:classification}) tasks. Data and \texttt{R} codes for generating all the plots in this chapter and reproducing more experiments are available via \url{https://github.com/YunlongJiao/kendallkernel_demo}. I have also developed \texttt{kernrank}, an \texttt{R} package implementing kernel functions and kernel methods for analyzing rank data, publicly available at \url{https://github.com/YunlongJiao/kernrank}.
 
 
 
@@ -61,7 +61,7 @@ Given two permutations $\sigma,\sigma'\in\Sn$, the number of concordant and disc
 \end{split}
 \end{equation*}
 As their names suggest, $n_c(\sigma,\sigma')$ and $n_d(\sigma,\sigma')$ count how many pairs of items are respectively in the same or opposite order in the two rankings $\sigma$ and $\sigma'$. $n_d$ is frequently used as a distance between permutations, often under the name \emph{Kendall tau distance}, and underlies two popular similarity measures between permutations:
-\begin{itemize}
+\begin{bulletList}
 \item The \emph{Mallows kernel} defined for any $\lambda\geq 0$ by
 \begin{equation}\label{eq2:mallows}
 K_{M}^\lambda(\sigma,\sigma') =  e^{-\lambda n_d(\sigma,\sigma')} \,,
@@ -70,7 +70,7 @@ K_{M}^\lambda(\sigma,\sigma') =  e^{-\lambda n_d(\sigma,\sigma')} \,,
 \begin{equation}\label{eq2:kendall}
 K_\tau(\sigma,\sigma') = \frac{n_c(\sigma,\sigma') - n_d(\sigma,\sigma')}{ {n \choose 2}}\,.
 \end{equation}
-\end{itemize}
+\end{bulletList}
 The Mallows kernel plays a role on the symmetric group similar to the Gaussian kernel on Euclidean space, for example for statistical modeling of permutations \cite{Mallows1957Non, Critchlow1985Metric, Fligner1986Distance, Meila2007Consensus} or nonparametric smoothing \cite{Lebanon2008Non}, and the Kendall kernel \cite{Kendall1938new, Kendall1948Rank} is probably the most widely-used measure of rank correlation coefficient. In spite of their pervasiveness, to the best of our knowledge the following property has been overlooked:
 
 \begin{thm}\label{thm2:main}
@@ -113,7 +113,7 @@ Although the Kendall and Mallows kernels correspond respectively to a linear and
 In this section we show how the Kendall and Mallows kernels can efficiently be adapted to partial rankings, a situation frequently encountered in practice. For example, in a movie recommender system, each user only grades a few movies that he has watched based on personal interest. As another example, in a chess tournament, each game results in a relative ordering between two contestants, and one would typically like to find a single ranking of all players that globally best represents the large collection of binary outcomes.
 
 
-As opposed to a total ranking (\ref{eq2:totalranking}), \emph{partial rankings} arise in diverse form which can be generally described by
+As opposed to a total ranking \eqref{eq2:totalranking}, \emph{partial rankings} arise in diverse form which can be generally described by
 $$X_1 \succ X_2 \succ \cdots \succ X_k,$$ 
 where $X_1,\dots,X_k$ are $k$ disjoint subsets of $n$ items $\{x_1,\dots,x_n\}.$ For example, $\cbr{x_2,x_4} \succ x_6 \succ \cbr{x_3,x_8}$ in a social survey could represent the fact that items $2$ and $4$ are ranked higher by an interviewee than item 6, which itself is ranked higher than items 3 and 8. Note that it is uninformative of the relative order between items 2 and 4, nor of how item 1 is rated. For ease of analysis, a partial ranking is often associated with a subset $R \subset \Sn$ of permutations which are compatible with all partial orders described by the partial ranking. In this study, two particularly interesting types are:
 
@@ -140,11 +140,11 @@ To extend any kernel $K$ over $\Sn$ to a kernel over the set of partial rankings
 	\label{eq2:partialranking}
 	K(R,R')=\frac{1}{|R||R'|} \sum_{\sigma\in R} \sum_{\sigma'\in R'}K(\sigma, \sigma').
 \end{equation}
-As a convolution kernel, it is positive definite as long as $K$ is positive definite \cite{Haussler1999Convolution}. However, a naive implementation to compute (\ref{eq2:partialranking}) typically requires $O((n-k)!(n-k')!)$ operations when the number of observed items in partial rankings $R,R'$ is respectively $k,k'<n$, which can quickly become prohibitive. Fortunately Theorem~\ref{thm2:partial} guarantees that we can circumvent the computational burden of naively implementing (\ref{eq2:partialranking}) with the Kendall kernel $K_{\tau}$ on at least the two particular cases of partial rankings \eqref{eq2:interleavingpartial} or \eqref{eq2:topkpartial}.
+As a convolution kernel, it is positive definite as long as $K$ is positive definite \cite{Haussler1999Convolution}. However, a naive implementation to compute \eqref{eq2:partialranking} typically requires $O((n-k)!(n-k')!)$ operations when the number of observed items in partial rankings $R,R'$ is respectively $k,k'<n$, which can quickly become prohibitive. Fortunately Theorem \ref{thm2:partial} guarantees that we can circumvent the computational burden of naively implementing \eqref{eq2:partialranking} with the Kendall kernel $K_{\tau}$ on at least the two particular cases of partial rankings \eqref{eq2:interleavingpartial} or \eqref{eq2:topkpartial}.
 
 
 \begin{thm}\label{thm2:partial}
-The Kendall kernel $K_{\tau}$ between two interleaving partial rankings of respectively $k$ and $m$ observed items, or between a top-$k$ partial ranking and a top-$m$ partial ranking, of form (\ref{eq2:partialranking}) can be computed in $O(k \log k + m \log m)$ operations.
+The Kendall kernel $K_{\tau}$ between two interleaving partial rankings of respectively $k$ and $m$ observed items, or between a top-$k$ partial ranking and a top-$m$ partial ranking, of form \eqref{eq2:partialranking} can be computed in $O(k \log k + m \log m)$ operations.
 \end{thm}
 
 
@@ -160,25 +160,25 @@ are subsets of $\Sn$ compatible with the two partial rankings respectively. In p
 
 Key observation to our proof is the ``symmetry'' of $A_I$ (or $A_J$) in the sense that (i) for every item pair $\{i,j\}$ such that $i,j \in I$, all permutations in $A_I$ are identical on the relative order of items $i$ and $j$; (ii) for every item pair $\{i,j\}$ such that $i,j \in I^\complement$, there exists a unique permutation $\rho = (i,j)\circ\pi\in A_I$ for each $\pi\in A_I$ by swapping the ranks of items $i,j$ in $\pi$ such that $(\pi(i) - \pi(j))(\rho(i) - \rho(j))<0$ and $\rho$ is identical with $\pi$ on the absolute ranks of all the other items.
 
-By the definition of convolution kernel and Theorem~\ref{thm2:main}, we have
+By the definition of convolution kernel and Theorem \ref{thm2:main}, we have
 \begin{multline}\label{eq2:kdtpartial}
 	K_\tau (A_I, A_J) = \frac{1}{|A_I| |A_J|} \sum_{\substack{\pi \in A_I \\ \pi' \in A_J}}
 	\frac{1}{{n\choose 2}} \sum_{1\leq i < j \leq n} \sgn(\pi(i)-\pi(j)) \sgn(\pi'(i)-\pi'(j)) \\
 	= \!\! \sum_{1 \leq i < j \leq n} \!\! \frac{k!m!}{(n!)^2{n \choose 2}} \!\! \sum_{\substack{\pi \in A_I \\ \pi' \in A_J}} \!\! \sgn(\pi(i)-\pi(j)) \sgn(\pi'(i)-\pi'(j)) \,.
 \end{multline}
 As we will always regard the item set $\n$ as the universe, we will write the complement of set $S \subset \n$ as $S^\complement := \n\setminus S$. Since the item set can be divided into four disjoint subsets that are $\n = (I \cap J) \sqcup (I \setminus J) \sqcup (J \setminus I) \sqcup (I \cup J)^\complement$, any (unordered) item pair $\{i,j\}$ can be categorized uniquely into one out of ten cases:
-\begin{itemize}
-	\item[1] both items in $I \cap J$.
-	\item[2] one item in $I \cap J$, the other in $I \setminus J$.
-	\item[3] one item in $I \cap J$, the other in $J \setminus I$.
-	\item[4] one item in $I \cap J$, the other in $(I \cup J)^\complement$.
-	\item[5] one item in $I \setminus J$, the other in $J \setminus I$.
-	\item[6] both items in $I \setminus J$.
-	\item[7] both items in $J \setminus I$.
-	\item[8] both items in $(I \cup J)^\complement$.
-	\item[9] one item in $I \setminus J$, the other in $(I \cup J)^\complement$.
-	\item[10] one item in $J \setminus I$, the other in $(I \cup J)^\complement$.
-\end{itemize}
+\begin{bulletList}
+	\item[1.] both items in $I \cap J$.
+	\item[2.] one item in $I \cap J$, the other in $I \setminus J$.
+	\item[3.] one item in $I \cap J$, the other in $J \setminus I$.
+	\item[4.] one item in $I \cap J$, the other in $(I \cup J)^\complement$.
+	\item[5.] one item in $I \setminus J$, the other in $J \setminus I$.
+	\item[6.] both items in $I \setminus J$.
+	\item[7.] both items in $J \setminus I$.
+	\item[8.] both items in $(I \cup J)^\complement$.
+	\item[9.] one item in $I \setminus J$, the other in $(I \cup J)^\complement$.
+	\item[10.] one item in $J \setminus I$, the other in $(I \cup J)^\complement$.
+\end{bulletList}
 Now we can split and case-by-case regroup the additive terms in \eqref{eq2:kdtpartial} into ten parts. We denote by $s_1$ to $s_{10}$ the subtotal corresponding to cases 1 to 10, i.e.,
 \begin{multline*}
 	K_\tau (A_I,A_J) = \sum_{l=1}^{10} s_l := \sum_{l=1}^{10} \Big\{ \sum_{\substack{\{i,j\} \mbox{ in}\\ \mbox{case } l}} \frac{k!m!}{(n!)^2{n \choose 2}} \\
@@ -252,7 +252,7 @@ For case 5, similar derivation (as case 4) with interleaving $i$ in $A_J$ and in
 	\end{split}
 \end{split}
 \end{equation*}
-Finally $K_\tau (A_{i_1,\dots,i_k},A_{j_1,\dots,j_m})=s_1+s_2+s_3+s_4+s_5$ concludes the proof. The algorithms are summarized in Algorithm~\ref{alg:kdtpartial} for interleaving partial rankings and Algorithm~\ref{alg:kdttop} for top-$k$ rankings. Note that in both algorithms, the first step is the computationally most intensive one, where we need to identify the total ranking restricted to the items present in the partial rankings. This can be achieved by any sorting algorithm, leading the algorithms to a time complexity $O(k\log k + m\log m)$.
+Finally $K_\tau (A_{i_1,\dots,i_k},A_{j_1,\dots,j_m})=s_1+s_2+s_3+s_4+s_5$ concludes the proof. The algorithms are summarized in Algorithm \ref{alg:kdtpartial} for interleaving partial rankings and Algorithm \ref{alg:kdttop} for top-$k$ rankings. Note that in both algorithms, the first step is the computationally most intensive one, where we need to identify the total ranking restricted to the items present in the partial rankings. This can be achieved by any sorting algorithm, leading the algorithms to a time complexity $O(k\log k + m\log m)$.
 \end{proof}
 
 \begin{algorithm}[!htbp]
@@ -342,7 +342,7 @@ Finally $K_\tau (A_{i_1,\dots,i_k},A_{j_1,\dots,j_m})=s_1+s_2+s_3+s_4+s_5$ concl
 \end{algorithm}
 
 
-Note that the convolution kernel \eqref{eq2:partialranking} taking the Mallows kernel $K_{M}^{\lambda}$ is not straightforward to evaluate, which will be further discussed in Section~\ref{sec2:group}. However, since we have extended the Kendall kernel to partial rankings, an exponential kernel can be constructed trivially following (\ref{eq2:distance}), for which the computation remains just as simple as the extended Kendall kernel. Since this technique also applies in following sections, we focus mainly on extending Kendall kernel henceforth.
+Note that the convolution kernel \eqref{eq2:partialranking} taking the Mallows kernel $K_{M}^{\lambda}$ is not straightforward to evaluate, which will be further discussed in Section \ref{sec2:group}. However, since we have extended the Kendall kernel to partial rankings, an exponential kernel can be constructed trivially following \eqref{eq2:distance}, for which the computation remains just as simple as the extended Kendall kernel. Since this technique also applies in following sections, we focus mainly on extending Kendall kernel henceforth.
 
 
 \subsection{Extension to Multivariate Rankings}
@@ -379,7 +379,7 @@ where $\Phi: \mathbb{R}^n \to \mathbb{R}^{n \choose 2}$ is defined for $\xb=\br{
 	\label{eq2:kdtmapping}
 	\Phi(\xb) = \bigg( \frac{1}{\sqrt{{n \choose 2}}} (\hollowone_{\{x_i>x_j\}}-\hollowone_{\{x_i<x_j\}}) \bigg)_{1\leq i < j \leq n}\,.
 \end{equation}
-In this case, the interpretation of the Kendall kernel in terms of concordant and discordant pairs (\ref{eq2:kendall}) is still valid, with the caveats that in the presence of ties between entries of $\xb$, say two coordinates $i$ and $j$ such that $x_i=x_j$, the tied pair $\{x_i,x_j\}$ will be neither concordant nor discordant. This implies in particular that if $\xb$ has ties or so does $\xb'$, then $|K_\tau(\xb,\xb')|<1$ strictly. Notably in the presence of ties, the fast implementation of Kendall kernel still applies to quantitative vectors in $O(n\log n)$ time \cite{Knight1966computer}. However, feature mapping (\ref{eq2:kdtmapping}) is by construction very sensitive to the presence of entry pairs that are ties or almost-ties. In fact, each entry of $\Phi(\xb)$ is, up to a normalization constant, the Heaviside step function which takes discrete values in $\cbr{-1,0,+1}$, and thus can change abruptly even when $\xb$ changes slightly but reverses the ordering of two entries whose values are close. In addition to pairwise relative ordering as defined in~\eqref{eq2:kdtmapping}, it can be wise to also exploit the information given by pairwise absolute difference in the feature values.
+In this case, the interpretation of the Kendall kernel in terms of concordant and discordant pairs \eqref{eq2:kendall} is still valid, with the caveats that in the presence of ties between entries of $\xb$, say two coordinates $i$ and $j$ such that $x_i=x_j$, the tied pair $\{x_i,x_j\}$ will be neither concordant nor discordant. This implies in particular that if $\xb$ has ties or so does $\xb'$, then $|K_\tau(\xb,\xb')|<1$ strictly. Notably in the presence of ties, the fast implementation of Kendall kernel still applies to quantitative vectors in $O(n\log n)$ time \cite{Knight1966computer}. However, feature mapping \eqref{eq2:kdtmapping} is by construction very sensitive to the presence of entry pairs that are ties or almost-ties. In fact, each entry of $\Phi(\xb)$ is, up to a normalization constant, the Heaviside step function which takes discrete values in $\cbr{-1,0,+1}$, and thus can change abruptly even when $\xb$ changes slightly but reverses the ordering of two entries whose values are close. In addition to pairwise relative ordering as defined in \eqref{eq2:kdtmapping}, it can be wise to also exploit the information given by pairwise absolute difference in the feature values.
 
 
 We propose to make the mapping more robust by assuming a random noise $\epsilon \sim \mathcal{P}$ added to the feature vector $\xb$ and checking where $\Phi(\xb+\epsilon)$ is on average (similarly to, e.g., \cite{Muandet2012Learning}). In other words, we consider a smoother mapping $\Psi: \mathbb{R}^n \to \mathbb{R}^{n \choose 2}$ defined by
@@ -390,7 +390,7 @@ where $\epsilon$ is an $n$-dimensional random noise and $\tilde{\xb} := \xb+\eps
 \begin{equation}\label{eq2:G}
 G\br{\xb,\xb'} = \Psi(\xb)^\top \Psi(\xb') = \mathbb{E}\Phi(\tilde{\xb})^\top  \mathbb{E}\Phi(\tilde{\xb}') =  \mathbb{E} K_\tau(\tilde{\xb},\tilde{\xb}')\,,
 \end{equation}
-where $\tilde{\xb}$ and $\tilde{\xb}'$ are independently noise-perturbed versions of $\xb$ and $\xb'$. In fact, we can deduce from (\ref{eq2:kdtmapping}) that $\Psi$ is equivalently written as
+where $\tilde{\xb}$ and $\tilde{\xb}'$ are independently noise-perturbed versions of $\xb$ and $\xb'$. In fact, we can deduce from \eqref{eq2:kdtmapping} that $\Psi$ is equivalently written as
 \begin{equation*}
 	%\label{eq2:psimapping}
 	\Psi(\xb) = \bigg( \frac{1}{\sqrt{{n \choose 2}}} (\mathbb{P}\br{\tilde{x}_i>\tilde{x}_j}-\mathbb{P} \br{\tilde{x}_i<\tilde{x}_j}) \bigg)_{1\leq i < j \leq n}\,.
@@ -410,17 +410,17 @@ where
 		\end{array}
 	\right.\,.
 \end{equation*}
-Note that $g_a$ is odd, continuous, piecewise quadratic between $[-a,a]$ and constant elsewhere at $\pm 1$, and thus can be viewed as smoothed version of the Heaviside step function to compare any two entries $x_i$ and $x_j$ from their difference $x_i-x_j$ (Figure~\ref{fig2:smoothheaviside}).
+Note that $g_a$ is odd, continuous, piecewise quadratic between $[-a,a]$ and constant elsewhere at $\pm 1$, and thus can be viewed as smoothed version of the Heaviside step function to compare any two entries $x_i$ and $x_j$ from their difference $x_i-x_j$ (Figure \ref{fig2:smoothheaviside}).
 \begin{figure}[!htbp]
 \begin{center}
 \includegraphics[width=0.6\textwidth]{ch-kendall/figures/smoothheaviside}
-\caption{Smooth approximation (in red) of the Heaviside function (in black) used to define the mapping (\ref{eq2:smoothmap}) for $a=1$.}
+\caption{Smooth approximation (in red) of the Heaviside function (in black) used to define the mapping \eqref{eq2:smoothmap} for $a=1$.}
 \label{fig2:smoothheaviside}
 \end{center}
 \end{figure} 
 
 
-Although the smoothed kernel (\ref{eq2:G}) can be an interesting alternative to the Kendall kernel (\ref{eq2:kdtALL}), we unfortunately lose for $G$ the computational trick that allows to compute $K_\tau$ in $O(n\log n)$. Specifically, we have two ways to compute $G$:
+Although the smoothed kernel \eqref{eq2:G} can be an interesting alternative to the Kendall kernel \eqref{eq2:kdtALL}, we unfortunately lose for $G$ the computational trick that allows to compute $K_\tau$ in $O(n\log n)$. Specifically, we have two ways to compute $G$:
 
 \noindent {\bf (i) Exact evaluation.} The first alternative is to compute explicitly the $n\choose 2$-vector representation $\Psi$ in the feature space, and then take the dot product to obtain $G$. While the kernel evaluation is exact, an analytic form of the smoothed mapping \eqref{eq2:Gkernel} is required and the computational cost is linear with the dimension of the feature space, i.e., $O(n^2)$.
 
@@ -458,7 +458,7 @@ $$
 We recover (a) by setting the right-hand side equal to $\delta$ and solving for $u$. (b) then follows by a simple union bound.
 \end{proof}
 
-The uniform approximation bound of Lemma~\ref{lem2:concentration} in turn implies that learning with the approximate kernel $G_D$ can be almost as good with the kernel $G$, as we now discuss. For that purpose, let us consider for example the case where the smoothed kernel $G$ is used to train a Support Vector Machine (SVM) from a training set $\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^m\subset (\RR^n \times \{-1,+1\})^m$, specifically to estimate a function $h(\mathbf{x})=\mathbf{w}^\top \Psi(\mathbf{x})$ by solving
+The uniform approximation bound of Lemma \ref{lem2:concentration} in turn implies that learning with the approximate kernel $G_D$ can be almost as good with the kernel $G$, as we now discuss. For that purpose, let us consider for example the case where the smoothed kernel $G$ is used to train a Support Vector Machine (SVM) from a training set $\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^m\subset (\RR^n \times \{-1,+1\})^m$, specifically to estimate a function $h(\mathbf{x})=\mathbf{w}^\top \Psi(\mathbf{x})$ by solving
 \begin{equation}
 \label{eq2:svm}
 \min_{\mathbf{w}} F(\mathbf{w})=\frac{\lambda}{2} \|\mathbf{w}\|^2 + \widehat{R}(\mathbf{w}),
@@ -467,11 +467,11 @@ where $\widehat{R}(\mathbf{w})=\frac{1}{m}\sum_{i=1}^m \ell(y_i \mathbf{w}^\top 
 $$
 \Psi_D(\xb_i) := \frac{1}{D}\sum_{j=1}^D \Phi(\tilde{\xb}_i^j)\,.
 $$
-Note that $ \Psi_D(\xb_i)^\top \Psi_D(\xb_j)=G_D(\xb_i,\xb_j)$, hence training an SVM with the Monte Carlo approximate $G_D$ instead of exact version $G$ is equivalent to solving (\ref{eq2:svm}) with $\{\Psi_D(\xb_i)\}_{i=1,\dots,m}$ in the hinge loss instead of $\{\Psi(\xb_i)\}_{i=1,\dots,m}$. Theorem \ref{thm2:approx} quantifies the approximation performance in terms of objective function $F$ which helps to answer the question on the trade-off between $G$ and $G_D$ in computational complexity and learning accuracy.
+Note that $ \Psi_D(\xb_i)^\top \Psi_D(\xb_j)=G_D(\xb_i,\xb_j)$, hence training an SVM with the Monte Carlo approximate $G_D$ instead of exact version $G$ is equivalent to solving \eqref{eq2:svm} with $\{\Psi_D(\xb_i)\}_{i=1,\dots,m}$ in the hinge loss instead of $\{\Psi(\xb_i)\}_{i=1,\dots,m}$. Theorem \ref{thm2:approx} quantifies the approximation performance in terms of objective function $F$ which helps to answer the question on the trade-off between $G$ and $G_D$ in computational complexity and learning accuracy.
 
 
 \begin{thm}\label{thm2:approx}
-For any $0\leq\delta\leq 1$, the solution $\wh_D$ of the SVM trained with the Monte Carlo approximation (\ref{eq2:mc}) with $D$ random-jittered samples for each training point satisfies, with probability greater than $1-\delta$,
+For any $0\leq\delta\leq 1$, the solution $\wh_D$ of the SVM trained with the Monte Carlo approximation \eqref{eq2:mc} with $D$ random-jittered samples for each training point satisfies, with probability greater than $1-\delta$,
 $$
 F(\wh_D) \leq \min_{\mathbf{w}} F(\mathbf{w}) +  \sqrt{\frac{8}{\lambda D}} \br{ 2+ \sqrt{8\log\frac{m}{\delta}}}\,.
 $$
@@ -490,11 +490,11 @@ with $\widehat{R}_D(\mathbf{w})=\frac{1}{m}\sum_{i=1}^m \ell(y_i \mathbf{w}^\top
 & \leq \nm{\ub} \sup_{i=1,\ldots,m}\nm{\Psi_D(\xb_i) - \Psi(\xb_i)}\,.
 \end{split}
 \end{equation}
-Now, since $\wh_D$ is a solution of (\ref{eq2:svmD}), it satisfies
+Now, since $\wh_D$ is a solution of \eqref{eq2:svmD}, it satisfies
 $$
 \nm{\wh_D} \leq \sqrt{\frac{2F_D(\wh_D)}{\lambda}} \leq \sqrt{\frac{2F_D(0)}{\lambda}} = \sqrt{\frac{2}{\lambda}}\,,
 $$
-and similarly $\nm{\wh} \leq \sqrt{2/\lambda}$ because $\wh$ is a solution of the original SVM optimization problem. Using (\ref{eq2:risklipschitz}) and these bounds on $\nm{\wh_D}$ and $\nm{\wh}$, we get
+and similarly $\nm{\wh} \leq \sqrt{2/\lambda}$ because $\wh$ is a solution of the original SVM optimization problem. Using \eqref{eq2:risklipschitz} and these bounds on $\nm{\wh_D}$ and $\nm{\wh}$, we get
 \begin{equation*}
 \begin{split}
 F(\wh_D) & - F(\wh) \\
@@ -509,9 +509,9 @@ Theorem \ref{thm2:approx} then follows from Lemma \ref{lem2:concentration}.
 \end{proof}
 
 
-It is known that compared to the exact solution of (\ref{eq2:svm}), an $O(m^{-1/2})$-approximate solution is sufficient to reach the optimal statistical accuracy \cite{Bottou2008Tradeoffs}. This accuracy can be attained in our analysis when $D = O(m/\lambda)$, and since typically $\lambda \sim m^{-1/2}$ \cite{Steinwart2005Consistency}, this suggests that it is sufficient to take $D$ of order $m^{3/2}$. Going back to the comparison strategy of the two alternatives $G$ and $G_D$, we see that the computational cost of computing the full $m\times m$ Gram matrix with the exact evaluation is $O(m^2 n^2)$, while the cost of computing the approximate Gram matrix with $D=O(m^{3/2})$ random samples is $O(m^2 D^2 n \log n) = O(m^5 n \log n)$. This shows that, up to constants and logarithmic terms, the Monte Carlo approximation is interesting when $m = o(n^{1/3})$, otherwise the exact evaluation using explicit computation in the feature space is preferable.
+It is known that compared to the exact solution of \eqref{eq2:svm}, an $O(m^{-1/2})$-approximate solution is sufficient to reach the optimal statistical accuracy \cite{Bottou2008Tradeoffs}. This accuracy can be attained in our analysis when $D = O(m/\lambda)$, and since typically $\lambda \sim m^{-1/2}$ \cite{Steinwart2005Consistency}, this suggests that it is sufficient to take $D$ of order $m^{3/2}$. Going back to the comparison strategy of the two alternatives $G$ and $G_D$, we see that the computational cost of computing the full $m\times m$ Gram matrix with the exact evaluation is $O(m^2 n^2)$, while the cost of computing the approximate Gram matrix with $D=O(m^{3/2})$ random samples is $O(m^2 D^2 n \log n) = O(m^5 n \log n)$. This shows that, up to constants and logarithmic terms, the Monte Carlo approximation is interesting when $m = o(n^{1/3})$, otherwise the exact evaluation using explicit computation in the feature space is preferable.
 
-Interestingly we can look at the extended Kendall kernel \eqref{eq2:G} to uncertain rankings from the perspective of Hilbert space embeddings of probability distributions \cite{Smola2007Hilbert}. In fact, for $x$ fixed, the smoothed mapping $\Psi(\xb) = \EE \Phi(\xb+\epsilon)$ is exactly an embedding for the distribution $\mathcal{P}$ of an additive noise $\epsilon$ in the reproducing kernel Hilbert space (RKHS) associated with Kendall kernel. As a consequence, the idea of smoothed kernel $G(\xb,\xb')$ for $\xb,\xb'\in \mathcal{X}$ is essentially equivalent to how \cite[Lemma 4]{Muandet2012Learning} defines kernels on two probability distributions from $\{\mathcal{P}+\xb | \xb \in \mathcal{X} \}$ using the Kendall kernel as the level-1 embedding kernel and linear inner product as the level-2 kernel in the feature space. As a result, given a fixed training set $\mathcal{D}$, training an SVM with $G$ in place of $K_\tau$ is equivalent to training a Flex-SVM instead of an ordinary SVM with $K_\tau$ \cite{Muandet2012Learning}. In this case, Theorem~\ref{thm2:approx} provides an error bound in terms of the optimal accuracy for cases when training a Flex-SVM if exact evaluation of $G$ is intractable and its Monte Carlo approximate $G_D$ is employed. This serves to obtain a trade-off between computation complexity and approximation accuracy which is particularly interesting when we are working in high dimensions.
+Interestingly we can look at the extended Kendall kernel \eqref{eq2:G} to uncertain rankings from the perspective of Hilbert space embeddings of probability distributions \cite{Smola2007Hilbert}. In fact, for $x$ fixed, the smoothed mapping $\Psi(\xb) = \EE \Phi(\xb+\epsilon)$ is exactly an embedding for the distribution $\mathcal{P}$ of an additive noise $\epsilon$ in the reproducing kernel Hilbert space (RKHS) associated with Kendall kernel. As a consequence, the idea of smoothed kernel $G(\xb,\xb')$ for $\xb,\xb'\in \mathcal{X}$ is essentially equivalent to how \cite[Lemma 4]{Muandet2012Learning} defines kernels on two probability distributions from $\{\mathcal{P}+\xb | \xb \in \mathcal{X} \}$ using the Kendall kernel as the level-1 embedding kernel and linear inner product as the level-2 kernel in the feature space. As a result, given a fixed training set $\mathcal{D}$, training an SVM with $G$ in place of $K_\tau$ is equivalent to training a Flex-SVM instead of an ordinary SVM with $K_\tau$ \cite{Muandet2012Learning}. In this case, Theorem \ref{thm2:approx} provides an error bound in terms of the optimal accuracy for cases when training a Flex-SVM if exact evaluation of $G$ is intractable and its Monte Carlo approximate $G_D$ is employed. This serves to obtain a trade-off between computation complexity and approximation accuracy which is particularly interesting when we are working in high dimensions.
 
 
 
@@ -523,7 +523,7 @@ Interestingly we can look at the extended Kendall kernel \eqref{eq2:G} to uncert
 \section{Relation of the Mallows Kernel and the Diffusion Kernel on $\mathbb{S}_n$}
 \label{sec2:group}
 
-It is interesting to relate the Mallows kernel (\ref{eq2:mallows}) to the diffusion kernel on the symmetric group proposed by \cite{Kondor2010Ranking}, which is the diffusion kernel \cite{Kondor2002Diffusion} on the Cayley graph of $\Sn$ generated by adjacent transpositions with left-multiplication. This graph, illustrated for a specific case of $n=4$ in Figure \ref{fig2:permutahedron}, is defined by $\mathcal{G}=(\mathcal{V},\mathcal{E})$ with $\mathcal{V}=\mathbb{S}_n$ as vertices, and undirected edge set $\mathcal{E}=\big\{ \{\sigma,\pi\sigma\} : \sigma\in \mathbb{S}_n,\pi\in Q \big\}$, where $Q=\{(i,i+1)|i=1,\dots,n-1\}$ the set of all adjacent transpositions. Note $Q$ is symmetric in the sense that $\pi\in Q \Leftrightarrow \pi^{-1}\in Q$, and the graph adjacency relation is a right-invariant relation, that is $\sigma \sim \sigma' \Leftrightarrow \sigma'\sigma^{-1}\in Q$. The corresponding graph Laplacian is the matrix $\Delta$ with
+It is interesting to relate the Mallows kernel \eqref{eq2:mallows} to the diffusion kernel on the symmetric group proposed by \cite{Kondor2010Ranking}, which is the diffusion kernel \cite{Kondor2002Diffusion} on the Cayley graph of $\Sn$ generated by adjacent transpositions with left-multiplication. This graph, illustrated for a specific case of $n=4$ in Figure \ref{fig2:permutahedron}, is defined by $\mathcal{G}=(\mathcal{V},\mathcal{E})$ with $\mathcal{V}=\mathbb{S}_n$ as vertices, and undirected edge set $\mathcal{E}=\big\{ \{\sigma,\pi\sigma\} : \sigma\in \mathbb{S}_n,\pi\in Q \big\}$, where $Q=\{(i,i+1)|i=1,\dots,n-1\}$ the set of all adjacent transpositions. Note $Q$ is symmetric in the sense that $\pi\in Q \Leftrightarrow \pi^{-1}\in Q$, and the graph adjacency relation is a right-invariant relation, that is $\sigma \sim \sigma' \Leftrightarrow \sigma'\sigma^{-1}\in Q$. The corresponding graph Laplacian is the matrix $\Delta$ with
 \begin{equation*}
 	\Delta_{\sigma,\sigma'} = \left\{
 		\begin{array}{ll}
@@ -572,7 +572,7 @@ considers exclusively the shortest path over the graph when expressing the simil
 
 
 
-A notable advantage of the Mallows kernel over the diffusion kernel is that the Mallows kernel enjoys faster evaluation. On one hand if data instances are total rankings, i.e. $\sigma,\sigma'\in \mathbb{S}_n$, evaluating $K_{\textrm{dif}}^{\beta}(\sigma,\sigma')$ would require exponentiating an $n!$-dimensional Laplacian matrix by naive implementation, and can reduce to exponentiating matrices of smaller sizes by careful analysis in the Fourier space, which still remains problematic if working dimension $n$ is large \cite{Kondor2010Ranking}. However, evaluating $K_{M}^{\lambda}(\sigma,\sigma')$ only takes $O(n\log n)$ time. On the other hand if data instances are partial ranking of size $k\ll n$, i.e. $R,R'\subset \mathbb{S}_n$, and we take convolution kernel (\ref{eq2:partialranking}) to extend the two kernels, the analysis of exploring the sparsity of the Fourier coefficients of the group algebra of partial rankings $R,R'$ of size $k$ reduces the evaluation of both the diffusion kernel and the Mallows kernel to $O((2k)^{2k+3})$ time, provided that the exponential kernel Fourier matrices $[\hat{\overline{\kappa}}(\mu)]_{\geq [\dots]_{n-k}}$ are precomputed before any kernel evaluations take place \cite[Theorem 13]{Kondor2010Ranking}.
+A notable advantage of the Mallows kernel over the diffusion kernel is that the Mallows kernel enjoys faster evaluation. On one hand if data instances are total rankings, i.e. $\sigma,\sigma'\in \mathbb{S}_n$, evaluating $K_{\textrm{dif}}^{\beta}(\sigma,\sigma')$ would require exponentiating an $n!$-dimensional Laplacian matrix by naive implementation, and can reduce to exponentiating matrices of smaller sizes by careful analysis in the Fourier space, which still remains problematic if working dimension $n$ is large \cite{Kondor2010Ranking}. However, evaluating $K_{M}^{\lambda}(\sigma,\sigma')$ only takes $O(n\log n)$ time. On the other hand if data instances are partial ranking of size $k\ll n$, i.e. $R,R'\subset \mathbb{S}_n$, and we take convolution kernel \eqref{eq2:partialranking} to extend the two kernels, the analysis of exploring the sparsity of the Fourier coefficients of the group algebra of partial rankings $R,R'$ of size $k$ reduces the evaluation of both the diffusion kernel and the Mallows kernel to $O((2k)^{2k+3})$ time, provided that the exponential kernel Fourier matrices $[\hat{\overline{\kappa}}(\mu)]_{\geq [\dots]_{n-k}}$ are precomputed before any kernel evaluations take place \cite[Theorem 13]{Kondor2010Ranking}.
 
 
 
@@ -601,7 +601,7 @@ As the Kendall tau distance is conditionally positive definite, we can propose a
 \begin{equation*}\label{eq2:kernelkmeans}
 \underset{\big\{S_j,\mu_j\in\RR^{{n\choose 2}}\big\}}{\arg\min} \sum_{j=1}^c \sum_{i:\sigma_i\in S_j} \nm{\Phi(\sigma_i) - \mu_j}^2 \,,
 \end{equation*}
-for which local minima can be found efficiently by Algorithm~\ref{alg:kernelkmeans}. Note that $\mu_j$ does not match a true permutation $\pi_j\in\Sn$ in general, and the Kemeny consensus problem in the update step is thus bypassed. It is worthwhile to note that the algorithm is not exclusive for clustering permutations, kernel $k$-means clustering can be applied respectively to total/partial/multivariate/uncertain rankings with appropriate kernels defined.
+for which local minima can be found efficiently by Algorithm \ref{alg:kernelkmeans}. Note that $\mu_j$ does not match a true permutation $\pi_j\in\Sn$ in general, and the Kemeny consensus problem in the update step is thus bypassed. It is worthwhile to note that the algorithm is not exclusive for clustering permutations, kernel $k$-means clustering can be applied respectively to total/partial/multivariate/uncertain rankings with appropriate kernels defined.
 
 \begin{algorithm}[!htbp]
 \caption{Kernel $k$-means for clustering heterogeneous rank data.}
@@ -672,7 +672,7 @@ g^{\dagger} (\sigma|\mu,\lambda) = \sqrt{\br{\frac{\lambda}{\pi}}^{{n\choose 2}}
 \end{equation}
 which is exactly $\mathcal{N}(\Phi(\sigma) | \mu, (2\lambda)^{-1} I )$, i.e., the ${n\choose 2}$-dimensional Gaussian distribution with mean $\mu$ and isotropic covariance matrix $(2\lambda)^{-1} I$ injected by $\Phi(\sigma)$. Notably, $g^{\dagger} (\cdot|\mu,\lambda)$ is not a valid probability mass function over $\Sn$.
 
-The mixture modeling approach stated above using $g^{\dagger}$ instead of $f$ is in fact equivalently stated in Algorithm~\ref{alg:kernelgaussian}. It is worthwhile to note that the algorithm also applies to total/partial/multivariate/uncertain rankings with appropriate kernels defined as \cite[Table 2]{Wang2003Kernel} provides the counterpart of Algorithm~\ref{alg:kernelgaussian} in case that a kernel matrix evaluated between data points is given instead. However, since $g^{\dagger}$ itself is not a valid probability mass function over $\Sn$, an evident drawback is that we now lose the probabilistic interpretation of the mixture distribution as in \eqref{eq2:mallowsf}.
+The mixture modeling approach stated above using $g^{\dagger}$ instead of $f$ is in fact equivalently stated in Algorithm \ref{alg:kernelgaussian}. It is worthwhile to note that the algorithm also applies to total/partial/multivariate/uncertain rankings with appropriate kernels defined as \cite[Table 2]{Wang2003Kernel} provides the counterpart of Algorithm \ref{alg:kernelgaussian} in case that a kernel matrix evaluated between data points is given instead. However, since $g^{\dagger}$ itself is not a valid probability mass function over $\Sn$, an evident drawback is that we now lose the probabilistic interpretation of the mixture distribution as in \eqref{eq2:mallowsf}.
 
 
 \begin{algorithm}[!htbp]
@@ -699,7 +699,7 @@ The mixture modeling approach stated above using $g^{\dagger}$ instead of $f$ is
 
 
 
-We first use $k$-means approaches to cluster the data. We compare the proposed kernel $k$-means algorithm (Algorithm~\ref{alg:kernelkmeans} with Kendall kernel $K_{\tau}$) to the classic $k$-means algorithm formulated as \eqref{eq2:kmeans}. For the classic $k$-means where cluster centers are required to be a prototype permutation, three methods are employed in the center-update step for each iteration: brute-force search of Kemeny-optimal ranking, approximate ranking induced by Borda Count and Copeland's method. In each case, we vary the number of clusters ranging from $2$ to $10$ and the algorithm is repeated $50$ times with randomly initialized configurations for each fixed number of clusters. We observe from Figure~\ref{fig2:kmeans-time} that the kernel $k$-means or classic $k$-means with approximate centers runs much faster than optimal $k$-means for which the Kemeny-optimal ranking is time-consuming to find by a brute-force search. Further, Figure~\ref{fig2:kmeans-silhouette} shows that the kernel $k$-means outperforms all three methods based on classic $k$-means in terms of the average silhouette scores of the clustering results, which justifies that the kernel $k$-means splits the data into more consistent sub-groups in the sense that instances, measured by Kendall tau distance on average, are more similar in the same cluster and more dissimilar in different clusters.
+We first use $k$-means approaches to cluster the data. We compare the proposed kernel $k$-means algorithm (Algorithm \ref{alg:kernelkmeans} with Kendall kernel $K_{\tau}$) to the classic $k$-means algorithm formulated as \eqref{eq2:kmeans}. For the classic $k$-means where cluster centers are required to be a prototype permutation, three methods are employed in the center-update step for each iteration: brute-force search of Kemeny-optimal ranking, approximate ranking induced by Borda Count and Copeland's method. In each case, we vary the number of clusters ranging from $2$ to $10$ and the algorithm is repeated $50$ times with randomly initialized configurations for each fixed number of clusters. We observe from Figure \ref{fig2:kmeans-time} that the kernel $k$-means or classic $k$-means with approximate centers runs much faster than optimal $k$-means for which the Kemeny-optimal ranking is time-consuming to find by a brute-force search. Further, Figure \ref{fig2:kmeans-silhouette} shows that the kernel $k$-means outperforms all three methods based on classic $k$-means in terms of the average silhouette scores of the clustering results, which justifies that the kernel $k$-means splits the data into more consistent sub-groups in the sense that instances, measured by Kendall tau distance on average, are more similar in the same cluster and more dissimilar in different clusters.
 
 
 
@@ -718,7 +718,7 @@ We first use $k$-means approaches to cluster the data. We compare the proposed k
 
 
 
-Further, good clustering algorithms are supposed be robust to ``perturbation'' in data, in the sense that clusters formed by running an algorithm on bootstrap replicas of the original data should be similar. In other words, if we bootstrap the complete dataset twice and form a clustering with respect to each, the two clustering assignments should be close to each other. Note that in order to measure the similarity of two clustering assignments, we use the (adjusted) Rand index defined by the percentage of instance pairs falling in the same or in different clusters by the two assignments \cite{Hubert1985Comparing}. We now compare the stability performance of the proposed kernel $k$-means and other $k$-means algorithms. Specifically, for each fixed number of clusters, we repeatedly use a bootstrap replica of the dataset to search for centroids returned by running $k$-means algorithms, and partition the original dataset with these identified centroids. The Rand index for two such clustering assignments is computed and the computation is repeated for 100 times accounting for the random process of bootstrapping. Results are shown in Figure~\ref{fig2:kmeans-stability}. We observe that, for each fixed number of clusters, kernel $k$-means has higher stability scores than the classic $k$-means algorithms in general. Notably, the discrepancy between kernel $k$-means and the others in terms of their stability performance is even sharper when the number of clusters becomes large. In conclusion, evidence advocates again the use of kernel $k$-means over classic $k$-means algorithms in clustering rank data.
+Further, good clustering algorithms are supposed be robust to ``perturbation'' in data, in the sense that clusters formed by running an algorithm on bootstrap replicas of the original data should be similar. In other words, if we bootstrap the complete dataset twice and form a clustering with respect to each, the two clustering assignments should be close to each other. Note that in order to measure the similarity of two clustering assignments, we use the (adjusted) Rand index defined by the percentage of instance pairs falling in the same or in different clusters by the two assignments \cite{Hubert1985Comparing}. We now compare the stability performance of the proposed kernel $k$-means and other $k$-means algorithms. Specifically, for each fixed number of clusters, we repeatedly use a bootstrap replica of the dataset to search for centroids returned by running $k$-means algorithms, and partition the original dataset with these identified centroids. The Rand index for two such clustering assignments is computed and the computation is repeated for 100 times accounting for the random process of bootstrapping. Results are shown in Figure \ref{fig2:kmeans-stability}. We observe that, for each fixed number of clusters, kernel $k$-means has higher stability scores than the classic $k$-means algorithms in general. Notably, the discrepancy between kernel $k$-means and the others in terms of their stability performance is even sharper when the number of clusters becomes large. In conclusion, evidence advocates again the use of kernel $k$-means over classic $k$-means algorithms in clustering rank data.
 
 
 \begin{figure}[!htbp]
@@ -730,7 +730,7 @@ Further, good clustering algorithms are supposed be robust to ``perturbation'' i
 \end{figure} 
 
 
-Mixture modeling is then used to fit the data and a partition of the votes is converted from the fitted models forming a clustering result. Baseline models are the Mallows mixture models fitted by the EM algorithm \cite{Murphy2003Mixtures} using three different center-update algorithms at each iteration: brute-force search for Kemeny-optimal ranking, approximate ranking induced by Borda Count and Copeland's method. As proposed in this chapter, we embed the kernel trick in Mallows mixture modeling with two alternatives $g$ \eqref{eq2:kernelmallows} and $g^{\dagger}$ \eqref{eq2:kernelgaussian} in place of $f$ \eqref{eq2:mallowspdf}. In each case, we vary the number of clusters ranging from $2$ to $10$ and the algorithm is repeated $50$ times with randomly initialized configurations for each fixed number of clusters. As shown in Figure~\ref{fig2:mallows-silhouette}, modeling a Gaussian mixture to data in the feature space, or equivalently using $g^{\dagger}$ instead of $f$, provides a preferable split of the data into sub-groups with higher average silhouette scores across different number of clusters selected \emph{a priori}.
+Mixture modeling is then used to fit the data and a partition of the votes is converted from the fitted models forming a clustering result. Baseline models are the Mallows mixture models fitted by the EM algorithm \cite{Murphy2003Mixtures} using three different center-update algorithms at each iteration: brute-force search for Kemeny-optimal ranking, approximate ranking induced by Borda Count and Copeland's method. As proposed in this chapter, we embed the kernel trick in Mallows mixture modeling with two alternatives $g$ \eqref{eq2:kernelmallows} and $g^{\dagger}$ \eqref{eq2:kernelgaussian} in place of $f$ \eqref{eq2:mallowspdf}. In each case, we vary the number of clusters ranging from $2$ to $10$ and the algorithm is repeated $50$ times with randomly initialized configurations for each fixed number of clusters. As shown in Figure \ref{fig2:mallows-silhouette}, modeling a Gaussian mixture to data in the feature space, or equivalently using $g^{\dagger}$ instead of $f$, provides a preferable split of the data into sub-groups with higher average silhouette scores across different number of clusters selected \emph{a priori}.
 
 
 \begin{figure}[!htbp]
@@ -745,7 +745,7 @@ Mixture modeling is then used to fit the data and a partition of the votes is co
 
 
 
-In comparison with the mixture of Insertion Sorting Rank (ISR) model for clustering multivariate partial rank data proposed by \cite{Jacques2014Model}, we implement the kernel $k$-means algorithm (Algorithm~\ref{alg:kernelkmeans}) with the extended Kendall kernel to multivariate rankings \eqref{eq2:multivariate} and equal weights $\mu_j=1/p$ where $p=6$ corresponding to the six contests across years. For each fixed number of clusters, the kernel $k$-means algorithm is repeated $100$ times with randomly initialized configurations while $10$ times for the ISR mixture modeling approach. We vary the number of clusters ranging from $2$ to $6$, and the optimal number is selected to be $2$ for kernel $k$-means with respect to highest average silhouette score while $5$ for the ISR mixture model with respect to highest BIC value. It consumes $2$ hours in total to fit the ISR mixture model in order for clustering while it only takes less than $10$ seconds to form the partition of data with kernel $k$-means. Although it is beyond the scope of this study to further explore the meaningful voting blocs, the colored map of Asia-Europe in terms of clustering results of participating countries to the ESC according to their voting behavior (Figure~\ref{fig2:eurovision}, Left) depicts that there exists interesting geographical alliances between countries in the voting data. For example, country-clusters returned by both algorithms present a sign of strong amity within Eastern Europe. Silhouette plots for both algorithms are shown in Figure~\ref{fig2:eurovision} (Right). Despite a relatively small number of clusters selected for the kernel $k$-means, the silhouette plot (Figure~\ref{fig2:eurovision-kkmeans}, Right) attests that the underlying clusters are well formed. Note that both silhouette plots opt for the same distance used by kernel $k$-means, which may show bias against a clustering scheme based on probabilistic modeling with ISR mixtures. However, the two approaches behave distinctly in identifying subgroups. For example, the ISR mixture model distinguishes Portugal as a singleton among all countries, while interpreting such clustering results remains to be studied. On the other hand, the $k$-means based approach tends to find more evenly distributed subgroups, in the sense that the number of individuals in each subgroup is more consistent. Therefore kernel $k$-means clustering is favored if the study of interest lies in populous behaviors in voting despite of potential outlier individuals. Notably the detection of outliers can be done by other kernel algorithms (Section \ref{sec2:discussion}).
+In comparison with the mixture of Insertion Sorting Rank (ISR) model for clustering multivariate partial rank data proposed by \cite{Jacques2014Model}, we implement the kernel $k$-means algorithm (Algorithm \ref{alg:kernelkmeans}) with the extended Kendall kernel to multivariate rankings \eqref{eq2:multivariate} and equal weights $\mu_j=1/p$ where $p=6$ corresponding to the six contests across years. For each fixed number of clusters, the kernel $k$-means algorithm is repeated $100$ times with randomly initialized configurations while $10$ times for the ISR mixture modeling approach. We vary the number of clusters ranging from $2$ to $6$, and the optimal number is selected to be $2$ for kernel $k$-means with respect to highest average silhouette score while $5$ for the ISR mixture model with respect to highest BIC value. It consumes $2$ hours in total to fit the ISR mixture model in order for clustering while it only takes less than $10$ seconds to form the partition of data with kernel $k$-means. Although it is beyond the scope of this study to further explore the meaningful voting blocs, the colored map of Asia-Europe in terms of clustering results of participating countries to the ESC according to their voting behavior (Figure \ref{fig2:eurovision}, Left) depicts that there exists interesting geographical alliances between countries in the voting data. For example, country-clusters returned by both algorithms present a sign of strong amity within Eastern Europe. Silhouette plots for both algorithms are shown in Figure \ref{fig2:eurovision} (Right). Despite a relatively small number of clusters selected for the kernel $k$-means, the silhouette plot (Figure \ref{fig2:eurovision-kkmeans}, Right) attests that the underlying clusters are well formed. Note that both silhouette plots opt for the same distance used by kernel $k$-means, which may show bias against a clustering scheme based on probabilistic modeling with ISR mixtures. However, the two approaches behave distinctly in identifying subgroups. For example, the ISR mixture model distinguishes Portugal as a singleton among all countries, while interpreting such clustering results remains to be studied. On the other hand, the $k$-means based approach tends to find more evenly distributed subgroups, in the sense that the number of individuals in each subgroup is more consistent. Therefore kernel $k$-means clustering is favored if the study of interest lies in populous behaviors in voting despite of potential outlier individuals. Notably the detection of outliers can be done by other kernel algorithms (Section \ref{sec2:discussion}).
 
 \begin{figure}[!htbp]
 
@@ -822,7 +822,7 @@ Prostate Cancer 2 & 12600 & 13 (Non-relapse) & 8 (Relapse) & \cite{Singh2002Gene
 
 We compare the Kendall kernel to three standard kernels, namely linear kernel, homogeneous 2nd-order polynomial kernel and Gaussian RBF kernel with bandwidth set with ``median trick'', using SVM (with regularization parameter $C$) and Kernel Fisher Discriminant (KFD, without tuning parameter) as classifiers. In addition, we include in the benchmark classifiers based on Top Scoring Pairs (TSP) \cite{Geman2004Classifying}, namely (1-)TSP, $k$-TSP \cite{Tan2005Simple}\footnote{While the original $k$-TSP algorithm selects only top $k$ \textit{disjoint} pairs with the constraint that $k$ is \textit{less than} 10, we do not restrict ourselves to any of these two conditions since we consider $k$-TSP in this study essentially a feature pair scoring algorithm.} and APMV (all-pairs majority votes, i.e. ${n \choose 2}$-TSP). Finally we also test SVM with various kernels using as input only top features selected by TSP \cite{Shi2011Top}.
 
-In all experiments, each kernel is centered (on the training set) and scaled to unit norm in the feature space. For KFD-based models, we add $10^{-3}$ on the diagonal of the centered and scaled kernel matrix, as suggested by \cite{Mika1999Fisher}. The Kendall kernel we use in practice is a soft version to (\ref{eq2:kdtALL}) in the sense that the extremes $\pm 1$ can still be attained in the presence of ties, specifically we use
+In all experiments, each kernel is centered (on the training set) and scaled to unit norm in the feature space. For KFD-based models, we add $10^{-3}$ on the diagonal of the centered and scaled kernel matrix, as suggested by \cite{Mika1999Fisher}. The Kendall kernel we use in practice is a soft version to \eqref{eq2:kdtALL} in the sense that the extremes $\pm 1$ can still be attained in the presence of ties, specifically we use
 \begin{equation*}
 	K_{\tau}(\mathbf{x},\mathbf{x}') = \frac{n_c(\mathbf{x},\mathbf{x}')-n_d(\mathbf{x},\mathbf{x}')}{\sqrt{(n_0-n_1)(n_0-n_2)}} \,,
 \end{equation*}
@@ -905,7 +905,7 @@ We further studied how the performance of different kernels depends on the choic
 
 
 
-Finally, as a proof of concept we empirically compare on one dataset the smooth alternative (\ref{eq2:G}) and its Monte Carlo approximate (\ref{eq2:mc}) with the original Kendall kernel. We studied how the performance varies with the amount of noise added to the samples (Figure \ref{fig2:exprapprox-stab}), and how the performance varies with the number of samples in the Monte Carlo scheme for a given amount of noise (Figure \ref{fig2:exprapprox-approxsingle}). It confirms that the smooth alternative (\ref{eq2:G}) can improve the performance of the Kendall kernel, and that the amount of noise (window size) should be considered as a parameter of the kernel to be optimized. Although the $D^2$-sample Monte Carlo approximate kernel (\ref{eq2:mc}) mainly serves as a fast estimate to the exact evaluation of (\ref{eq2:G}), it shows that the idea of jittered input with specific noise can also bring a tempting benefit for data analysis with Kendall kernel, even when $D$ is small. This also justifies the motivation of our proposed smooth alternative (\ref{eq2:G}). Last but not least, despite the fact that the convergence rate of $D^2$-sample Monte Carlo approximate to the exact kernel evaluation is guaranteed by Theorem~\ref{thm2:approx}, experiments show that the convergence in practice is typically faster than the theoretical bound, and even faster in case that the window size $a$ is small. This is due to the fact that the convergence rate is also dependent of the observed data distribution in the input space, for which we have not made any specific assumption in our analysis.
+Finally, as a proof of concept we empirically compare on one dataset the smooth alternative \eqref{eq2:G} and its Monte Carlo approximate \eqref{eq2:mc} with the original Kendall kernel. We studied how the performance varies with the amount of noise added to the samples (Figure \ref{fig2:exprapprox-stab}), and how the performance varies with the number of samples in the Monte Carlo scheme for a given amount of noise (Figure \ref{fig2:exprapprox-approxsingle}). It confirms that the smooth alternative \eqref{eq2:G} can improve the performance of the Kendall kernel, and that the amount of noise (window size) should be considered as a parameter of the kernel to be optimized. Although the $D^2$-sample Monte Carlo approximate kernel \eqref{eq2:mc} mainly serves as a fast estimate to the exact evaluation of \eqref{eq2:G}, it shows that the idea of jittered input with specific noise can also bring a tempting benefit for data analysis with Kendall kernel, even when $D$ is small. This also justifies the motivation of our proposed smooth alternative \eqref{eq2:G}. Last but not least, despite the fact that the convergence rate of $D^2$-sample Monte Carlo approximate to the exact kernel evaluation is guaranteed by Theorem \ref{thm2:approx}, experiments show that the convergence in practice is typically faster than the theoretical bound, and even faster in case that the window size $a$ is small. This is due to the fact that the convergence rate is also dependent of the observed data distribution in the input space, for which we have not made any specific assumption in our analysis.
 
 
 
