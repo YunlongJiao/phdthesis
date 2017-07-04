@@ -211,7 +211,17 @@ urlcolor=linkcol %couleur des liens pour les url
 {\vspace*{\fill}}
 
 % abstract for each chapter
-\newenvironment{chapabstract}{\itshape\raggedright\leftskip1in}{}
+\newenvironment{chapabstract}%
+{\itshape\raggedright\leftskip1in}%
+{}
+
+% thesis abstract in en and fr and acknowledgments
+\newenvironment{prechap}[1]%
+{\section*{\huge #1}%
+\addcontentsline{toc}{chapter}{#1}
+\vskip 0.5cm
+\begin{large}}%
+{\end{large}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Page de garde              %

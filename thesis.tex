@@ -32,11 +32,11 @@
 }
 
 \frabstract{
-  Voilà le résumé!
+	\input{abstract-fr}
 }
 
 \enabstract{
-  Here goes the abstract!
+	\input{abstract-en}
 }
 
 \frkeyword{Bio-informatique.}
@@ -49,13 +49,19 @@
 \pagenumbering{roman}
 
 % abstract in english and french
-\input{abstract-en}
+\begin{prechap}{Abstract}%
+\input{abstract-en}%
+\end{prechap}
 \cleardoublepage
-\input{abstract-fr}
+\begin{prechap}{Résumé}%
+\input{abstract-fr}%
+\end{prechap}
 \cleardoublepage
 
 % acknowledgments
-\input{acknowledgments}
+\begin{prechap}{Acknowledgments}%
+\input{acknowledgments}%
+\end{prechap}
 \cleardoublepage
 
 % contents
