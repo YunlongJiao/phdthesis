@@ -47,21 +47,23 @@
 
 % abstract in english and french
 \newpage\vspace*{\fill}
-\begin{prechap}{Abstract}%
+\begin{theabstract}{Abstract}%
 \input{abstract-en}%
-\end{prechap}
+\end{theabstract}
 \vskip 0.5in
-\begin{prechap}{Résumé}%
+\begin{theabstract}{Résumé}%
 \input{abstract-fr}%
-\end{prechap}
+\end{theabstract}
 \vspace*{\fill}
 \cleardoublepage
 
 % acknowledgments
-\begin{prechap}{Acknowledgments}%
-\input{acknowledgments}%
-\end{prechap}
+\section*{\huge Acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\vskip 0.2in
+{\large\input{acknowledgments}}
 \cleardoublepage
+
 
 % contents
 \dominitoc
