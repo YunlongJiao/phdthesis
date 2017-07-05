@@ -2,7 +2,7 @@
 
 \input{preamble}
 
-\title{Thesis title goes here}
+\title{Survival Prediction and Molecular Feature Selection for Breast Cancer Prognosis}
 
 \author{Yunlong JIAO}
 
@@ -18,10 +18,10 @@
   M Risi KONDOR\\
   University of Chicago, Rapporteur
 
-  M Stephan CLEMEN\c{C}ON\\
-  T\'{e}l\'{e}com ParisTech, Rapporteur
+  M Stephan CLEMENÇON\\
+  Télécom ParisTech, Rapporteur
 
-  M R\'{e}mi GRIBONVAL\\
+  M Rémi GRIBONVAL\\
   INRIA, Membre du jury
 
   M Prénom Nom\\
@@ -31,16 +31,13 @@
   MINES ParisTech, Membre du jury
 }
 
-\frabstract{
-	\input{abstract-fr}
+{
+\small
+\frabstract{\input{abstract-fr}}
+\enabstract{\input{abstract-en}}
+\frkeyword{Bio-informatique}
+\enkeyword{Breast Cancer, Prognosis, Survival Prediction, Molecular Feature Selection, Genomic Data Analysis}
 }
-
-\enabstract{
-	\input{abstract-en}
-}
-
-\frkeyword{Bio-informatique.}
-\enkeyword{Bioinformatics.}
 
 \begin{document}
 
@@ -49,13 +46,15 @@
 \pagenumbering{roman}
 
 % abstract in english and french
+\newpage\vspace*{\fill}
 \begin{prechap}{Abstract}%
 \input{abstract-en}%
 \end{prechap}
-\cleardoublepage
+\vskip 0.5in
 \begin{prechap}{Résumé}%
 \input{abstract-fr}%
 \end{prechap}
+\vspace*{\fill}
 \cleardoublepage
 
 % acknowledgments

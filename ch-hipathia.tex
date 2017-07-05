@@ -6,7 +6,7 @@
 \textrm{{\bf Abstract:}} With the advent of high-throughput technologies for genome-wide expression profiling, a large number of methods have been proposed to discover gene-based signatures as biomarkers to guide cancer prognosis. However, it is often difficult to interpret the list of genes in a prognostic signature regarding the underlying biological processes responsible for disease progression or therapeutic response. A particularly interesting alternative to gene-based biomarkers is mechanistic biomarkers, derived from signaling pathway activities, which are known to play a key role in cancer progression and thus provide more informative insights into cellular functions involved in cancer mechanism. In this chapter, we demonstrate that a pathway-level feature, such as the activity of signaling circuits, outperform conventional gene-level features in prediction performance in breast cancer prognosis. We also show that the proposed classification scheme can even suggest, in addition to relevant signaling circuits related to disease outcome, a list of genes that do not code for signaling proteins whose contribution to cancer prognosis potentially supplements the mechanisms detected by pathway analysis. This study is under submission as joint work with Marta R. Hidalgo, Cankut \c{C}ubuk, Alicia Amadoz, Jos\'{e} Carbonell-Caballero, Jean-Philippe Vert, Joaqu\'{i}n Dopazo \cite{Jiao2017Signaling}.
 \linebreak
 \vskip 0.1in
-\noindent \textrm{{\bf Résumé:}}
+\noindent \textrm{{\bf Résumé :}}
 
 \end{chapabstract}
 
@@ -344,7 +344,7 @@ When comparing the prognostic power between pathway-level and gene-level profile
 
 Table \ref{tab4:score} summarizes the best-performing classifiers for each type of prognostic profile in the sense that they are most frequently selected by internal cross-validation. Notably, it evidences that Support Vector Machines with various kernels are recurrently selected as the competent classifier in breast cancer prognosis that suits well for both gene-level and pathway-level features.
 
-\subsection{Signaling Circuits Selected As Features Relevant for Cancer Prognostic Account for Cancer Hallmarks}
+\subsection{Signaling Circuits Selected as Features Relevant for Cancer Prognostic Account for Cancer Hallmarks}
 \label{sec4:pathselect}
 
 From the clinical standpoint of cancer prognosis, we are interested in identifying a small set of biomarkers that can guide decision making in cancer prognosis. As our analysis is made at the level of pathways, we would like to detect a few signaling circuits whose activity, and thus the underlying cell functionality, has a significant impact on discriminating the prognosis classes of cancer patients. We opted for the Random Forests classifier to perform this analysis, since it simultaneously predicts the survival outcome of tumor samples and scores the importance of each feature that is ultimately used in the prediction. We focus on the feature importance measure returned by fitting a Random Forest which accounts for the mean decrease in classification performance if we randomly permute the data of the corresponding feature.

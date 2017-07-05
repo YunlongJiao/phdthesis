@@ -6,7 +6,7 @@
 \textrm{{\bf Abstract:}} Due to its numerous applications, rank aggregation has become a problem of major interest across many fields of the computer science literature. In the vast majority of situations, Kemeny consensus is considered as the ``golden'' solution. It is however well known that its computation is NP-hard. Much contribution have thus been devoted to establishing various results to apprehend this complexity. In this chapter, we introduce a practical method to predict, given a dataset and a ranking typically output by some approximate procedure, how close this ranking is to the Kemeny consensus of the dataset. A major strength of the proposed method is its generality: it requires little assumption on the dataset nor the ranking. Furthermore, it relies on a geometric interpretation of Kemeny aggregation that we believe could paves way to other results beyond those presented in this chapter. This study has been published as joint work with Anna Korba and Eric Sibony \cite{Jiao2016Controlling}.
 \linebreak
 \vskip 0.1in
-\noindent \textrm{{\bf Résumé:}}
+\noindent \textrm{{\bf Résumé :}}
 
 \end{chapabstract}
 
@@ -48,7 +48,7 @@ Let $\sigma\in\Sn$ be a permutation, typically output by a computationally effic
 \end{question*}
 
 
-The answer to The Question is positive as we will elaborate in this study. We propose an upper bound, guaranteed by Theorem \ref{thmA:method}, thus says: for any $\sigma$ and $\DN$, we have $d(\sigma,\sigstar)\leq \kmin$ for all consensuses $\sigstar\in\KN$, where $\kmin$ is defined in \eqref{eqA:k-min}. We would like to stress a major strength of our method compared to those previously studied in literature that is the generality: it can be applied to any dataset $\DN$ and any permutation $\sigma$ with little assumption on neither. This is because it exploits a powerful geometric framework for the analysis of Kemeny aggregation.
+The answer to The Question is positive as we will elaborate in this study. We propose an upper bound, guaranteed by Theorem \ref{thmA:method}, that reads: for any $\sigma$ and $\DN$, we have $d(\sigma,\sigstar)\leq \kmin$ for all consensuses $\sigstar\in\KN$, where $\kmin$ is defined in \eqref{eqA:k-min}. We would like to stress a major strength of our method compared to those previously studied in literature that is the generality: it can be applied to any dataset $\DN$ and any permutation $\sigma$ with little assumption on neither. This is because it exploits a powerful geometric framework for the analysis of Kemeny aggregation.
 
 
 
@@ -125,7 +125,7 @@ Let $\DN\in\Sn^N$ be a dataset and $\sigma\in\Sn$ a permutation. For any integer
 \]
 \end{thm}
 
-The proof of Theorem \ref{thmA:method} along with its geometric interpretation are postponed to Section \ref{secA:proof}. Broadly speaking, Theorem \ref{thmA:method} ensures that if the angle $\theta_{N}(\sigma)$ between the embedding $\phi(\sigma)$ of a permutation $\sigma\in\Sn$ and the mean embedding $\phi(\DN)$ is small, then the Kemeny consensuses cannot be too far from $\sigma$. Its application in practice is straightforward. Assume that one applies an aggregation procedure on $\DN$ (say the Borda Count for instance) that outputs $\sigma$. A natural question is then: how far is it from the Kemeny consensuses in terms of Kendall's tau distance? It is well known that the Kendall's tau distance takes values in $\{0,\dots,\binom{n}{2}\}$ \cite{Stanley1986Enumerative}. Consequently, the distance is at most equal to $\max_{\sigma',\sigma''\in\Sn} d(\sigma',\sigma'') = \binom{n}{2}$. But if one computes the quantity $\cos(\theta_{N}(\sigma))$, a better bound can be allowed due to Theorem \ref{thmA:method}. More specifically, the best bound is given by the minimal $k\in\{0,\dots,\binom{n}{2}-1\}$ such that $\cos(\theta_{N}(\sigma)) > \sqrt{1-(k+1)/\binom{n}{2}}$. Denoting by $\kmin(\sigma;\DN)$ this integer, it is easy to see that
+The proof of Theorem \ref{thmA:method} along with its geometric interpretation are postponed to Section \ref{secA:proof}. Broadly speaking, Theorem \ref{thmA:method} ensures that if the angle $\theta_{N}(\sigma)$ between the embedding $\phi(\sigma)$ of a permutation $\sigma\in\Sn$ and the mean embedding $\phi(\DN)$ is small, then the Kemeny consensuses cannot be too far from $\sigma$. Its application in practice is straightforward. Assume that one applies an aggregation procedure on $\DN$, say the Borda Count for instance, that outputs $\sigma$. A natural question is then: how far is it from the Kemeny consensuses in terms of Kendall's tau distance? It is well known that the Kendall's tau distance takes values in $\{0,\dots,\binom{n}{2}\}$ \cite{Stanley1986Enumerative}. Consequently, the distance is at most equal to $\max_{\sigma',\sigma''\in\Sn} d(\sigma',\sigma'') = \binom{n}{2}$. But if one computes the quantity $\cos(\theta_{N}(\sigma))$, a better bound can be allowed due to Theorem \ref{thmA:method}. More specifically, the best bound is given by the minimal $k\in\{0,\dots,\binom{n}{2}-1\}$ such that $\cos(\theta_{N}(\sigma)) > \sqrt{1-(k+1)/\binom{n}{2}}$. Denoting by $\kmin(\sigma;\DN)$ this integer, it is easy to see that
 \begin{equation}
 \label{eqA:k-min}
 \kmin(\sigma;\DN) = 
