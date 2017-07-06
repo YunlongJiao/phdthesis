@@ -216,9 +216,9 @@ urlcolor=linkcol %couleur des liens pour les url
 {\end{large}}
 
 % abstract for each chapter
-\newenvironment{chapabstract}%
-{\itshape\raggedright\leftskip1in}%
-{}
+\newenvironment{chapabstract}[1]%
+{\raggedright\leftskip1in\textbf{#1 }\itshape}%
+{\\}
 
 % acknowledgments
 \newenvironment{acknowledgments}%
