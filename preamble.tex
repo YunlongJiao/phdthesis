@@ -206,19 +206,30 @@ urlcolor=linkcol %couleur des liens pour les url
 
 % abstract for thesis
 \newenvironment{theabstract}[1]%
-{{\large\noindent\rule{1ex}{1ex}\hspace{\stretch{1}}%
+{\markboth{#1}{#1}%
+{\large\noindent\rule{1ex}{1ex}\hspace{\stretch{1}}%
 {\textbf{\textit{#1}}}%
 \hspace{\stretch{1}}\rule{1ex}{1ex}}
-%\section*{\huge #1}%
 \addcontentsline{toc}{chapter}{#1}
-\vskip 0.1in
-\begin{normalsize}\noindent}%
-{\end{normalsize}}
+\vskip 0.2in
+\begin{large}\noindent}%
+{\end{large}}
 
 % abstract for each chapter
 \newenvironment{chapabstract}%
 {\itshape\raggedright\leftskip1in}%
 {}
+
+% acknowledgments
+\newenvironment{acknowledgments}%
+{\section*{\huge Acknowledgments}%
+\addcontentsline{toc}{chapter}{Acknowledgments}%
+\markboth{Acknowledgments}{Acknowledgments}
+\vskip 0.2in
+\begin{large}}%
+{\end{large}%
+\pagestyle{fancy}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Page de garde              %

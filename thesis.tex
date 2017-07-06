@@ -45,23 +45,22 @@
 
 \pagenumbering{roman}
 
-% abstract in english and french
-\newpage\vspace*{\fill}
+% abstract in en
 \begin{theabstract}{Abstract}%
 \input{abstract-en}%
 \end{theabstract}
-\vskip 0.3in
+\cleardoublepage
+
+% abstract in fr
 \begin{theabstract}{Résumé}%
 \input{abstract-fr}%
 \end{theabstract}
-\vspace*{\fill}
 \cleardoublepage
 
 % acknowledgments
-\section*{\huge Acknowledgments}
-\addcontentsline{toc}{chapter}{Acknowledgments}
-\vskip 0.2in
-\input{acknowledgments}
+\begin{acknowledgments}%
+\input{acknowledgments}%
+\end{acknowledgments}
 \cleardoublepage
 
 % contents
