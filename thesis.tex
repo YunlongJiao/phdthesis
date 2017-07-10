@@ -11,25 +11,25 @@
 \specialty{Bio-informatique}
 \date{xx septembre 2017}
 
-\jury{
-  Mme Prénom Nom\\
-  Établissement, Président
-
-  M Risi KONDOR\\
-  University of Chicago, Rapporteur
-
-  M Stéphan CLÉMENÇON\\
-  Télécom ParisTech, Rapporteur
-
-  M Rémi GRIBONVAL\\
-  INRIA, Membre du jury
-
-  M Prénom Nom\\
-  Établissement, Membre du jury
-
-  M Jean-Philippe VERT\\
-  MINES ParisTech, Membre du jury
-}
+%\jury{
+%  Mme Prénom Nom\\
+%  Établissement, Président
+%
+%  M Risi KONDOR\\
+%  University of Chicago, Rapporteur
+%
+%  M Stéphan CLÉMENÇON\\
+%  Télécom ParisTech, Rapporteur
+%
+%  M Rémi GRIBONVAL\\
+%  INRIA, Membre du jury
+%
+%  M Prénom Nom\\
+%  Établissement, Membre du jury
+%
+%  M Jean-Philippe VERT\\
+%  MINES ParisTech, Membre du jury
+%}
 
 {
 \small
@@ -43,7 +43,8 @@
 
 \maketitle
 
-\pagenumbering{roman}
+% front matter
+\frontmatter
 
 % abstract in en
 \begin{theabstract}{Abstract}%
@@ -57,11 +58,11 @@
 \end{theabstract}
 \cleardoublepage
 
-% acknowledgments
-\begin{theabstract}{Acknowledgments}%
-\input{acknowledgments}%
-\end{theabstract}
-\cleardoublepage
+%% acknowledgments
+%\begin{theabstract}{Acknowledgments}%
+%\input{acknowledgments}%
+%\end{theabstract}
+%\cleardoublepage
 
 % contents
 \dominitoc
@@ -69,10 +70,12 @@
 \cleardoublepage
 
 % list of figures
+\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
 \cleardoublepage
 
 % list of tables
+\addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
 \cleardoublepage
 
@@ -127,7 +130,36 @@
 \nomenclature[F, 02]{$\mathbb{P}$}{Probability}
 \nomenclature[F, 03]{$\EE$}{Expectation}
 
+\addcontentsline{toc}{chapter}{\nomname}
 \printnomenclature
+\cleardoublepage
+
+% list of publications
+\begin{publication}
+\paragraph{Working Papers and Preprints}
+\begin{itemize}
+	\item \bibentry{Jiao2017Network}.
+	\item \bibentry{Jiao2017Signaling}.
+\end{itemize}
+
+\paragraph{Published Papers}
+\begin{itemize}
+	\item \bibentry{Jiao2017Kendall}.
+	\item \bibentry{Jiao2016Controlling}.
+	\item \bibentry{Eduati2015Prediction}.
+	\item \bibentry{Jiao2015Kendall}.
+\end{itemize}
+
+\paragraph{Patents and Patent Applications}
+\begin{itemize}
+	\item \bibentry{Jiao2016Failure}.
+\end{itemize}
+
+\paragraph{Software}
+\begin{itemize}
+	\item \bibentry{Jiao2016kernrank}.
+\end{itemize}
+\end{publication}
 \cleardoublepage
 
 % thesis

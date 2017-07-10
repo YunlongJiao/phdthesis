@@ -25,6 +25,10 @@
 %\usepackage{imakeidx}
 %\makeindex
 
+% full citation intext for bibtex
+\usepackage{bibentry}
+\nobibliography*
+
 % My pdf code
 
 \usepackage{ifpdf}
@@ -229,6 +233,12 @@ urlcolor=linkcol %couleur des liens pour les url
 %\begin{large}}%
 %{\end{large}}
 
+% list of publication
+\newenvironment{publication}[1][List of PhD Deliverables]%
+{\chapter*{#1}%
+\addcontentsline{toc}{chapter}{#1}%
+\markboth{#1}{#1}}%
+{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Page de garde              %
