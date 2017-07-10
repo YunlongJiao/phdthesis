@@ -2,7 +2,7 @@
 \label{chap:kemeny}
 
 \begin{chapabstract}{Publication and Dissemination:}
-The work in this chapter has been published as joint work with Anna Korba and Eric Sibony in \cite{Jiao2016Controlling} and presented at ICML 2016 by Anna Korba.
+The work in this chapter has been published as joint work with Anna Korba and Eric Sibony in \cite{Jiao2016Controlling} and orally presented at ICML 2016 by Anna Korba.
 \end{chapabstract}
 \vskip 0.2in
 \begin{chapabstract}{Abstract:}
@@ -154,7 +154,7 @@ The application of The Method has complexity in time $O(Nn^{2})$.
 With a concrete example, we demonstrate the applicability and the generality of The Method.
 
 \begin{example}[Application of The Method to the sushi dataset]
-We report here the results of a case-study on the sushi dataset provided by \cite{Kamishima2003Nantonac} to illustrate our method. The dataset consists of $N=5000$ total rankings given by different individuals of the preference order on $n=10$ sushi dishes such that a brute-force search for the Kemeny consensus is already very computationally intensive. To apply our method, we selected seven tractable voting rules, denoted by $\sigma$, as approximate candidates to Kemeny's rule to provide an initial guess (details of voting rules can be found in Section \ref{secA:votingrules}). Table \ref{tabA:sushi} summarizes the values of $\cos(\theta_N(\sigma))$ and $\kmin(\sigma)$, respectively given by \eqref{eqA:cosinus} and \eqref{eqA:k-min}. Results show that on this particular dataset, if we use for instance Borda Count to approximate a Kemeny consensus, we are confident that any exact consensus has a distance of at most 14 to the approximate ranking. We detail empirical analysis of the results further in Section \ref{secA:experiments}.
+We report here the results of a case-study on the sushi dataset provided by \cite{Kamishima2003Nantonac} to illustrate our method. The dataset consists of $N=5000$ total rankings given by different individuals of the preference order on $n=10$ sushi dishes such that a brute-force search for the Kemeny consensus is already very computationally intensive. To apply our method, we selected seven tractable voting rules, denoted by $\sigma$, as approximate candidates to Kemeny's rule to provide an initial guess (details of voting rules can be found in Section \ref{secA:experiments}). Table \ref{tabA:sushi} summarizes the values of $\cos(\theta_N(\sigma))$ and $\kmin(\sigma)$, respectively given by \eqref{eqA:cosinus} and \eqref{eqA:k-min}. Results show that on this particular dataset, if we use for instance Borda Count to approximate a Kemeny consensus, we are confident that any exact consensus has a distance of at most 14 to the approximate ranking. We detail empirical analysis of the results further in Section \ref{secA:experiments}.
 \end{example}
 
 \begin{table}[!htbp]
@@ -186,7 +186,6 @@ We report here the results of a case-study on the sushi dataset provided by \cit
 
 This section details the proof of Theorem \ref{thmA:method} based the geometric interpretation introduced in Section \ref{secA:geometry}. We deem that our proof has indeed a standalone interest, and that it could pave way to other profound results on Kemeny aggregation.
 
-\subsection{Extended Cost Function}
 
 Recall that the Kemeny consensuses of a dataset $\DN$ are the solutions of the problem \eqref{eqA:reformulation}:
 \[
@@ -289,10 +288,7 @@ This recovers exactly the condition stated in Lemma \ref{lemA:condition}.
 \label{figA:illustration-condition}
 \end{figure}
 
-
-\subsection{Embedding of a Ball}
-
-For $\sigma\in\Sn$ and $k\in\{0,\dots,\binom{n}{2}\}$ we denote by $B(\sigma,k)$ the (closed) ball for the Kendall's tau distance of center $\sigma$ and radius $k$, i.e. $B(\sigma,k) = \{\sigma'\in\Sn \;\vert\; d(\sigma,\sigma')\leq k\}$. The following is a direct consequence of Proposition \ref{propA:background-result}.
+A final lemma necessary for the proof of Theorem \ref{thmA:method} is on the embedding of a ball in the Euclidean space. For $\sigma\in\Sn$ and $k\in\{0,\dots,\binom{n}{2}\}$, we denote by $B(\sigma,k)$ the (closed) ball for the Kendall's tau distance of center $\sigma$ and radius $k$, i.e. $B(\sigma,k) = \{\sigma'\in\Sn \;\vert\; d(\sigma,\sigma')\leq k\}$. The following is a direct consequence of Proposition \ref{propA:background-result}.
 
 \begin{lemma}
 \label{lemA:ball-embedding}
@@ -327,9 +323,6 @@ This means that for all $\sigma'\in\Sn$ with $d(\sigma,\sigma') > k$, $\theta_{N
 \section{Numerical Experiments}
 \label{secA:experiments}
 
-
-\subsection{Examples of Voting Rules}
-\label{secA:votingrules}
 
 In this section we study the tightness of the bound in Theorem \ref{thmA:method} and the applicability of The Method through numerical experiments. We first elaborate in detail the voting rules used in the chapter to approximate Kemeny's rule. Note that if multiple consensuses are returned from a rule on a given dataset, we always randomly pick one from these consensuses.
 

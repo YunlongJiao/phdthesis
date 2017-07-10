@@ -291,7 +291,7 @@ In this study, we considered a total of 12 classification algorithms as candidat
 \section{Results}
 \label{sec4:results}
 
-\subsection{Signaling Pathway Activity Leads to Improved Prognosis for Breast Tumor Samples}
+\subsection{Signaling Pathway Activities Lead to Improved Prognosis for Breast Tumor Samples}
 \label{sec4:performance}
 
 The performance of using different types of profiles (Table \ref{tab4:profile}) as predictive features to classify survival outcome for breast cancer patients is shown in Figure \ref{fig4:score} while mean scores with standard deviation are reported in Table \ref{tab4:score}. Under the criterion of AUROC to evaluate the classification performance, we observe that the activity values of signaling circuits, denoted by  \textit{path.vals}, yield the best performance overall. In particular, they outperform the profiles based solely on gene expression values, denoted by \textit{path.genes.vals}, \textit{other.genes.vals} and \textit{genes.vals}. In other words, we are able to integrate the expression values of path-genes with the prior knowledge of cell signaling to obtain pathway-level features that achieve improved prognosis. Interestingly, these pathway-level features relate to biological processes and cellular functions \textit{per se}. Although the pathway-level features are derived from the expression of path-genes and thus agnostic to the expression of other-genes, the inclusion of other-genes to the signaling circuits, inducing the profiles denoted by \textit{eff.and.other.genes.vals} and \textit{path.and.other.genes.vals}, does not significantly improve the performance by performing a two-sided t-test comparing the difference between the cross-validation AUROC scores obtained by each pair of profiles further FDR-adjusted for multiple testing \cite{Benjamini1995Controlling} (Table \ref{tab4:test}).
@@ -347,7 +347,7 @@ When comparing the prognostic power between pathway-level and gene-level profile
 
 Table \ref{tab4:score} summarizes the best-performing classifiers for each type of prognostic profile in the sense that they are most frequently selected by internal cross-validation. Notably, it evidences that Support Vector Machines with various kernels are recurrently selected as the competent classifier in breast cancer prognosis that suits well for both gene-level and pathway-level features.
 
-\subsection{Signaling Circuits Selected as Features Relevant for Cancer Prognostic Account for Cancer Hallmarks}
+\subsection{Signaling Circuits Selected as Features Relevant for Cancer Prognosis Account for Cancer Hallmarks}
 \label{sec4:pathselect}
 
 From the clinical standpoint of cancer prognosis, we are interested in identifying a small set of biomarkers that can guide decision making in cancer prognosis. As our analysis is made at the level of pathways, we would like to detect a few signaling circuits whose activity, and thus the underlying cell functionality, has a significant impact on discriminating the prognosis classes of cancer patients. We opted for the Random Forests classifier to perform this analysis, since it simultaneously predicts the survival outcome of tumor samples and scores the importance of each feature that is ultimately used in the prediction. We focus on the feature importance measure returned by fitting a Random Forest which accounts for the mean decrease in classification performance if we randomly permute the data of the corresponding feature.
