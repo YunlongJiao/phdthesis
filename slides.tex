@@ -14,6 +14,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{decorations.fractals}
+\usepackage{etoolbox}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -27,12 +28,26 @@
 \setbeamerfont{frametitle}{shape=\scshape}
 \setbeamerfont{caption}{size=\scriptsize}
 
+\definecolor{myblue}{RGB}{33,84,157}
+\setbeamercolor*{title}{fg=myblue}
+\setbeamercolor*{frametitle}{fg=myblue}
 \setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
 \setbeamercolor*{normal text}{fg=black,bg=white} 
 \setbeamercolor*{alerted text}{fg=red} 
 \setbeamercolor*{example text}{fg=black} 
-\setbeamercolor*{structure}{fg=black} 
- 
+\setbeamercolor*{structure}{fg=black,bg=white}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\BeforeBeginEnvironment{thm}{
+	\setbeamercolor{block title}{fg=myblue,bg=myblue!10!bg}
+	\setbeamercolor{block body}{fg=structure.fg, bg=myblue!5!bg}
+}
+\AfterEndEnvironment{thm}{
+	\setbeamercolor{block title}{fg=myblue,bg=white}
+	\setbeamercolor{block body}{fg=black, bg=white}
+}
+
 \setbeamercolor*{palette tertiary}{fg=black,bg=black!10} 
 \setbeamercolor*{palette quaternary}{fg=black,bg=black!10} 
 
@@ -59,19 +74,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%% full citation intext for bibtex %%%%%%%%%%%%%%%
-\usepackage{bibentry}
-\nobibliography*
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 %% section title page %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\addsectiontitlepage}{
 	\hfill\leavevmode
   \vtop{
-    \huge\hbox{\insertsection}
+    \huge\hbox{\color{myblue}\insertsection}
     \kern.5ex % space between text and line
-    \hrule height 2pt % rule thickness
     \vspace{1cm}
   }
 }
@@ -79,22 +87,10 @@
 
 
 %% aliases %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{amsmath}	% need for math
-\usepackage{graphicx}   % need for figures
-\usepackage{bbm}		% need for bold indicators 1(i<j)
-\usepackage{framed}		% need for framed environment
-\usepackage{color}		% need for colorful fonts
-
-\usepackage{fancybox}	% for fancy boxes
-
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{amsthm}
-%\usepackage{bbm} % for hollow 1
+\usepackage{amssymb,amsmath,amsthm} % need for math
 \usepackage{dsfont} % for hollow 1 with Type 1 fonts
+
 \newcommand{\Sn}{\mathbb{S}_n}
-\newcommand{\fixme}[1]{{\bf [FIXME: #1]}}
-%\newtheorem{thm}{Theorem}
 \newcommand{\RR}{\mathbb{R}}    %reals
 \newcommand {\br}[1]{\left(#1\right)}
 \newcommand {\sqb}[1]{\left[#1\right]}
@@ -102,14 +98,17 @@
 \newcommand{\xb}{\mathbf{x}}
 \newcommand{\ub}{\mathbf{u}}
 \newcommand{\wb}{\mathbf{w}}
-\newcommand {\nm}[1]{\Arrowvert\, #1 \,\Arrowvert}
-\newcommand {\abs}[1]{\left\vert\, #1 \,\right\vert}
+\newcommand{\innerprod}[1]{\langle #1 \rangle}
+\newcommand {\nm}[1]{\Arrowvert #1 \Arrowvert}
+\newcommand {\abs}[1]{\left\vert #1 \right\vert}
 \newcommand{\EE}{\mathbb{E}}
 \newcommand{\wh}{\widehat{\wb}}
 \newcommand{\Rh}{\widehat{R}}
-\newcommand {\OMIT}[1]{}               % to ignore things
-
 \newcommand{\sgn}{\operatorname{sgn}}
+
+\newcommand{\sigstar}{\sigma^{\ast}}
+\newcommand{\DN}{\mathcal{D}_{N}}
+\DeclareMathOperator*{\argmin}{argmin}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -204,7 +203,7 @@ of cancer patients.
 	\begin{equation*}
 		\left\{
 		\begin{array}{l}
-			\textrm{{\only<3>{\color{red}}Gene expression}} \\
+			\textrm{\alert<3>{Gene expression}} \\
 			\textrm{Mutations} \\
 			\textrm{Copy number variation} \\
 			\cdots
@@ -279,7 +278,7 @@ of cancer patients.
 	
 	\only<2->{
 	\begin{itemize}
-		\item {\only<2>{\color{red}}Challenges}:
+		\item \alert<2>{Challenges:}
 		\begin{itemize}
 			\item[?] High-dimensional ($m \ll n$) noisy data.
 			\item[?] Stability and interpretability of gene selection.
@@ -289,9 +288,9 @@ of cancer patients.
 	
 	\only<3->{
 	\begin{itemize}
-		\item {\only<3->{\color{red}}Initiatives}:
+		\item \alert<3-6>{Initiatives:}
 		\begin{itemize}
-			\item[$\checkmark$]<3-> Rank-based gene expression analysis\only<7>{ \color{red}(Part 1)}.
+			\item[$\checkmark$]<3-> Rank-based gene expression analysis.
 			\only<3>{
 			\begin{figure}
 				\centering
@@ -305,7 +304,7 @@ of cancer patients.
 			\end{figure}
 			}
 			
-			\item[$\checkmark$]<5-> Network-guided gene/subnetwork selection\only<7>{ \color{red}(Part 2)}.
+			\item[$\checkmark$]<5-> Network-guided gene/subnetwork selection.
 			\only<5>{
 			\begin{figure}
 				\centering
@@ -321,6 +320,16 @@ of cancer patients.
 				\caption{Network-free (left) vs network-guided (right) model \cite{Rapaport2007Classification}.}
 			\end{figure}
 			}
+		\end{itemize}
+	\end{itemize}
+	}
+	
+	\only<7>{
+	\begin{itemize}
+		\item \alert<7>{Outline:}
+		\begin{itemize}
+			\item[\alert<7>{Part 1}] Learning with rank data.
+			\item[\alert<7>{Part 2}] Learning on graphs.
 		\end{itemize}
 	\end{itemize}
 	}
@@ -360,6 +369,297 @@ of cancer patients.
 	\end{footnotesize}
 	\>
 	\)
+	
+\end{frame}
+
+
+\subsection{\scshape Rank data are everywhere}
+\begin{frame}{\insertsubsection}
+	
+	\([b]
+	\<{0.6\linewidth}
+		\includegraphics[width=\columnwidth]{slides/USelection}\\
+		\includegraphics[width=\columnwidth]{slides/employee-engagement}
+	\>%
+	\<{0.6\linewidth}
+		\includegraphics[width=\columnwidth]{slides/questionnaire}\\
+		\includegraphics[width=0.8\columnwidth]{slides/microarray}
+	\>
+	\)
+	
+\end{frame}
+
+\subsection{\scshape Total rankings and permutations}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item<1-> A total ranking $(\xb, \succ)$ is a strict ordering of $n$ items $\{x_1,x_2,\dots,x_n\}\,,$
+		$$ x_{i_1} \succ x_{i_2} \succ \cdots \succ x_{i_n}\,. $$
+		\item<1-> A permutation $\sigma \in \Sn$ is a rearrangement of $n$ indices,
+		$$ \sigma: \{1,2,\dots,n\} \to \{1,2,\dots,n\} \mbox{ such that } \sigma(i)\neq \sigma(j) \mbox{ for } i\neq j\,.$$
+		\item<2-> A total ranking is \alert<2>{equivalently represented} by a permutation if $\sigma$ maps item index to item rank, e.g.,
+		\begin{equation*}
+		\begin{split}
+			& x_2 \succ x_4 \succ x_3 \succ x_1 \\
+			\Longleftrightarrow \sigma = & 
+				\left(\begin{array}{llll}
+					1 & 2 & 3 & 4 \\
+					1 & 4 & 2 & 3 \\
+				\end{array}\right)
+				\left.\begin{array}{l}
+					\mbox{--- index} \\
+					\mbox{--- rank} \\
+				\end{array}\right. \\
+				(\mbox{or written } & \sigma = (1 , 4 , 2 , 3) \mbox{ for simplicity}) \\
+			\Longleftrightarrow \sigma(1)=1 &, \sigma(2)=4, \sigma(3)=2, \sigma(4)=3\,.
+		\end{split}
+		\end{equation*}
+	\end{itemize}
+	
+\end{frame}
+
+\subsection{\scshape Kendall kernel for permutations}
+\begin{frame}{\insertsubsection}
+	
+	\only<1-3>{
+	\([c]
+	\<{0.7\linewidth}
+		\begin{itemize}
+			\item<1-> Kendall tau distance \cite{Kendall1938New} counts the number of discordant pairs between permutations, i.e., 
+			\begin{equation*}
+			\begin{split}
+				d (\sigma, & \sigma') := \# \big\{ (i,j) | \mbox{ for } i < j \,, \\
+				& (\sigma(i)-\sigma(j))(\sigma'(i)-\sigma'(j)) < 0 \big\} \,.
+			\end{split}
+			\end{equation*}
+			
+			\item<2-> Kendall tau correlation \cite{Kendall1938New} for permutations is defined as
+			$$ K_\tau(\sigma, \sigma') := 1 - \frac{2d(\sigma, \sigma')}{{n\choose 2}} \,. $$
+		\end{itemize}
+	\>
+	
+	\vrule{}
+	
+	\<{0.4\linewidth}
+		\vskip 0.1cm
+		E.g.,
+		\vskip 0.2cm
+		\begin{tabular}{c|ccccc}\hline
+			index $e$ & 1 & 2 & 3 & 4 \\ \hline
+			rank $\sigma$ & 2 & 3 & 4 & 1 \\
+			rank $\sigma'$ & 3 & 1 & 4 & 2 \\\hline
+		\end{tabular}
+		
+		\vskip 0.2cm
+		$$ d(\sigma,\sigma') = 2 $$
+		
+		\vskip 1cm
+		\uncover<2>{
+		$$ K_\tau(\sigma,\sigma') = \frac{1}{3} $$
+		}
+	\>
+	\)
+	}
+	
+	\only<3->{
+	\begin{thm}[Main theorem \cite{Jiao2015Kendall}]
+		Kendall tau correlation $K_\tau$ is a positive definite kernel, and Kendall tau distance $d$ is a negative definite kernel on $\Sn$.
+	\end{thm}
+	}
+	
+	\only<4>{
+	Recall from introduction:
+	\begin{figure}
+		\includegraphics[width=\linewidth]{slides/kendall-2}
+	\end{figure}
+	}
+	
+	\only<5->{
+	\begin{proof}
+	\footnotesize
+		Consider explicitly the \alert<5>{Kendall embedding} defined as
+		$$ \phi:\Sn \rightarrow \RR^{{n \choose 2}}, \sigma \mapsto \left( \sgn(\sigma(i)-\sigma(j)) \right)_{1\leq i < j \leq n} \,. $$
+		Up to constant scaling, we have
+		\begin{eqnarray*}
+			K_\tau(\sigma, \sigma') & = & \innerprod{\phi(\sigma), \phi(\sigma')} \,, \\
+			d(\sigma, \sigma') & = & \nm{\phi(\sigma) - \phi(\sigma')}^2 \,.
+		\end{eqnarray*}
+	\end{proof}
+	}
+	
+	\only<6>{
+	\begin{thm}[Kernel trick \cite{Knight1966Computer}]
+		Both quantities $K_\tau$ and $d$ can be evaluated in \alert<6>{$O(n\log n)$} time.
+	\end{thm}
+	}
+	
+\end{frame}
+
+
+\subsection{\scshape Application: Biomedical classification}
+\begin{frame}{\insertsubsection}
+	
+	\only<1>{
+	\begin{itemize}
+		\item Datasets:
+	\end{itemize}
+		\vskip -0.4cm
+		\begin{table}
+		\scriptsize
+			\begin{tabular}{cccc}
+			\hline
+			Dataset & No. of features & \multicolumn{2}{c}{No. of samples in each class (training/test)} \\
+			& & $C_1$ & $C_2$ \\
+			\hline
+			Breast Cancer 1 & 23624 & 44/7 (Non-relapse) & 32/12 (Relapse) \\
+			Breast Cancer 2 & 22283 & 142 (Non-relapse) & 56 (Relapse) \\
+			Breast Cancer 3 & 22283 & 71 (Poor Prognosis) & 138 (Good Prognosis) \\
+			Colon Tumor & 2000 & 40 (Tumor) & 22 (Normal) \\
+			Lung Cancer 1 & 7129 & 24 (Poor Prognosis) & 62 (Good Prognosis) \\
+			Lung Cancer 2 & 12533 & 16/134 (ADCA) & 16/15 (MPM) \\
+			Medulloblastoma & 7129 & 39 (Failure) & 21 (Survivor) \\
+			Ovarian Cancer & 15154 & 162 (Cancer) & 91 (Normal) \\
+			Prostate Cancer 1 & 12600 & 50/9 (Normal) & 52/25 (Tumor) \\
+			Prostate Cancer 2 & 12600 & 13 (Non-relapse) & 8 (Relapse) \\
+			\hline
+			\end{tabular}
+		\end{table}
+		\vskip -0.1cm
+		
+	\begin{itemize}
+		\item Methods:
+		\begin{itemize}
+			\item[-] Kernel machines: \alert{Support Vector Machines (SVM)} and Kernel Fisher Discriminant (KFD) \alert{with Kendall kernel}, linear kernel, Gaussian RBF kernel, polynomial kernel.
+			\item[-] Baseline classifiers: Top Scoring Pairs (TSP) \cite{Tan2005Simple}.
+			\item[-] Hybrid schemes: SVM + TSP feature selection algorithm.
+		\end{itemize}
+	\end{itemize}
+	}
+	
+	\only<2->{
+	\([c]
+	\<{0.65\linewidth}
+		\begin{figure}
+			\only<2>{\includegraphics[width=\columnwidth]{ch-kendall/clasf_results/acc_plot}}
+			\only<3>{\includegraphics[width=\columnwidth]{ch-kendall/clasf_results/acc_perfSVM}}
+			\only<4>{\includegraphics[width=\columnwidth]{ch-kendall/clasf_results/acc_perfFS}}
+		\end{figure} 
+	\>
+	\vspace{-1.5cm}
+	\<{0.5\linewidth}
+		Kendall kernel SVM has
+		\begin{itemize}
+			\item<2-4> \alert<2>{Competitive accuracy!}
+			\item<3-4> \alert<3>{Less sensitivity to regularization parameter!}
+			\item<4> \alert<4>{No need for feature selection!}
+		\end{itemize}
+	\>
+	\)
+	}
+	
+\end{frame}
+
+
+\subsection{\scshape Application: Rank aggregation}
+\begin{frame}{\insertsubsection}
+	
+	\only<1>{
+	\begin{itemize}
+		\item Rank aggregation: \alert<1>{Given a collection} of permutations $\sigma_1,\dots,\sigma_N \in \Sn$, \alert<1>{find a consensus} permutation $\sigstar \in \Sn$ that ``best'' summarizes them.
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[width=0.5\linewidth]{slides/rankaggregation}
+	\end{figure}
+	}
+	
+	\only<2-7>{
+	\begin{itemize}
+		\item	Kemeny aggregation: Given $\DN := \{\sigma_t\}_{t=1}^N \in \Sn^N$,
+		\only<2-5>{
+			\only<2-3>{
+			\begin{equation*}
+			\sigstar \in \argmin_{\sigma \in \Sn} \sum_{t=1}^{N} d(\sigma,\sigma_t) \,.
+			\end{equation*}
+			}
+			\only<4->{
+			\begin{equation*}
+			\begin{split}
+			\sigstar & \in \argmin_{\sigma \in \Sn} \sum_{t=1}^{N} \alert<4>{ \nm{\phi(\sigma) - \phi(\sigma_t)}^2 }
+			\only<5>{ \\
+				& = \argmin_{\sigma \in \Sn} \nm{ \phi(\sigma) - \frac{1}{N} \sum_{t=1}^N \phi(\sigma_t) }^2
+			}
+			\,.
+			\end{split}
+			\end{equation*}
+			}
+		}
+		\only<6->{
+		\([c]
+		\<{0.6\columnwidth}
+			\begin{itemize}
+				\item[\alert<6>{Step 1}] Compute the mean embedding of $\DN$ in \alert<6>{$O(Nn^2)$} time by
+				$$ \phi(\DN) := \frac{1}{N} \sum_{t=1}^N \phi(\sigma_t) \,. $$
+				\item[\alert<6>{Step 2}] Find a Kemeny consensus $\sigstar$ by solving the \alert<6>{NP-hard} problem:
+				$$ \sigstar \in \argmin_{\sigma \in \Sn} \nm{ \phi(\sigma) - \phi(\DN) }^2 \,. $$
+			\end{itemize}
+		\>
+		\<{0.45\linewidth}
+			\begin{figure}
+				\includegraphics[trim=2cm 2.5cm 3.5cm 3cm, clip=true, width=\textwidth, height=1.3in]{ch-kemeny/figures/3d1test}
+				\caption{Kemeny aggregation for $n=3$.}
+			\end{figure}
+		\>
+		\)
+		}
+	\end{itemize}
+	}
+		
+	\only<3-7>{
+	\begin{itemize}
+		\item \alert<3>{Dilemma:} Kemeny consensus $\sigstar$ is desirable but NP-hard to find\only<7->{, and usually \alert<7->{approximated by $\sigma$} from a tractable procedure in practice}.
+	\end{itemize}
+	}
+	
+	\only<8->{
+	\begin{thm}[Tractable approx bound \cite{Jiao2016Controlling}]
+		If the Euclidean angle $\theta_N(\sigma)$ between $\phi(\sigma)$ and $\phi(\DN)$ is less than $\frac{\pi}{2}$, then
+		$$d(\sigma, \sigstar) \leq \left\lfloor {n \choose 2} \sin^2(\theta_N(\sigma)) \right\rfloor \,,$$
+		where $\lfloor \cdot \rfloor$ denotes the integer part of a real number.
+	\end{thm}
+	}
+	
+\end{frame}
+
+
+\subsection{\scshape Application: Cluster analysis}
+\begin{frame}{\insertsubsection}
+	
+	\only<1>{
+	\begin{figure}
+		\includegraphics[width=0.9\linewidth]{slides/clusterRank}
+		\caption{An example of voting blocs in Irish electorate \cite{Gormley2008Exploring}.}
+	\end{figure}
+	}
+	
+	\only<2-3>{
+	\begin{itemize}
+		\item Cluster analysis with $k$-means: \alert<2>{Given a collection} of permutations $\{\sigma_i\}_{i=1}^m \in \Sn^m$, \alert<2>{assign each permutation} into one of $c$ clusters $\{S_j\}_{j=1}^c$ by
+		$$
+		\argmin_{\{S_j, \pi_j \in \Sn\}} \sum_{j=1}^{c} \sum_{i: \sigma_i \in S_j} d(\pi_j, \sigma_i) \,,
+		$$
+		where each $\pi_j$ is the ``center'' permutation of cluster $S_j$.
+		
+		\item<3-> Lloyd's algorithm applies:
+%		\begin{figure}
+%			\includegraphics[width=\linewidth]{slides/lloyd}
+%		\end{figure}
+	\end{itemize}
+	}
+	
+	\only<4-5>{
+		
+		\item<3-> \alert<3>{Kernel $k$-means} algorithm applies!
+	}
 	
 \end{frame}
 
