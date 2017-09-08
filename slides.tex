@@ -25,6 +25,7 @@
 
 \setbeamerfont{title like}{shape=\scshape}
 \setbeamerfont{frametitle}{shape=\scshape}
+\setbeamerfont{caption}{size=\scriptsize}
 
 \setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
 \setbeamercolor*{normal text}{fg=black,bg=white} 
@@ -55,6 +56,25 @@
 %% Graphics path %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \graphicspath{{.}{images/}}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% full citation intext for bibtex %%%%%%%%%%%%%%%
+\usepackage{bibentry}
+\nobibliography*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% section title page %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addsectiontitlepage}{
+	\hfill\leavevmode
+  \vtop{
+    \huge\hbox{\insertsection}
+    \kern.5ex % space between text and line
+    \hrule height 2pt % rule thickness
+    \vspace{1cm}
+  }
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -110,7 +130,7 @@
       };
 		\end{tikzpicture}
 		
-		\title{Rank-based Molecular Prognosis and Network-guided Biomarker Discovery for Breast Cancer}
+		\title{Rank-based molecular prognosis and network-guided biomarker discovery for breast cancer}
 		\author{
 			Yunlong Jiao\\
 			{\scriptsize Supervised by Jean-Philippe Vert}
@@ -124,7 +144,32 @@
 
 \section{\scshape Introduction}
 
-\begin{frame}{Cancer prognosis}
+
+\subsection{\scshape Breast cancer in Europe}
+\begin{frame}{\insertsubsection}
+	
+	\(
+	\<{0.7\linewidth}
+		\includegraphics[width=\columnwidth]{slides/IncidenceMortalityBar}
+	\>
+	\hspace{-0.5cm}
+	\<{0.5\linewidth}
+		\begin{itemize}
+			\item Most common cancer in women
+			\item 458,337 new cases in 2012
+			\item 131,259 deaths in 2012
+		\end{itemize}
+		\begin{center}
+			\includegraphics[width=0.85\columnwidth]{slides/MortalityMapSmall}
+		\end{center}
+	\>
+	\)
+	
+\end{frame}
+
+
+\subsection{\scshape Cancer prognosis}
+\begin{frame}{\insertsubsection}
 	
 	\begin{itemize}
 		\item Prognosis is an estimate of the likely course or outcome
@@ -152,14 +197,15 @@ of cancer patients.
 	
 	\only<2->{
 	\fbox{
-		\parbox{0.95\columnwidth}{
-		\& Genomic information
+		\parbox{0.9\columnwidth}{
+		Molecular information
 		}
 	}
 	\begin{equation*}
 		\left\{
 		\begin{array}{l}
 			\textrm{{\only<3>{\color{red}}Gene expression}} \\
+			\textrm{Mutations} \\
 			\textrm{Copy number variation} \\
 			\cdots
 		\end{array}
@@ -168,26 +214,42 @@ of cancer patients.
 	}
 	\>
 	
-	\<{0.2\linewidth}
+	\<{0.25\linewidth}
 	\begin{figure}
 	\begin{center}
 		\only<1>{
 		\includegraphics[width=0.8\columnwidth]{slides/doctor}
 		}
 		\only<2->{
-		\includegraphics[width=1.2\columnwidth]{slides/Bioinfo}
+		\includegraphics[width=\columnwidth]{slides/Bioinfo}
 		}
 	\end{center}
 	\end{figure}
 	\>
 	
 	\<{0.4\linewidth}
-	\fbox{
-		\parbox{0.9\columnwidth}{
-		\only<1>{High/low risk of 5-year relapse}
-		\only<2->{
-			{\only<3>{\color{red}}Survival classification or survival analysis}
+	\only<1>{
+		\fbox{
+			\parbox{0.7\columnwidth}{
+				High/low risk of 5-year relapse
+			}
 		}
+	}
+	\only<2->{
+		\fbox{
+			\parbox{0.92\columnwidth}{
+				Prognosis classification
+			}
+		}
+		\fbox{
+			\parbox{0.7\columnwidth}{
+				Survival analysis
+			}
+		}
+		\fbox{
+			\parbox{0.85\columnwidth}{
+				Biomarker discovery
+			}
 		}
 	}
 	\>
@@ -196,36 +258,149 @@ of cancer patients.
 \end{frame}
 
 
-\begin{frame}{Supervised analysis of gene expression data}
+\subsection{\scshape Gene expression data analysis}
+\begin{frame}{\insertsubsection}
 	
+	\only<1-2>{
 	\begin{itemize}
 		\item Data: 
-		\begin{itemize}
-			\item[-] $X$ denotes $p$-gene expression profiles of $n$ cancer patients.
-			\item[-] $\mathbf{y}$ denotes the prognosis class or survival time of the $n$ patients.
-		\end{itemize}
-		
-		\item Goal: Learn to predict $y$ from a patient's profile $\mathbf{x}$.
 		\begin{figure}
-		\begin{center}
-			\includegraphics[width=0.8\linewidth]{slides/prognosis}
-			\vskip -0.1in
-			\caption{{\scriptsize Prognosis classification (good vs. poor) or survival analysis of gene expression data.}}
-		\end{center}
+			\centering
+			\includegraphics[width=\linewidth]{slides/prognosis}
 		\end{figure}
 		
-		\item<2-> Challenge:
+		\item Goal: Learn to predict $y$ from a patient's profile $\mathbf{x}$.
 		\begin{itemize}
-			\item[-] High-dimensional ($n \ll p$) and high-throughput measurements (Project 1).
-			\item[-] Interpretability of gene selection (Project 2).
+			\item[-] Classification or survival analysis.
+			\item[-] Gene selection.
 		\end{itemize}
 	\end{itemize}
+	}
+	
+	\only<2->{
+	\begin{itemize}
+		\item {\only<2>{\color{red}}Challenges}:
+		\begin{itemize}
+			\item[?] High-dimensional ($m \ll n$) noisy data.
+			\item[?] Stability and interpretability of gene selection.
+		\end{itemize}
+	\end{itemize}
+	}
+	
+	\only<3->{
+	\begin{itemize}
+		\item {\only<3->{\color{red}}Initiatives}:
+		\begin{itemize}
+			\item[$\checkmark$]<3-> Rank-based gene expression analysis\only<7>{ \color{red}(Part 1)}.
+			\only<3>{
+			\begin{figure}
+				\centering
+				\includegraphics[width=\linewidth]{slides/kendall}
+			\end{figure}
+			}
+			\only<4>{
+			\begin{figure}
+				\centering
+				\includegraphics[width=\linewidth]{slides/kendall-2}
+			\end{figure}
+			}
+			
+			\item[$\checkmark$]<5-> Network-guided gene/subnetwork selection\only<7>{ \color{red}(Part 2)}.
+			\only<5>{
+			\begin{figure}
+				\centering
+				\includegraphics[width=\linewidth]{slides/microarray-ppi}
+			\end{figure}
+			}
+			\only<6>{
+			\begin{figure}
+				\centering
+				\hspace{-2cm}
+				\includegraphics[width=0.75\linewidth]{ch-intro/network}
+				\vspace{-0.4cm}
+				\caption{Network-free (left) vs network-guided (right) model \cite{Rapaport2007Classification}.}
+			\end{figure}
+			}
+		\end{itemize}
+	\end{itemize}
+	}
+	
 \end{frame}
 
 
+\section{\scshape Learning with rank data}
 
 
+\begin{frame}
+	
+	\addsectiontitlepage
+	
+	\(
+	\<{0.4\linewidth}
+	\includegraphics[width=\columnwidth]{ch-kendall/figures/permutahedron}
+	\>
+	
+	\<{0.55\linewidth}
+	\begin{footnotesize}
+	\textbf{Working Papers and Preprints}
+	\begin{itemize}
+		\item \nocite{Jiao2017Kendall} Jiao, Y., Vert, J.-P. IEEE TPAMI 2017 (to appear). Preprint HAL-01279273.
+	\end{itemize}
+	
+	\textbf{Published Papers}
+	\begin{itemize}
+		\item \nocite{Jiao2016Controlling} Jiao, Y., Korba, A., Sibony, E. ICML 2016.
+		\item \nocite{Jiao2015Kendall} Jiao, Y., Vert, J.-P. ICML 2015.
+	\end{itemize}
+	
+	\textbf{Software}
+	\begin{itemize}
+		\item \nocite{Jiao2016kernrank} Jiao, Y. \texttt{kernrank} ver. 1.0.2.
+	\end{itemize}
+	\end{footnotesize}
+	\>
+	\)
+	
+\end{frame}
 
+
+\section{\scshape Learning on graphs}
+
+
+\begin{frame}
+	
+	\addsectiontitlepage
+	
+	\(
+	\<{0.4\linewidth}
+	\includegraphics[width=\columnwidth]{slides/ppi}
+	\>
+	
+	\<{0.55\linewidth}
+	\begin{footnotesize}
+	\textbf{Working Papers and Preprints}
+	\begin{itemize}
+		\item \nocite{Jiao2017Network} Jiao, Y., Vert, J.-P. Technical report.
+		\item \nocite{Jiao2017Signaling} Jiao, Y., Hidalgo, M. R., \c{C}ubuk, C., Amadoz, A., Carbonell-Caballero, J., Vert, J.-P., Dopazo, J. Preprint bioRxiv-132357. (*)
+	\end{itemize}
+	\end{footnotesize}
+	\>
+	\)
+	
+\end{frame}
+
+
+\section{\scshape Conclusion}
+
+
+\begin{frame}{\insertsection}
+	
+\end{frame}
+
+
+\begin{frame}{Acknowledgments}
+	
+\end{frame}
 
 
 \begin{frame}[allowframebreaks]{References}
