@@ -105,10 +105,16 @@
 \newcommand{\wh}{\widehat{\wb}}
 \newcommand{\Rh}{\widehat{R}}
 \newcommand{\sgn}{\operatorname{sgn}}
+\renewcommand{\epsilon}{\varepsilon}
 
 \newcommand{\sigstar}{\sigma^{\ast}}
 \newcommand{\DD}{\mathcal{D}}
 \DeclareMathOperator*{\argmin}{argmin}
+
+\newcommand{\GG}{\mathcal{G}}
+\newcommand{\VV}{\mathcal{V}}
+\newcommand{\EEc}{\mathcal{E}}
+\newcommand{\fb}{\mathbf{f}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -373,17 +379,37 @@ of cancer patients.
 \end{frame}
 
 
+\subsection{\scshape Motivation recap}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item Data: 
+		\begin{figure}
+			\centering
+			\includegraphics[width=\linewidth]{slides/prognosis}
+		\end{figure}
+		
+		\item Goal: Learn to predict $y$ from a patient's profile $\mathbf{x}$.
+		\begin{itemize}
+			\item[-] Keep only ordinal ranks but ignore real values.
+			\item[-] Classification with kernel machines.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+
 \subsection{\scshape Rank data are everywhere}
 \begin{frame}{\insertsubsection}
 	
 	\([b]
-	\<{0.6\linewidth}
-		\includegraphics[width=\columnwidth]{slides/USelection}\\
+	\<{0.5\linewidth}
+		\includegraphics[width=0.9\columnwidth]{slides/USelection}\\
 		\includegraphics[width=\columnwidth]{slides/employee-engagement}
-	\>%
+	\>
+	\hskip -1cm
 	\<{0.6\linewidth}
-		\includegraphics[width=0.9\columnwidth]{slides/questionnaire}\\
-		\includegraphics[width=0.8\columnwidth]{slides/microarray}
+		\includegraphics[width=0.9\columnwidth]{slides/questionnaire}
 	\>
 	\)
 	
@@ -463,7 +489,7 @@ of cancer patients.
 	
 	\only<3->{
 	\begin{thm}[Main theorem \cite{Jiao2015Kendall}]
-		Kendall tau correlation $K_\tau$ is a positive definite kernel, and Kendall tau distance $d$ is a negative definite kernel on $\Sn$.
+		$K_\tau$ is a positive definite kernel on $\Sn$, and $d$ is a negative definite kernel on $\Sn$.
 	\end{thm}
 	}
 	
@@ -481,8 +507,8 @@ of cancer patients.
 		$$ \phi:\Sn \rightarrow \RR^{{n \choose 2}}, \sigma \mapsto \left( \sgn(\sigma(i)-\sigma(j)) \right)_{1\leq i < j \leq n} \,. $$
 		Up to constant scaling, we have
 		\begin{eqnarray*}
-			K_\tau(\sigma, \sigma') & = & \innerprod{\phi(\sigma), \phi(\sigma')} \,, \\
-			d(\sigma, \sigma') & = & \nm{\phi(\sigma) - \phi(\sigma')}^2 \,.
+			\alert<5>{\mbox{Kendall kernel:}} \quad K_\tau(\sigma, \sigma') & = & \phi(\sigma)^\top \phi(\sigma') \,, \\
+			\alert<5>{\mbox{Kendall distance:}} \quad d(\sigma, \sigma') & = & \nm{\phi(\sigma) - \phi(\sigma')}^2 \,.
 		\end{eqnarray*}
 	\end{proof}
 	}
@@ -496,7 +522,7 @@ of cancer patients.
 \end{frame}
 
 
-\subsection{\scshape Application: Biomedical classification}
+\subsection{\scshape Application (1/3): Biomedical classification}
 \begin{frame}{\insertsubsection}
 	
 	\only<1>{
@@ -560,7 +586,7 @@ of cancer patients.
 \end{frame}
 
 
-\subsection{\scshape Application: Rank aggregation}
+\subsection{\scshape Application (2/3): Rank aggregation}
 \begin{frame}{\insertsubsection}
 	
 	\only<1>{
@@ -632,7 +658,7 @@ of cancer patients.
 \end{frame}
 
 
-\subsection{\scshape Application: Cluster analysis}
+\subsection{\scshape Application (3/3): Cluster analysis}
 \begin{frame}{\insertsubsection}
 	
 	\only<1>{
@@ -672,21 +698,127 @@ of cancer patients.
 	\end{itemize}
 	}
 	
-	\only<4->{
+%	\only<4->{
+%	\([c]
+%	\<{0.65\linewidth}
+%		\begin{figure}
+%			\only<4>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-time}}
+%			\only<5>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-silhouette}}
+%			\only<6>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-stability}}
+%		\end{figure} 
+%	\>
+%	\<{0.5\linewidth}
+%		Kendall kernel $k$-means has
+%		\begin{itemize}
+%			\item<4-6> \alert<4>{Less running time!}
+%			\item<5-6> \alert<5>{Higher cluster consistency!}
+%			\item<6> \alert<6>{Higher cluster stability!}
+%		\end{itemize}
+%	\>
+%	\)
+%	}
+	
+\end{frame}
+
+
+
+\subsection{\scshape Extension (1/2): Partial rankings}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item An interleaving partial ranking of size $k$ is
+		$$ x_{i_1} \succ x_{i_2} \succ \cdots \succ x_{i_k} \,, \quad k\leq n \,, $$
+		and a top-$k$ partial ranking is
+		$$ x_{i_1} \succ x_{i_2} \succ \cdots \succ x_{i_k} \succ X_{\textrm{rest}} \,, \quad k\leq n \,. $$
+		\item A partial ranking is \alert<1>{uniquely represented} by a set of permutations compatible with the observed partial orders.
+	\end{itemize}
+	
+	\pause
+	
+	\begin{thm}
+		For these two particular types of partial rankings, the \alert{convolution kernel} \cite{Haussler1999Convolution} induced by Kendall kernel
+	$$ K_\tau^\star (R,R')=\frac{1}{|R||R'|} \sum_{\sigma\in R} \sum_{\sigma'\in R'}K_\tau (\sigma, \sigma') $$
+	can be evaluated in \alert{$O(k\log k)$} time.
+	\end{thm}
+	
+\end{frame}
+
+
+\subsection{\scshape Extension (2/2): Uncertain rankings}
+\begin{frame}{\insertsubsection}
+	
+	\only<1-2>{
+	\([c]
+	\<{0.55\linewidth}
+	\begin{itemize}
+		\item Recall for real-valued vectors, Kendall embedding is \alert{binary}\only<2->{ thus sensitive to ``almost ties''},
+		$$ \phi(\xb) = \left( \sgn(x_i-x_j) \right)_{1\leq i < j \leq n} \,. $$
+		\item Kendall kernel is defined by
+		$$
+		K_\tau(\xb,\xb') = \phi(\xb)^\top \phi(\xb') \,.
+		$$
+	\end{itemize}
+	\vskip -0.7cm
+	\begin{figure}
+	\centering
+		\includegraphics[width=0.8\columnwidth]{ch-kendall/figures/smoothheaviside}
+	\end{figure}
+	\>
+	\<{0.55\linewidth}
+		\uncover<2>{
+		\vskip -1.5cm
+		\begin{itemize}
+			\item<2-> Now consider a \alert{continuous} embedding by
+			$$
+			\psi(\xb) = \EE \phi(\xb + \epsilon) \,,
+			$$
+			where $\epsilon \sim \br{\mathcal{U}\sqb{-\frac{a}{2}, \frac{a}{2}}}^n \,.$
+			\item<2-> Corresponding kernel is defined by
+			\begin{equation*}
+			\begin{split}
+				G(\xb,\xb') & = \psi(\xb)^\top \psi(\xb') \\
+				& = \EE K_\tau (\xb + \epsilon, \xb' + \epsilon') \,.
+			\end{split}
+			\end{equation*}
+		\end{itemize}
+		}
+	\>
+	\)
+	}
+	
+	\only<3-5>{
+		\begin{itemize}
+			\item The \alert<3>{distributional kernel} \cite{Muandet2012Learning} induced by Kendall kernel is defined by
+			$$
+			G(\xb,\xb') = \psi(\xb)^\top \psi(\xb')
+			\only<4->{= \EE K_\tau (\xb + \epsilon, \xb' + \epsilon')}
+			\,. $$
+			\vskip -0.1cm
+			\begin{itemize}
+				\item[-] Can be exactly computed in \alert<3>{$O(n^2)$} time.
+				\item[-]<4-> Can be approximately computed in \alert<4>{$O(D^2 n \log n)$} time by Monte-Carlo approximation:
+				$$ G_D \br{\xb,\xb'} = \frac{1}{D^2} \sum_{i,j=1}^D K_\tau (\xb+\epsilon^{(i)}, \xb' + \epsilon'^{(j)}) \,. $$
+			\end{itemize}
+		\end{itemize}
+	}
+	
+	\only<5>{
+	\begin{thm}
+		Training a standard SVM with $m$ samples and $n$ features, using $G_D$ is faster than $G$ for the same statistical accuracy when $m = o(n^{1/3})$.
+	\end{thm}
+	}
+	
+	\only<6->{
 	\([c]
 	\<{0.65\linewidth}
 		\begin{figure}
-			\only<4>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-time}}
-			\only<5>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-silhouette}}
-			\only<6>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-stability}}
-		\end{figure} 
+			\only<6>{\includegraphics[width=\columnwidth]{ch-kendall/clasf_results/acc_approxSingleWindow}}
+		\end{figure}
 	\>
 	\<{0.5\linewidth}
-		Kendall kernel $k$-means has
+		Kendall kernel Flex-SVM \cite{Muandet2012Learning} has
 		\begin{itemize}
-			\item<4-6> \alert<4>{Less run time!}
-			\item<5-6> \alert<5>{Higher cluster consistency!}
-			\item<6> \alert<6>{Higher cluster stability!}
+			\item<6> \alert<6>{Improved accuracy!}
 		\end{itemize}
 	\>
 	\)
@@ -694,6 +826,75 @@ of cancer patients.
 	
 \end{frame}
 
+
+\subsection{\scshape Mallows kernel for permutations}
+\begin{frame}{\insertsubsection}
+	
+	\([b]
+	\<{0.75\linewidth}
+	\begin{itemize}
+		\item The Mallows kernel for permutations is defined for any $\lambda \geq 0$ by
+		$$
+			K_M^\lambda (\sigma, \sigma') := e^{-\lambda d(\sigma, \sigma')} \,.
+		$$
+		\item<2-> Relation to diffusion kernel on $\Sn$:
+	\end{itemize}
+	\>
+	\hspace{-1cm}
+	\<{0.4\linewidth}
+		\begin{figure}
+			\includegraphics[width=0.7\columnwidth]{ch-kendall/figures/permutahedron}
+			\vspace{-0.5cm}
+			\caption{Cayley graph of $\mathbb{S}_4$.}
+		\end{figure}
+	\>
+	\)
+	
+	\only<2->{
+	\vskip -0.3cm
+	\begin{table}
+	\centering
+	\footnotesize
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{c|cc}
+		\hline
+		Kernel & Diffusion kernel & Mallows kernel \\\hline
+		Definition & $\sqb{e^{-\lambda \Delta}}_{\sigma,\sigma'}$ & $e^{-\lambda d(\sigma, \sigma')}$ \\
+		Positive definiteness & $\checkmark$ & $\checkmark$ \\
+		Graph interpretation & Diffusion process & Shortest path \\
+		Time complexity & $O(n^n)$ & $O(n \log n)$ \\
+		Reference & \cite{Kondor2002Diffusion} & \cite{Jiao2015Kendall} \\
+		\hline
+	\end{tabular}
+	\end{table}
+	}
+	
+\end{frame}
+
+
+\subsection{\scshape Conclusion and future directions}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item We have shown
+		\begin{itemize}
+		 \item[-] Kendall and Mallows kernels are computationally attractive, positive definite kernels on $\Sn$.
+		 \item[-] Kendall distance for permutations is negative definite.
+		 \item[-] Applications involving biomedical classification, clustering and rank aggregation in social choice theory.
+		 \item[-] Extensions to partial rankings and uncertain rankings.
+		\end{itemize}
+		
+		\pause
+		
+		\item We are currently working on extending Kendall kernel to
+		\begin{itemize}
+			\item[?] Weighted pairwise comparison.
+			\item[?] higher-order (such as three-way) comparison.
+			\item[?] partially ordered set.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
 
 \section{\scshape Learning on graphs}
 
@@ -717,6 +918,29 @@ of cancer patients.
 	\end{footnotesize}
 	\>
 	\)
+	
+\end{frame}
+
+
+\subsection{\scshape Motivation recap}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item Data: 
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.7\linewidth]{slides/prognosis}%
+			\hskip 0.1cm%
+			\includegraphics[width=0.25\linewidth]{slides/ppi}
+		\end{figure}
+		
+		\item Goal: Learn to predict $y$ from a patient's profile $\mathbf{x}$.
+		\begin{itemize}
+			\item[-] Network-guided analysis.
+			\item[-] Classification or survival analysis with linear models.
+			\item[-] Structured gene/subnetwork selection by regularization.
+		\end{itemize}
+	\end{itemize}
 	
 \end{frame}
 
