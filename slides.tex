@@ -107,7 +107,7 @@
 \newcommand{\sgn}{\operatorname{sgn}}
 
 \newcommand{\sigstar}{\sigma^{\ast}}
-\newcommand{\DN}{\mathcal{D}_{N}}
+\newcommand{\DD}{\mathcal{D}}
 \DeclareMathOperator*{\argmin}{argmin}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -382,7 +382,7 @@ of cancer patients.
 		\includegraphics[width=\columnwidth]{slides/employee-engagement}
 	\>%
 	\<{0.6\linewidth}
-		\includegraphics[width=\columnwidth]{slides/questionnaire}\\
+		\includegraphics[width=0.9\columnwidth]{slides/questionnaire}\\
 		\includegraphics[width=0.8\columnwidth]{slides/microarray}
 	\>
 	\)
@@ -545,7 +545,7 @@ of cancer patients.
 			\only<4>{\includegraphics[width=\columnwidth]{ch-kendall/clasf_results/acc_perfFS}}
 		\end{figure} 
 	\>
-	\vspace{-1.5cm}
+	\hspace{-0.3cm}
 	\<{0.5\linewidth}
 		Kendall kernel SVM has
 		\begin{itemize}
@@ -565,7 +565,7 @@ of cancer patients.
 	
 	\only<1>{
 	\begin{itemize}
-		\item Rank aggregation: \alert<1>{Given a collection} of permutations $\sigma_1,\dots,\sigma_N \in \Sn$, \alert<1>{find a consensus} permutation $\sigstar \in \Sn$ that ``best'' summarizes them.
+		\item Rank aggregation: \alert<1>{Given a collection} of permutations $\{\sigma_i\}_{i=1}^m \in \Sn^m$, \alert<1>{find a consensus permutation} $\sigstar \in \Sn$ that ``best'' summarizes them.
 	\end{itemize}
 	\begin{figure}
 		\includegraphics[width=0.5\linewidth]{slides/rankaggregation}
@@ -574,19 +574,19 @@ of cancer patients.
 	
 	\only<2-7>{
 	\begin{itemize}
-		\item	Kemeny aggregation: Given $\DN := \{\sigma_t\}_{t=1}^N \in \Sn^N$,
+		\item	Kemeny aggregation: Given $\DD := \{\sigma_i\}_{i=1}^m \in \Sn^m$,
 		\only<2-5>{
 			\only<2-3>{
 			\begin{equation*}
-			\sigstar \in \argmin_{\sigma \in \Sn} \sum_{t=1}^{N} d(\sigma,\sigma_t) \,.
+			\sigstar \in \argmin_{\sigma \in \Sn} \sum_{i=1}^{m} d(\sigma,\sigma_i) \,.
 			\end{equation*}
 			}
 			\only<4->{
 			\begin{equation*}
 			\begin{split}
-			\sigstar & \in \argmin_{\sigma \in \Sn} \sum_{t=1}^{N} \alert<4>{ \nm{\phi(\sigma) - \phi(\sigma_t)}^2 }
+			\sigstar & \in \argmin_{\sigma \in \Sn} \sum_{i=1}^{m} \alert<4>{ \nm{\phi(\sigma) - \phi(\sigma_i)}^2 }
 			\only<5>{ \\
-				& = \argmin_{\sigma \in \Sn} \nm{ \phi(\sigma) - \frac{1}{N} \sum_{t=1}^N \phi(\sigma_t) }^2
+				& = \argmin_{\sigma \in \Sn} \nm{ \phi(\sigma) - \frac{1}{m} \sum_{i=1}^m \phi(\sigma_i) }^2
 			}
 			\,.
 			\end{split}
@@ -597,12 +597,13 @@ of cancer patients.
 		\([c]
 		\<{0.6\columnwidth}
 			\begin{itemize}
-				\item[\alert<6>{Step 1}] Compute the mean embedding of $\DN$ in \alert<6>{$O(Nn^2)$} time by
-				$$ \phi(\DN) := \frac{1}{N} \sum_{t=1}^N \phi(\sigma_t) \,. $$
+				\item[\alert<6>{Step 1}] Compute the mean embedding of $\DD$ in \alert<6>{$O(mn^2)$} time by
+				$$ \phi(\DD) := \frac{1}{m} \sum_{i=1}^m \phi(\sigma_i) \,. $$
 				\item[\alert<6>{Step 2}] Find a Kemeny consensus $\sigstar$ by solving the \alert<6>{NP-hard} problem:
-				$$ \sigstar \in \argmin_{\sigma \in \Sn} \nm{ \phi(\sigma) - \phi(\DN) }^2 \,. $$
+				$$ \sigstar \in \argmin_{\sigma \in \Sn} \nm{ \phi(\sigma) - \phi(\DD) }^2 \,. $$
 			\end{itemize}
 		\>
+		\hspace{-0.5cm}
 		\<{0.45\linewidth}
 			\begin{figure}
 				\includegraphics[trim=2cm 2.5cm 3.5cm 3cm, clip=true, width=\textwidth, height=1.3in]{ch-kemeny/figures/3d1test}
@@ -622,8 +623,8 @@ of cancer patients.
 	
 	\only<8->{
 	\begin{thm}[Tractable approx bound \cite{Jiao2016Controlling}]
-		If the Euclidean angle $\theta_N(\sigma)$ between $\phi(\sigma)$ and $\phi(\DN)$ is less than $\frac{\pi}{2}$, then
-		$$d(\sigma, \sigstar) \leq \left\lfloor {n \choose 2} \sin^2(\theta_N(\sigma)) \right\rfloor \,,$$
+		If the Euclidean angle $\theta(\sigma)$ between $\phi(\sigma)$ and $\phi(\DD)$ is less than $\frac{\pi}{2}$, then
+		$$d(\sigma, \sigstar) \leq \left\lfloor {n \choose 2} \sin^2(\theta(\sigma)) \right\rfloor \,,$$
 		where $\lfloor \cdot \rfloor$ denotes the integer part of a real number.
 	\end{thm}
 	}
@@ -635,30 +636,60 @@ of cancer patients.
 \begin{frame}{\insertsubsection}
 	
 	\only<1>{
+	\begin{itemize}
+		\item Cluster analysis: \alert<1>{Given a collection} of permutations $\{\sigma_i\}_{i=1}^m \in \Sn^m$, \alert<1>{assign each permutation} into one of $c$ clusters $\{S_j\}_{j=1}^c$.
+	\end{itemize}
 	\begin{figure}
-		\includegraphics[width=0.9\linewidth]{slides/clusterRank}
+		\includegraphics[width=0.7\linewidth]{slides/clusterRank}
 		\caption{An example of voting blocs in Irish electorate \cite{Gormley2008Exploring}.}
 	\end{figure}
 	}
 	
 	\only<2-3>{
 	\begin{itemize}
-		\item Cluster analysis with $k$-means: \alert<2>{Given a collection} of permutations $\{\sigma_i\}_{i=1}^m \in \Sn^m$, \alert<2>{assign each permutation} into one of $c$ clusters $\{S_j\}_{j=1}^c$ by
-		$$
-		\argmin_{\{S_j, \pi_j \in \Sn\}} \sum_{j=1}^{c} \sum_{i: \sigma_i \in S_j} d(\pi_j, \sigma_i) \,,
-		$$
-		where each $\pi_j$ is the ``center'' permutation of cluster $S_j$.
+		\item Cluster analysis with \alert{\only<3->{kernel} $k$-means}: Given a collection of permutations $\{\sigma_i\}_{i=1}^m \in \Sn^m$, assign each permutation into one of $c$ clusters $\{S_j\}_{j=1}^c$ by solving
+		\only<2>{
+			$$
+			\argmin_{\left\{S_j, \pi_j \in \Sn\right\}_{j=1}^c} \sum_{j=1}^{c} \sum_{i: \sigma_i \in S_j} d(\pi_j, \sigma_i) \,,
+			$$
+			where each $\pi_j$ is the \alert{center permutation} of cluster $S_j$.}
+		\only<3->{
+			$$
+			\argmin_{\left\{S_j, \mu_j \in \RR^{{n \choose 2}}\right\}_{j=1}^c} \sum_{j=1}^{c} \sum_{i: \sigma_i \in S_j} \nm{\mu_j - \phi(\sigma_i)}^2 \,,
+			$$
+			where each $\mu_j$ is the \alert{center embedding} of cluster $S_j$.
+		}
 		
-		\item<3-> Lloyd's algorithm applies:
-%		\begin{figure}
-%			\includegraphics[width=\linewidth]{slides/lloyd}
-%		\end{figure}
+		\item Lloyd's algorithm applies\only<3->{ with \alert{kernel trick}}:
+		\begin{figure}
+		\only<2>{
+			\includegraphics[width=0.9\linewidth]{slides/kmeans}
+		}
+		\only<3->{
+			\includegraphics[width=0.9\linewidth]{slides/kkmeans}
+		}
+		\end{figure}
 	\end{itemize}
 	}
 	
-	\only<4-5>{
-		
-		\item<3-> \alert<3>{Kernel $k$-means} algorithm applies!
+	\only<4->{
+	\([c]
+	\<{0.65\linewidth}
+		\begin{figure}
+			\only<4>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-time}}
+			\only<5>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-silhouette}}
+			\only<6>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-stability}}
+		\end{figure} 
+	\>
+	\<{0.5\linewidth}
+		Kendall kernel $k$-means has
+		\begin{itemize}
+			\item<4-6> \alert<4>{Less run time!}
+			\item<5-6> \alert<5>{Higher cluster consistency!}
+			\item<6> \alert<6>{Higher cluster stability!}
+		\end{itemize}
+	\>
+	\)
 	}
 	
 \end{frame}
@@ -705,7 +736,7 @@ of cancer patients.
 
 \begin{frame}[allowframebreaks]{References}
 	
-	\footnotesize
+	\tiny
 	\bibliography{mybib}
 	\bibliographystyle{apalike}
 	
