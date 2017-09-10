@@ -311,7 +311,7 @@ of cancer patients.
 			\end{figure}
 			}
 			
-			\item[$\checkmark$]<5-> Network-guided gene/subnetwork selection.
+			\item[$\checkmark$]<5-> Network-guided gene selection.
 			\only<5>{
 			\begin{figure}
 				\centering
@@ -553,7 +553,7 @@ of cancer patients.
 	\begin{tabular}{c|cc}
 		\hline
 		Kernel & Diffusion kernel & Mallows kernel \\\hline
-		Definition & $\sqb{e^{-\lambda \Delta}}_{\sigma,\sigma'}$ & $e^{-\lambda d(\sigma, \sigma')}$ \\
+		$K(\sigma,\sigma')$ & $\sqb{e^{-\lambda \Delta}}_{\sigma,\sigma'}$ & $e^{-\lambda d(\sigma, \sigma')}$ \\
 		Positive definiteness & $\checkmark$ & $\checkmark$ \\
 		Graph interpretation & Diffusion process & Shortest path \\
 		Time complexity & $O(n^n)$ & $O(n \log n)$ \\
@@ -617,10 +617,10 @@ of cancer patients.
 	\>
 	\hspace{-0.3cm}
 	\<{0.5\linewidth}
-		Kendall kernel SVM has
+		Kendall kernel SVM
 		\begin{itemize}
 			\item<2-4> \alert<2>{Competitive accuracy!}
-			\item<3-4> \alert<3>{Less sensitivity to regularization parameter!}
+			\item<3-4> \alert<3>{Less sensitive to regularization parameter!}
 			\item<4> \alert<4>{No need for feature selection!}
 		\end{itemize}
 	\>
@@ -642,7 +642,7 @@ of cancer patients.
 	\end{figure}
 	}
 	
-	\only<2-7>{
+	\only<2->{
 	\begin{itemize}
 		\item	Kemeny aggregation: Given $\DD := \{\sigma_i\}_{i=1}^m \in \Sn^m$,
 		\only<2-5>{
@@ -687,15 +687,13 @@ of cancer patients.
 		
 	\only<3-7>{
 	\begin{itemize}
-		\item \alert<3>{Dilemma:} Kemeny consensus $\sigstar$ is desirable but NP-hard to find\only<7->{, and usually \alert<7->{approximated by $\sigma$} from a tractable procedure in practice}.
+		\item \alert<3>{Dilemma:} Kemeny consensus $\sigstar$ is desirable but NP-hard to find\only<7->{, and usually \alert<7->{approximated} by $\sigma$ from a tractable procedure in practice}.
 	\end{itemize}
 	}
 	
 	\only<8->{
 	\begin{thm}[Tractable approx bound \cite{Jiao2016Controlling}]
-		If the Euclidean angle $\theta(\sigma)$ between $\phi(\sigma)$ and $\phi(\DD)$ is less than $\frac{\pi}{2}$, then
-		$$d(\sigma, \sigstar) \leq \left\lfloor {n \choose 2} \sin^2(\theta(\sigma)) \right\rfloor \,,$$
-		where $\lfloor \cdot \rfloor$ denotes the integer part of a real number.
+		For any approximation $\sigma$ such that the Euclidean angle $\theta(\sigma)$ between $\phi(\sigma)$ and $\phi(\DD)$ is less than $\frac{\pi}{2}$, then $d(\sigma, \sigstar) \leq \left\lfloor {n \choose 2} \sin^2(\theta(\sigma)) \right\rfloor \, .$
 	\end{thm}
 	}
 	
@@ -958,7 +956,7 @@ of cancer patients.
 		\begin{itemize}
 			\item[-] Network-guided analysis.
 			\item[-] Survival analysis with linear models.
-			\item[-] Structured gene/subnetwork selection by regularization.
+			\item[-] Structured gene selection by regularization.
 		\end{itemize}
 	\end{itemize}
 	
