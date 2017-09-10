@@ -89,6 +89,7 @@
 %% aliases %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amssymb,amsmath,amsthm} % need for math
 \usepackage{dsfont} % for hollow 1 with Type 1 fonts
+\usepackage{framed}	% for framed environment
 
 \newcommand{\Sn}{\mathbb{S}_n}
 \newcommand{\RR}{\mathbb{R}}    %reals
@@ -489,7 +490,7 @@ of cancer patients.
 	
 	\only<3->{
 	\begin{thm}[Main theorem \cite{Jiao2015Kendall}]
-		$K_\tau$ is a positive definite kernel on $\Sn$, and $d$ is a negative definite kernel on $\Sn$.
+		$K_\tau$ is positive definite, and $d$ is negative definite.
 	\end{thm}
 	}
 	
@@ -517,6 +518,51 @@ of cancer patients.
 	\begin{thm}[Kernel trick \cite{Knight1966Computer}]
 		Both quantities $K_\tau$ and $d$ can be evaluated in \alert<6>{$O(n\log n)$} time.
 	\end{thm}
+	}
+	
+\end{frame}
+
+
+\subsection{\scshape Mallows kernel for permutations}
+\begin{frame}{\insertsubsection}
+	
+	\([b]
+	\<{0.75\linewidth}
+	\begin{itemize}
+		\item The Mallows kernel for permutations is defined for any $\lambda \geq 0$ by
+		$$
+			K_M^\lambda (\sigma, \sigma') := e^{-\lambda d(\sigma, \sigma')} \,.
+		$$
+		\item<2-> Relation to diffusion kernel on $\Sn$:
+	\end{itemize}
+	\>
+	\hspace{-1cm}
+	\<{0.4\linewidth}
+		\begin{figure}
+			\includegraphics[width=0.7\columnwidth]{ch-kendall/figures/permutahedron}
+			\vspace{-0.5cm}
+			\caption{Cayley graph of $\mathbb{S}_4$.}
+		\end{figure}
+	\>
+	\)
+	
+	\only<2->{
+	\vskip -0.3cm
+	\begin{table}
+	\centering
+	\footnotesize
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{c|cc}
+		\hline
+		Kernel & Diffusion kernel & Mallows kernel \\\hline
+		Definition & $\sqb{e^{-\lambda \Delta}}_{\sigma,\sigma'}$ & $e^{-\lambda d(\sigma, \sigma')}$ \\
+		Positive definiteness & $\checkmark$ & $\checkmark$ \\
+		Graph interpretation & Diffusion process & Shortest path \\
+		Time complexity & $O(n^n)$ & $O(n \log n)$ \\
+		Reference & \cite{Kondor2002Diffusion} & \cite{Jiao2015Kendall} \\
+		\hline
+	\end{tabular}
+	\end{table}
 	}
 	
 \end{frame}
@@ -671,48 +717,66 @@ of cancer patients.
 	\end{figure}
 	}
 	
-	\only<2-3>{
+	\only<2-4>{
 	\begin{itemize}
-		\item Cluster analysis with \alert{\only<3->{kernel} $k$-means}: Given a collection of permutations $\{\sigma_i\}_{i=1}^m \in \Sn^m$, assign each permutation into one of $c$ clusters $\{S_j\}_{j=1}^c$ by solving
-		\only<2>{
+		\item Cluster analysis with \alert<2,4>{\only<4->{kernel} $k$-means}: Given a collection of permutations $\{\sigma_i\}_{i=1}^m \in \Sn^m$, assign each permutation into one of $c$ clusters $\{S_j\}_{j=1}^c$ by solving
+		\only<2-3>{
 			$$
-			\argmin_{\left\{S_j, \pi_j \in \Sn\right\}_{j=1}^c} \sum_{j=1}^{c} \sum_{i: \sigma_i \in S_j} d(\pi_j, \sigma_i) \,,
-			$$
-			where each $\pi_j$ is the \alert{center permutation} of cluster $S_j$.}
-		\only<3->{
+			\argmin_{\left\{S_j, \pi_j \in \Sn\right\}_{j=1}^c} \sum_{j=1}^{c} \sum_{i: \sigma_i \in S_j} 
+			\only<2>{d(\pi_j, \sigma_i)}
+			\only<3>{\alert{\nm{\phi(\pi_j) - \phi(\sigma_i)}^2}}
+			\,, $$
+			where each $\pi_j$ is the \alert<2>{center permutation} of cluster $S_j$.}
+		\only<4->{
 			$$
 			\argmin_{\left\{S_j, \mu_j \in \RR^{{n \choose 2}}\right\}_{j=1}^c} \sum_{j=1}^{c} \sum_{i: \sigma_i \in S_j} \nm{\mu_j - \phi(\sigma_i)}^2 \,,
 			$$
-			where each $\mu_j$ is the \alert{center embedding} of cluster $S_j$.
+			where each $\mu_j$ is the \alert<4>{center embedding} of cluster $S_j$.
 		}
 		
-		\item Lloyd's algorithm applies\only<3->{ with \alert{kernel trick}}:
+		\item Lloyd's algorithm applies\only<4->{ with \alert<4>{kernel trick}}:
 		\begin{figure}
-		\only<2>{
+		\only<2-3>{
 			\includegraphics[width=0.9\linewidth]{slides/kmeans}
 		}
-		\only<3->{
+		\only<4->{
 			\includegraphics[width=0.9\linewidth]{slides/kkmeans}
 		}
 		\end{figure}
 	\end{itemize}
 	}
 	
-%	\only<4->{
+%	\only<5>{
+%		\begin{itemize}
+%			\item Dataset: 1980 APA election data \cite{Diaconis1988Group}
+%			\begin{itemize}
+%				\item $n = 5$ candidates to rank.
+%				\item $m = 5,738$ votes of total rankings.
+%			\end{itemize}
+%			
+%			\item Methods:
+%			\begin{itemize}
+%				\item $k$-means with Kemeny aggregation step solved by brute search, Copeland's method and Borda Count.
+%				\item Kernel $k$-means with Kendall kernel.
+%			\end{itemize}
+%		\end{itemize}
+%	}
+%	
+%	\only<6->{
 %	\([c]
 %	\<{0.65\linewidth}
 %		\begin{figure}
-%			\only<4>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-time}}
-%			\only<5>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-silhouette}}
-%			\only<6>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-stability}}
+%			\only<6>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-time}}
+%			\only<7>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-silhouette}}
+%			\only<8>{\includegraphics[width=\columnwidth]{ch-kendall/cluster_results/kmeans-stability}}
 %		\end{figure} 
 %	\>
 %	\<{0.5\linewidth}
-%		Kendall kernel $k$-means has
+%		Kendall kernel $k$-means
 %		\begin{itemize}
-%			\item<4-6> \alert<4>{Less running time!}
-%			\item<5-6> \alert<5>{Higher cluster consistency!}
-%			\item<6> \alert<6>{Higher cluster stability!}
+%			\item<6-8> \alert<6>{Less running time!}
+%			\item<7-8> \alert<7>{Higher cluster consistency!}
+%			\item<8> \alert<8>{Higher cluster stability!}
 %		\end{itemize}
 %	\>
 %	\)
@@ -777,9 +841,10 @@ of cancer patients.
 			\begin{equation*}
 			\begin{split}
 				G(\xb,\xb') & = \psi(\xb)^\top \psi(\xb') \\
-				& = \EE K_\tau (\xb + \epsilon, \xb' + \epsilon') \,.
+				& = \EE K_\tau (\xb + \epsilon, \xb' + \epsilon') \,,
 			\end{split}
 			\end{equation*}
+			where $\epsilon, \epsilon'$ are i.i.d.
 		\end{itemize}
 		}
 	\>
@@ -816,7 +881,7 @@ of cancer patients.
 		\end{figure}
 	\>
 	\<{0.5\linewidth}
-		Kendall kernel Flex-SVM \cite{Muandet2012Learning} has
+		Kendall kernel Flex-SVM \cite{Muandet2012Learning}
 		\begin{itemize}
 			\item<6> \alert<6>{Improved accuracy!}
 		\end{itemize}
@@ -827,52 +892,7 @@ of cancer patients.
 \end{frame}
 
 
-\subsection{\scshape Mallows kernel for permutations}
-\begin{frame}{\insertsubsection}
-	
-	\([b]
-	\<{0.75\linewidth}
-	\begin{itemize}
-		\item The Mallows kernel for permutations is defined for any $\lambda \geq 0$ by
-		$$
-			K_M^\lambda (\sigma, \sigma') := e^{-\lambda d(\sigma, \sigma')} \,.
-		$$
-		\item<2-> Relation to diffusion kernel on $\Sn$:
-	\end{itemize}
-	\>
-	\hspace{-1cm}
-	\<{0.4\linewidth}
-		\begin{figure}
-			\includegraphics[width=0.7\columnwidth]{ch-kendall/figures/permutahedron}
-			\vspace{-0.5cm}
-			\caption{Cayley graph of $\mathbb{S}_4$.}
-		\end{figure}
-	\>
-	\)
-	
-	\only<2->{
-	\vskip -0.3cm
-	\begin{table}
-	\centering
-	\footnotesize
-	\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{c|cc}
-		\hline
-		Kernel & Diffusion kernel & Mallows kernel \\\hline
-		Definition & $\sqb{e^{-\lambda \Delta}}_{\sigma,\sigma'}$ & $e^{-\lambda d(\sigma, \sigma')}$ \\
-		Positive definiteness & $\checkmark$ & $\checkmark$ \\
-		Graph interpretation & Diffusion process & Shortest path \\
-		Time complexity & $O(n^n)$ & $O(n \log n)$ \\
-		Reference & \cite{Kondor2002Diffusion} & \cite{Jiao2015Kendall} \\
-		\hline
-	\end{tabular}
-	\end{table}
-	}
-	
-\end{frame}
-
-
-\subsection{\scshape Conclusion and future directions}
+\subsection{\scshape Summary and future directions}
 \begin{frame}{\insertsubsection}
 	
 	\begin{itemize}
@@ -880,8 +900,10 @@ of cancer patients.
 		\begin{itemize}
 		 \item[-] Kendall and Mallows kernels are computationally attractive, positive definite kernels on $\Sn$.
 		 \item[-] Kendall distance for permutations is negative definite.
-		 \item[-] Applications involving biomedical classification, clustering and rank aggregation in social choice theory.
-		 \item[-] Extensions to partial rankings and uncertain rankings.
+		 \pause
+		 \item[-] Applications ranging from biomedical classification to cluster analysis and rank aggregation in social choice theory.
+		 \pause
+		 \item[-] Extensions of Kendall kernel to partial rankings and uncertain rankings.
 		\end{itemize}
 		
 		\pause
@@ -939,6 +961,371 @@ of cancer patients.
 			\item[-] Network-guided analysis.
 			\item[-] Classification or survival analysis with linear models.
 			\item[-] Structured gene/subnetwork selection by regularization.
+		\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+
+\subsection{\scshape Linear models with regularization}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item For training data $ X 
+		\only<1>{:= (\mathbf{x}_1 | \dots | \mathbf{x}_m)^\top} 
+		\in \RR^{m \times n} $ paired with responses $\mathbf{y} 
+		\only<1>{:= (y_1,\dots,y_m)} 
+		\in \mathcal{Y}^m$, fitting a linear model 
+		\only<2>{\alert{with regularization}} 
+		solves
+		$$
+		\min_{\beta \in \RR^n} \ell(\mathbf{y}, X \beta)
+		\only<2>{\alert{ + \lambda J(\beta)}}
+		\,,
+		$$
+		where $\ell$ is a loss function\only<2>{, $\lambda > 0$ and $J:\RR^n \to \RR^+$ is a penalty function}.
+		
+%		\only<1>{
+%		\item Examples of the loss function $\ell$ include:
+%		\begin{itemize}
+%			\item[-] Squared loss for regression $\mathcal{Y} = \RR$.
+%			\item[-] Logistic loss for classification $\mathcal{Y} = \{-1,+1\}$.
+%			\item[-] Negative partial likelihood for survival analysis $\mathcal{Y} = (\RR^+,\{0,1\})$.
+%		\end{itemize}
+%		}
+		
+		\only<2>{
+		\item Examples of the penalty function $J$ include:
+		\begin{itemize}
+			\item[-] The ridge $J(\beta) = \|\beta\|_2^2$ to address $n \gg m$.
+			\item[-] The lasso $J(\beta) = \|\beta\|_1$ for feature selection.
+			\begin{figure}
+				\includegraphics[width=0.5\linewidth]{slides/lasso}
+				\caption{Estimation returned by lasso (left) vs ridge (right) \cite{Tibshirani1996Regression}.}
+			\end{figure}
+		\end{itemize}
+		}
+	\end{itemize}
+	
+\end{frame}
+
+
+\subsection{Network-guided regularization}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item A biological network is a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ where
+		\begin{itemize}
+			\item[-] $\mathcal{V}$ consists of $n$ genes.
+			\item[-] $\mathcal{E}$ encodes some notion of interaction between genes.
+		\end{itemize}
+	\end{itemize}
+	
+	\vskip -0.1in
+	
+	\(
+	\<{0.5\linewidth}
+	\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{slides/ppi}
+		\vskip -0.1in
+		\caption{An example of protein-protein interaction (PPI) network.}
+	\end{center}
+	\end{figure}
+	\>
+	\hskip -0.3cm
+	\<{0.55\linewidth}
+	\begin{framed}
+	\alert{Rule of thumb:}\\
+	$J(\beta)$ should encourage genes closer on the network to
+	\begin{itemize}
+		\item[-] have similar coefficients in $\beta$, and
+		\item[-] tend to be selected simultaneously.
+	\end{itemize}
+	\end{framed}
+	\>
+	\)
+	
+\end{frame}
+
+
+\subsection{Laplacian regularization}
+\begin{frame}{\insertsubsection}
+	
+	\begin{itemize}
+		\item For training data $X \in \RR^{m \times n}$ and $\mathbf{y} \in \mathcal{Y}^m$, fitting a linear model with regularization solves
+		$$
+		\min_{\beta \in \RR^n} \ell(\mathbf{y}, X \beta) + \lambda J(\beta) \,.
+		$$
+	\end{itemize}
+	
+	\only<1>{
+	\vskip -0.1in
+	\([t]
+	\<{0.6\linewidth}
+	\vskip -0.2in
+	\begin{figure}
+	\begin{center}
+		\includegraphics[width=\columnwidth]{ch-intro/network}
+		\vskip -0.1in
+		\caption{$\beta$ estimated by ridge (left) vs Laplacian regularization (right) \cite{Rapaport2007Classification}.}
+	\end{center}
+	\end{figure}
+	\>
+	\hskip -0.4in
+	\<{0.45\linewidth}
+	\begin{itemize}
+		\item Suppose that $\beta$ is \alert{smooth} on graph $\mathcal{G}$, a Laplacian penalty is defined as
+		$$
+		J(\beta) = \sum_{i \sim j} (\beta_i - \beta_j)^2 \, .
+		$$
+	\end{itemize}
+	\>
+	\)
+	}
+	
+	\only<2-4>{
+	\begin{itemize}
+		\item Suppose that $\beta$ is \alert{smooth} on graph $\mathcal{G}$, the Laplacian penalty can be written as
+		\only<2>{
+		\begin{equation*}
+		\begin{split}
+		J(\beta) & = \sum_{i \sim j} (\beta_i - \beta_j)^2 \\
+		& = \beta^\top \mathcal{L} \beta \, ,
+		\end{split}
+		\end{equation*}
+		where $\mathcal{L} = D - A$ is the graph Laplacian.
+		}
+		\only<3>{
+		\begin{equation*}
+		\begin{split}
+		J(\beta) & = \sum_{i \sim j} (\beta_i - \beta_j)^2 \\
+		& = \beta^\top \mathcal{L} \beta \\
+		 & = \|\Lambda^{\frac{1}{2}} U^\top \beta \|_2^2 \, ,
+		\end{split}
+		\end{equation*}
+		where the graph Laplacian has an eigendecomposition $\mathcal{L} = U \Lambda U^\top$.
+		}
+		\only<4>{
+		\begin{equation*}
+		\begin{split}
+		J(\beta) & = \sum_{i \sim j} (\beta_i - \beta_j)^2 \\
+		& = \beta^\top \mathcal{L} \beta \\
+		 & = \|\Lambda^{\frac{1}{2}} \alert{\hat{\beta}} \|_2^2 \quad \mbox{s.t. } \beta = U \hat{\beta} \, ,
+		\end{split}
+		\end{equation*}
+		where the graph Laplacian has an eigendecomposition $\mathcal{L} = U \Lambda U^\top$ and $\hat{\beta}$ is the \alert{graph Fourier transform} of $\beta$.
+		}
+	\end{itemize}
+	}
+	
+	\only<5>{
+	\begin{itemize}
+		\item Suppose that $\beta$ is \alert{smooth} on graph $\mathcal{G}$, the Laplacian penalty is defined as
+		$$
+		J(\beta) = \sum_{i \sim j} (\beta_i - \beta_j)^2 \, .
+		$$
+		
+		\item Suppose further that $\beta$ is \alert{also sparse}, the Laplacian penalty can be extended by adding a lasso term \cite{Li2008Network}
+		$$
+		J(\beta) = a \|\beta\|_1 + (1-a) \sum_{i \sim j} (\beta_i - \beta_j)^2 \, ,
+		$$
+		where $0 < a < 1$.
+	\end{itemize}
+	}
+	
+\end{frame}
+
+
+\subsection{From Fourier to wavelet}
+\begin{frame}{\insertsubsection}
+	
+	\only<1-2>{
+	\begin{itemize}
+		\item Given a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, recall \alert{graph Fourier basis} are eigenvectors $U$ of the graph Laplacian $\mathcal{L} = U \Lambda U^\top$.
+		\begin{itemize}
+		\item<1->[-] They reflect different level of global smoothness: the larger the eigenvalue, the less smooth the eigenvector.
+		\item<2->[-] They are \alert{not localized in space!}
+		\end{itemize}
+	\end{itemize}
+	\begin{figure}
+	\centering
+		\includegraphics[width=0.6\linewidth]{slides/fourierbasis-color}\\
+		\includegraphics[width=0.45\linewidth]{slides/fourierbasis-1}
+		\hskip 0.1in
+		\includegraphics[width=0.45\linewidth]{slides/fourierbasis-n}
+		\caption{Example of graph Fourier basis $\mathbf{u}_1$ (left) and $\mathbf{u}_n$ (right) corresponding to the smallest and largest eigenvalue \cite{Rapaport2007Classification}.}
+	\end{figure}
+	}
+	
+	\only<3->{
+	\begin{itemize}
+	\only<3-4>{
+		\item Given a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, \alert{spectral graph wavelets} \cite{Hammond2011Wavelets} at scale $s > 0$ for the vertex set $\mathcal{V}$ are defined by
+		$$
+		\Psi^s = U g(s \Lambda) U^\top \in \RR^{n \times n} \,,
+		$$
+		where $g$ is a wavelet generating kernel.
+		\item The spectral graph wavelet centered around one vertex $a \in \mathcal{V}$ is the $a$-th column of $\Psi^s$.
+		\uncover<4>{
+		\begin{itemize}
+			\item[-] It enjoys \alert{simultaneous localization} in frequency and space.
+			\item[-] It thus designates a locally smooth \alert{subnetwork}.
+		\end{itemize}
+		}
+	}
+	
+	\only<5>{
+		\item Given a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, an (over)complete system of spectral graph wavelets at a set of scales $S = \{s_1, \dots, s_J\}$ are written as
+		$$
+		\Psi = (\Psi^{s_1} | \dots | \Psi^{s_J}) \in \RR^{n \times d} \,,
+		$$
+		where $d = nJ$.
+	}
+	
+	\only<6>{
+		\item Given a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ with spectral graph wavelets $\Psi \in \RR^{n \times d} \, (d \geq n)$, any vector $\beta \in \RR^n$ can be linearly decomposed into
+		$$
+		\beta = \Psi \theta \,,
+		$$
+		for some wavelet coefficients $\theta \in \RR^d$.
+	}
+	\end{itemize}
+	
+	\uncover<4->{
+	\vspace{-0.1cm}
+	\begin{figure}
+	\centering
+	\(
+	\<{0.45\linewidth}
+		\includegraphics[width=\columnwidth]{slides/wavelets}
+	\>
+	\<{0.7\linewidth}
+		\caption{An example of spectral graph wavelets at different scales around one vertex \cite{Hammond2011Wavelets}.}
+	\>
+	\)
+	\end{figure}
+	}
+	}
+		
+\end{frame}
+
+
+\subsection{Network-based wavelet smoothing}
+\begin{frame}{\insertsubsection}
+	
+	\only<1>{
+	\begin{itemize}
+		\item For training data $X \in \RR^{m \times n}$ and $\mathbf{y} \in \mathcal{Y}^m$, fitting a linear model with regularization solves
+		$$
+		\min_{\beta \in \RR^n} \ell(\mathbf{y}, X \beta) + \lambda J(\beta) \,.
+		$$
+	\end{itemize}
+	
+	\begin{itemize}
+		\item Suppose that $\beta$ is \alert{globally smooth and modularly sparse} on graph $\mathcal{G}$, we propose a wavelet smoothing penalty defined as
+		$$
+		J(\beta) = \min_{\theta \in \RR^d} \| \theta \|_1 \quad \mbox{s.t. } \beta = \Psi \theta \,,
+		$$
+		where $\Psi \in \RR^{n \times d} \, (d \geq n)$ is an (over)complete system of \alert{spectral graph wavelets}.
+	\end{itemize}
+	}
+	
+	\only<2>{
+	\begin{itemize}
+		\item Given a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$,
+		\begin{itemize}
+			\item[-] The \alert{Laplacian penalty} encourages only global smoothness by
+			$$
+			J(\beta) = \| \Lambda^{\frac{1}{2}} \hat{\beta} \|_2^2 \quad \mbox{s.t. } \beta = U \hat{\beta} \, ,
+			$$
+			where $U \in \RR^{n \times n}$ is the graph Fourier basis with spectral frequencies in $\Lambda$.
+			
+			\item[-] The \alert{wavelet smoothing penalty} encourages both global smoothness and modularized sparsity by
+			$$
+			J(\beta) = \min_{\theta \in \RR^d} \| \theta \|_1 \quad \mbox{s.t. } \beta = \Psi \theta \,,
+			$$
+			where $\Psi \in \RR^{n \times d} (d \geq n)$ is an (over)complete system of graph wavelets.
+		\end{itemize}
+	\end{itemize}
+	}
+	
+\end{frame}
+
+
+\subsection{Application: Breast cancer survival analysis}
+\begin{frame}{\insertsubsection}
+	
+	\only<1>{
+	\begin{itemize}
+		\item Dataset: METABRIC breast cancer data \cite{Curtis2012genomic}
+		\begin{itemize}
+			\item[-] $m = 1,981$ patients with survival information.
+			\item[-] $n = 9,117$ genes.
+		\end{itemize}
+		
+		\item Network: A protein-protein interaction (PPI) network obtained from Human Protein Reference Database (HPRD).
+		
+		\item Methods: 6 penalty functions for regularizing Cox model.
+	\end{itemize}
+		
+	\begin{center}
+		\begin{scriptsize}
+		\begin{tabular}{c|c|c|c}
+		\hline
+		Label & Penalty function $J(\beta)$ & Network-based & Gene selection \\\hline
+		ridge & $\|\beta\|_2^2$ & & \\
+		lasso & $\|\beta\|_1$ & & $\checkmark$ \\
+		e-net & $a \|\beta\|_1 + (1-a) \|\beta\|_2^2$ & & $\checkmark$ \\\hline
+		lap & $\sum_{i \sim j} (\beta_i - \beta_j)^2$ & $\checkmark$ & \\
+		laplasso & $a \|\beta\|_1 + (1-a) \sum_{i \sim j} (\beta_i - \beta_j)^2$ & $\checkmark$ & $\checkmark$ \\
+		wavelet & $\min_{\theta} \|\theta\|_1 \quad \mbox{s.t. } \beta = \Psi \theta$ & $\checkmark$ & $\checkmark$ \\\hline
+		\end{tabular}
+		\end{scriptsize}
+	\end{center}
+	}
+	
+	\only<2->{
+	\([c]
+	\<{0.65\linewidth}
+		\begin{figure}
+			\only<2>{\includegraphics[width=\columnwidth]{slides/plot-prediction}}
+			\only<3>{\includegraphics[width=\columnwidth]{slides/plot-stability}}
+			\only<4>{\includegraphics[width=\columnwidth]{slides/plot-connectivity}}
+			\only<5>{\includegraphics[width=\columnwidth]{slides/subnetworks_w-analysis_spec}}
+		\end{figure} 
+	\>
+	\hspace{-0.3cm}
+	\<{0.5\linewidth}
+		Network-based wavelet smoothing
+		\begin{itemize}
+			\item<2-5> \alert<2>{Competitive prediction accuracy!}
+			\item<3-5> \alert<3>{Higher stability in gene selection!}
+			\item<4-5> \alert<4>{Higher connectivity of selected genes!}
+			\item<5> \alert<5>{Better interpretability of selected genes!}
+		\end{itemize}
+	\>
+	\)
+	}
+	
+\end{frame}
+
+
+\begin{frame}{Summary and future directions}
+	
+	\begin{itemize}
+		\item We have shown
+		\begin{itemize}
+			\item[-] Advantages of using wavelets in place of Fourier.
+			\item[-] Network-based wavelet smoothing improves efficacy for gene selection related to breast cancer survival.
+		\end{itemize}
+		
+		\pause
+		
+		\item We are currently looking to
+		\begin{itemize}
+			\item[$?$] More algorithms to perform graph wavelet transform.
+			\item[$?$] Other localized or multiscale transforms on graphs.
 		\end{itemize}
 	\end{itemize}
 	
