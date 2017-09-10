@@ -709,7 +709,7 @@ of cancer patients.
 	\end{itemize}
 	\begin{figure}
 		\includegraphics[width=0.7\linewidth]{slides/clusterRank}
-		\caption{An example of voting blocs in Irish electorate \cite{Gormley2008Exploring}.}
+		\caption{Voting blocs in Irish electorate \cite{Gormley2008Exploring}.}
 	\end{figure}
 	}
 	
@@ -1025,7 +1025,7 @@ of cancer patients.
 	\begin{center}
 		\includegraphics[width=0.9\columnwidth]{slides/ppi}
 		\vskip -0.1in
-		\caption{An example of protein-protein interaction (PPI) network.}
+		\caption{Protein-protein interaction (PPI) network.}
 	\end{center}
 	\end{figure}
 	\>
@@ -1140,7 +1140,7 @@ of cancer patients.
 	\begin{itemize}
 		\item Given a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, recall \alert{graph Fourier basis} are eigenvectors $U$ of the graph Laplacian $\mathcal{L} = U \Lambda U^\top$.
 		\begin{itemize}
-		\item<1->[-] They reflect different level of global smoothness: the larger the eigenvalue, the less smooth the eigenvector.
+		\item<1->[-] They reflect different level of global smoothness.
 		\item<2->[-] They are \alert{not localized in space!}
 		\end{itemize}
 	\end{itemize}
@@ -1150,7 +1150,7 @@ of cancer patients.
 		\includegraphics[width=0.45\linewidth]{slides/fourierbasis-1}
 		\hskip 0.1in
 		\includegraphics[width=0.45\linewidth]{slides/fourierbasis-n}
-		\caption{Example of graph Fourier basis $\mathbf{u}_1$ (left) and $\mathbf{u}_n$ (right) corresponding to the smallest and largest eigenvalue \cite{Rapaport2007Classification}.}
+		\caption{Graph Fourier basis $\mathbf{u}_1$ (left) and $\mathbf{u}_n$ (right) corresponding to the smallest and largest eigenvalue \cite{Rapaport2007Classification}.}
 	\end{figure}
 	}
 	
@@ -1163,7 +1163,13 @@ of cancer patients.
 		$$
 		where $g$ is a wavelet generating kernel.
 		\item The spectral graph wavelet centered around one vertex $a \in \mathcal{V}$ is the $a$-th column of $\Psi^s$.
-		\uncover<4>{
+		\only<3>{
+			\begin{figure}
+				\includegraphics[width=0.5\linewidth]{slides/sgwt}
+				\caption{Scaled wavelet generating kernels $g(s_j \lambda)$ at different scales $s_j > 0$ \cite{Hammond2011Wavelets}.}
+			\end{figure}
+		}
+		\only<4>{
 		\begin{itemize}
 			\item[-] It enjoys \alert{simultaneous localization} in frequency and space.
 			\item[-] It thus designates a locally smooth \alert{subnetwork}.
@@ -1197,7 +1203,7 @@ of cancer patients.
 		\includegraphics[width=\columnwidth]{slides/wavelets}
 	\>
 	\<{0.7\linewidth}
-		\caption{An example of spectral graph wavelets at different scales around one vertex \cite{Hammond2011Wavelets}.}
+		\caption{Spectral graph wavelets around one vertex at different scales \cite{Hammond2011Wavelets}.}
 	\>
 	\)
 	\end{figure}
