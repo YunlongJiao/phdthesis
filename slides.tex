@@ -275,7 +275,7 @@ of cancer patients.
 			\includegraphics[width=\linewidth]{slides/prognosis}
 		\end{figure}
 		
-		\item Goal: Learn to predict $y$ from a patient's profile $\mathbf{x}$.
+		\item Goal: Learn to predict $y$ from $\mathbf{x}$.
 		\begin{itemize}
 			\item[-] Classification or survival analysis.
 			\item[-] Gene selection.
@@ -390,9 +390,9 @@ of cancer patients.
 			\includegraphics[width=\linewidth]{slides/prognosis}
 		\end{figure}
 		
-		\item Goal: Learn to predict $y$ from a patient's profile $\mathbf{x}$.
+		\item Goal: Learn to predict $y$ from $\mathbf{x}$.
 		\begin{itemize}
-			\item[-] Keep only ordinal ranks but ignore real values.
+			\item[-] Only keep ordinal ranks of features in $\mathbf{x}$.
 			\item[-] Classification with kernel machines.
 		\end{itemize}
 	\end{itemize}
@@ -445,14 +445,14 @@ of cancer patients.
 	
 \end{frame}
 
-\subsection{\scshape Kendall kernel for permutations}
+\subsection{\scshape Positive definite kernels for permutations}
 \begin{frame}{\insertsubsection}
 	
 	\only<1-3>{
 	\([c]
-	\<{0.7\linewidth}
+	\<{0.75\linewidth}
 		\begin{itemize}
-			\item<1-> Kendall tau distance \cite{Kendall1938New} counts the number of discordant pairs between permutations, i.e., 
+			\item<1-> \alert<1>{Kendall (tau) distance} \cite{Kendall1938new} counts the number of discordant pairs between permutations, i.e.,
 			\begin{equation*}
 			\begin{split}
 				d (\sigma, & \sigma') := \# \big\{ (i,j) | \mbox{ for } i < j \,, \\
@@ -460,15 +460,17 @@ of cancer patients.
 			\end{split}
 			\end{equation*}
 			
-			\item<2-> Kendall tau correlation \cite{Kendall1938New} for permutations is defined as
+			\item<2-> \alert<2>{Kendall kernel} is defined by
 			$$ K_\tau(\sigma, \sigma') := 1 - \frac{2d(\sigma, \sigma')}{{n\choose 2}} \,. $$
+			
+			\item<3-> \alert<3>{Mallows kernel} is defined for any $\lambda \geq 0$ by
+			$$ K_M^\lambda (\sigma, \sigma') := e^{-\lambda d(\sigma, \sigma')} \,. $$
 		\end{itemize}
 	\>
 	
 	\vrule{}
 	
 	\<{0.4\linewidth}
-		\vskip 0.1cm
 		E.g.,
 		\vskip 0.2cm
 		\begin{tabular}{c|ccccc}\hline
@@ -480,17 +482,21 @@ of cancer patients.
 		\vskip 0.2cm
 		$$ d(\sigma,\sigma') = 2 $$
 		
-		\vskip 1cm
-		\uncover<2>{
+		\vskip 0.5cm
+		\uncover<2->{
 		$$ K_\tau(\sigma,\sigma') = \frac{1}{3} $$
+		}
+		
+		\uncover<3->{
+		$$ K_M^\lambda (\sigma,\sigma') = e^{-2\lambda} \,, \lambda \geq 0 $$
 		}
 	\>
 	\)
 	}
 	
-	\only<3->{
+	\only<4-6>{
 	\begin{thm}[Main theorem \cite{Jiao2015Kendall}]
-		$K_\tau$ is positive definite, and $d$ is negative definite.
+		$K_\tau$ and $K_M^\lambda$ are positive definite, and $d$ is negative definite.
 	\end{thm}
 	}
 	
@@ -501,39 +507,32 @@ of cancer patients.
 	\end{figure}
 	}
 	
-	\only<5->{
+	\only<5-6>{
 	\begin{proof}
 	\footnotesize
 		Consider explicitly the \alert<5>{Kendall embedding} defined as
 		$$ \phi:\Sn \rightarrow \RR^{{n \choose 2}}, \sigma \mapsto \left( \sgn(\sigma(i)-\sigma(j)) \right)_{1\leq i < j \leq n} \,. $$
 		Up to constant scaling, we have
-		\begin{eqnarray*}
-			\alert<5>{\mbox{Kendall kernel:}} \quad K_\tau(\sigma, \sigma') & = & \phi(\sigma)^\top \phi(\sigma') \,, \\
-			\alert<5>{\mbox{Kendall distance:}} \quad d(\sigma, \sigma') & = & \nm{\phi(\sigma) - \phi(\sigma')}^2 \,.
-		\end{eqnarray*}
+		\begin{alignat*}{2}
+			\mbox{Kendall kernel} &: \quad K_\tau(\sigma, \sigma') && = \phi(\sigma)^\top \phi(\sigma') \,, \\
+			\mbox{Mallows kernel} &: \quad K_M^\lambda(\sigma, \sigma') && = e^{-\lambda \nm{\phi(\sigma) - \phi(\sigma')}^2} \,, \\
+			\mbox{Kendall distance} &: \quad \quad d(\sigma, \sigma') && = \nm{\phi(\sigma) - \phi(\sigma')}^2 \,.
+		\end{alignat*}
 	\end{proof}
 	}
 	
 	\only<6>{
+	\vskip -0.2cm
 	\begin{thm}[Kernel trick \cite{Knight1966Computer}]
-		Both quantities $K_\tau$ and $d$ can be evaluated in \alert<6>{$O(n\log n)$} time.
+		$K_\tau$, $K_M^\lambda$ and $d$ can all be evaluated in \alert<6>{$O(n\log n)$} time.
 	\end{thm}
 	}
 	
-\end{frame}
-
-
-\subsection{\scshape Mallows kernel for permutations}
-\begin{frame}{\insertsubsection}
-	
-	\([b]
-	\<{0.75\linewidth}
+	\only<7>{
+	\([c]
+	\<{0.65\linewidth}
 	\begin{itemize}
-		\item The Mallows kernel for permutations is defined for any $\lambda \geq 0$ by
-		$$
-			K_M^\lambda (\sigma, \sigma') := e^{-\lambda d(\sigma, \sigma')} \,.
-		$$
-		\item<2-> Relation to diffusion kernel on $\Sn$:
+		\item Diffusion kernel vs Mallows kernel on $\Sn$:
 	\end{itemize}
 	\>
 	\hspace{-1cm}
@@ -546,7 +545,6 @@ of cancer patients.
 	\>
 	\)
 	
-	\only<2->{
 	\vskip -0.3cm
 	\begin{table}
 	\centering
@@ -956,10 +954,10 @@ of cancer patients.
 			\includegraphics[width=0.25\linewidth]{slides/ppi}
 		\end{figure}
 		
-		\item Goal: Learn to predict $y$ from a patient's profile $\mathbf{x}$.
+		\item Goal: Learn to predict $y$ from $\mathbf{x}$.
 		\begin{itemize}
 			\item[-] Network-guided analysis.
-			\item[-] Classification or survival analysis with linear models.
+			\item[-] Survival analysis with linear models.
 			\item[-] Structured gene/subnetwork selection by regularization.
 		\end{itemize}
 	\end{itemize}
@@ -1017,7 +1015,7 @@ of cancer patients.
 		\item A biological network is a graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ where
 		\begin{itemize}
 			\item[-] $\mathcal{V}$ consists of $n$ genes.
-			\item[-] $\mathcal{E}$ encodes some notion of interaction between genes.
+			\item[-] $\mathcal{E}$ encodes some notion of gene-gene interaction.
 		\end{itemize}
 	\end{itemize}
 	
@@ -1260,8 +1258,8 @@ of cancer patients.
 	\begin{itemize}
 		\item Dataset: METABRIC breast cancer data \cite{Curtis2012genomic}
 		\begin{itemize}
-			\item[-] $m = 1,981$ patients with survival information.
 			\item[-] $n = 9,117$ genes.
+			\item[-] $m = 1,981$ patients with survival information.
 		\end{itemize}
 		
 		\item Network: A protein-protein interaction (PPI) network obtained from Human Protein Reference Database (HPRD).
@@ -1317,13 +1315,13 @@ of cancer patients.
 	\begin{itemize}
 		\item We have shown
 		\begin{itemize}
-			\item[-] Advantages of using wavelets in place of Fourier.
+			\item[-] Wavelets have advantages over Fourier.
 			\item[-] Network-based wavelet smoothing improves efficacy for gene selection related to breast cancer survival.
 		\end{itemize}
 		
 		\pause
 		
-		\item We are currently looking to
+		\item We are currently looking at
 		\begin{itemize}
 			\item[$?$] More algorithms to perform graph wavelet transform.
 			\item[$?$] Other localized or multiscale transforms on graphs.
