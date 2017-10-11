@@ -2,7 +2,7 @@
 \label{chap:kendall}
 
 \begin{chapabstract}{Publication and Dissemination:}
-The work in this chapter has been published as joint work with Jean-Philippe Vert in \cite{Jiao2015Kendall, Jiao2017Kendall} and orally presented at ICML 2015.
+The work in this chapter has been published as joint work with Jean-Philippe Vert in \cite{Jiao2015Kendall}, orally presented at ICML 2015 and accepted for publication in \cite{Jiao2017Kendall}.
 \end{chapabstract}
 \vskip 0.2in
 \begin{chapabstract}{Abstract:}
@@ -10,7 +10,7 @@ We show that the widely used Kendall tau correlation coefficient and the related
 \end{chapabstract}
 \vskip 0.2in
 \begin{chapabstract}{Résumé :}
-Nous prouvons ici que le tau de Kendall, un coefficient de corrélation populaire, et le noyau de Mallows sont deux noyaux définis positifs pour les permutations. Ils offrent des alternatives computationnellement intéressantes comparés à d'autres noyaux plus complexes sur le groupe symétrique pour apprendre à partir de données de classements, ou apprendre à classer. Nous montrons comment étendre ces noyaux à des classements partiels, des classements multivariés et des classements incertains. Nous présenterons des exemples sur comment formuler des problèmes classiques pour apprendre à partir de données de classements afin qu'ils puissent être résolus par les algorithmes à noyaux de l'état de l'art. Nous obtenons des résultats prometteurs sur le regroupement de données hétérogènes de classements et sur les problèmes de classification en grande dimension dans les applications biomédicales.
+Nous prouvons ici que le tau de Kendall, un coefficient de corrélation populaire, et le noyau de Mallows sont deux noyaux définis positifs pour les permutations. Ils offrent des alternatives computationnellement intéressantes comparés à d'autres noyaux plus complexes sur le groupe symétrique pour apprendre à partir de données de classements, ou apprendre à classer. Nous montrons comment étendre ces noyaux à des classements partiels, des classements multivariés et des classements incertains. Nous présentons des exemples sur comment formuler des problèmes classiques pour apprendre à partir de données de classements afin qu'ils puissent être résolus par les algorithmes à noyaux de l'état de l'art. Nous obtenons des résultats prometteurs sur le regroupement de données hétérogènes de classements et sur les problèmes de classification en grande dimension dans les applications biomédicales.
 \end{chapabstract}
 
 \section{Introduction}
@@ -33,7 +33,7 @@ In this context, it is surprising that relatively little attention has been paid
 
 Here we study new computationally attractive positive definite kernels for permutations and rankings. Our main contribution is to show that two widely-used and computationally efficient measures of similarity between permutations, the Kendall tau correlation coefficient and the Mallows kernel, are positive definite. Although these measures compare two permutations of $n$ items in terms of $n\choose 2$ pairwise comparisons, they can be computed in $O(n \log n)$, which allows us to use kernel methods for problems involving rank data over a large number of items. We show how these kernels can be extended to partial rankings, multivariate rankings, and uncertain rankings which are particularly relevant when the rankings are obtained by sorting a real-valued vector where ties or almost-ties occur. We illustrate the benefit of kernel learning with the new kernels on two applications, one concerning the unsupervised clustering of rank data with kernel $k$-means, one focusing on the supervised classification of genomic data with Support Vector Machines (SVMs), reaching in both cases state-of-the-art performances. 
 
-The chapter is organized as follows. In Section \ref{sec2:kernel}, we prove our main theorem showing that the Kendall and Mallows kernels are positive definite. We extend them to partial, multivariate and uncertain rankings respectively in Section \ref{sec2:partial}, \ref{sec2:multivariate} and \ref{sec2:uncertain}. We highlight the relation to the diffusion kernel of \cite{Kondor2010Ranking} in Section \ref{sec2:group}. Finally we illustrate the relevance of kernel methods for unsupervised (Section \ref{sec2:clustering}) and supervised (Section \ref{sec2:classification}) tasks. Data and \texttt{R} codes for generating all the plots in this chapter and reproducing more experiments are available via \url{https://github.com/YunlongJiao/kendallkernel_demo}. I have also developed \texttt{kernrank}, an \texttt{R} package implementing kernel functions and kernel methods for analyzing rank data \cite{Jiao2016kernrank}.
+The chapter is organized as follows. In Section \ref{sec2:kernel}, we prove our main theorem showing that the Kendall and Mallows kernels are positive definite. We extend them to partial, multivariate and uncertain rankings respectively in Section \ref{sec2:partial}, \ref{sec2:multivariate} and \ref{sec2:uncertain}. We highlight the relation to the diffusion kernel of \cite{Kondor2010Ranking} in Section \ref{sec2:group}. Finally we illustrate the relevance of kernel methods for unsupervised (Section \ref{sec2:clustering}) and supervised (Section \ref{sec2:classification}) tasks. Data and \texttt{R} code for reproducing the experiments in this chapter are available via \url{https://github.com/YunlongJiao/kendallkernel_demo}. I have also developed \texttt{kernrank}, an \texttt{R} package implementing kernel functions and kernel methods for analyzing rank data \cite{Jiao2016kernrank}.
 
 
 
@@ -97,7 +97,7 @@ showing that $K_\tau$ is positive definite, and that
 	& = \frac{4}{{n \choose 2}} n_d(\sigma,\sigma') \,,
 \end{split}
 \end{equation}
-showing that $n_d$ is conditionally positive definite and therefore that $K_{M}^\lambda$ is positive definite for all $\lambda\geq 0$ \cite{Schoenberg1938Metric}.
+showing that $-n_d$ is conditionally positive definite and therefore that $K_{M}^\lambda$ is positive definite for all $\lambda\geq 0$ \cite{Schoenberg1938Metric}.
 \end{proof}
 
 Although the Kendall and Mallows kernels correspond respectively to a linear and Gaussian kernel on an $n \choose 2$-dimensional embedding of $\Sn$ such that they can in particular be computed in $O(n^2)$ time by a naive implementation of pair-by-pair comparison, it is interesting to notice that more efficient algorithms based on divide-and-conquer strategy can significantly speed up the computation, up to $O(n \log n)$ using a technique based on Merge Sort algorithm \cite{Knight1966computer}. Computing in $O(n \log n)$ a kernel corresponding to an $O(n^2)$-dimensional embedding of $\Sn$ is a typical example of the kernel trick, which allows to scale kernel methods to larger values of $n$ than what would be possible for methods working with the explicit embedding. 
@@ -118,7 +118,7 @@ In this section we show how the Kendall and Mallows kernels can efficiently be a
 
 As opposed to a total ranking \eqref{eq2:totalranking}, \emph{partial rankings} arise in diverse form which can be generally described by
 $$X_1 \succ X_2 \succ \cdots \succ X_k,$$ 
-where $X_1,\dots,X_k$ are $k$ disjoint subsets of $n$ items $\{x_1,\dots,x_n\}.$ For example, $\cbr{x_2,x_4} \succ x_6 \succ \cbr{x_3,x_8}$ in a social survey could represent the fact that items $2$ and $4$ are ranked higher by an interviewee than item 6, which itself is ranked higher than items 3 and 8. Note that it is uninformative of the relative order between items 2 and 4, nor of how item 1 is rated. For ease of analysis, a partial ranking is often associated with a subset $R \subset \Sn$ of permutations which are compatible with all partial orders described by the partial ranking. In this study, two particularly interesting types are:
+where $X_1,\dots,X_k$ are $k$ disjoint subsets of $n$ items $\{x_1,\dots,x_n\}.$ For example, $\cbr{x_2,x_4} \succ x_6 \succ \cbr{x_3,x_8}$ in a social survey could represent the fact that items $2$ and $4$ are ranked higher by an interviewee than item 6, which itself is ranked higher than items 3 and 8. Note that it is uninformative of the relative order between items 2 and 4, and of how item 1 is rated. For ease of analysis, a partial ranking is often associated with a subset $R \subset \Sn$ of permutations which are compatible with all partial orders described by the partial ranking. In this study, two particularly interesting types are:
 
 \noindent {\bf (i) Interleaving partial rankings.} Such a partial ranking is of the form
 \begin{equation*}
@@ -836,32 +836,32 @@ For the three datasets that are split into training and test sets, we report the
 
 
 
-Table \ref{tab2:exprresult} and Figure \ref{fig2:exprresult-acc} summarize the performance of each model across the datasets. An SVM with the Kendall kernel achieves the highest average prediction accuracy overall ($79.39\%$), followed by a linear SVM trained on a subset of features selected from the top scoring pairs ($77.16\%$) and a standard linear SVM ($76.09\%$). The SVM with Kendall kernel outperforms all the other methods at a P-value of $0.07$ according to a Wilcoxon rank test. We note that even though models based on KFD generally are less accurate than those based on SVMs, the relative order of the different kernels is consistent between KFD and SVM, adding evidence that the Kendall kernel provides an interesting alternative to other kernels in this context. The performance of TSP and $k$-TSP, based on majority vote rules, are comparatively worse than SVMs using the same features, as already observed by \cite{Shi2011Top}.
+Table \ref{tab2:exprresult} and Figure \ref{fig2:exprresult-acc} summarize the performance of each model across the datasets. An SVM with the Kendall kernel achieves the highest average prediction accuracy overall ($79.39\%$), followed by a linear SVM trained on a subset of features selected from the top scoring pairs ($77.16\%$) and a standard linear SVM ($76.09\%$). The SVM with Kendall kernel outperforms all the other methods at a p-value of $0.07$ according to a Wilcoxon rank test. We note that even though models based on KFD generally are less accurate than those based on SVMs, the relative order of the different kernels is consistent between KFD and SVM, adding evidence that the Kendall kernel provides an interesting alternative to other kernels in this context. The performance of TSP and $k$-TSP, based on majority vote rules, are comparatively worse than SVMs using the same features, as already observed by \cite{Shi2011Top}.
 
 
 
 \begin{table}[!htbp]
-\caption{Prediction accuracy (\%) of different methods across biomedical datasets. Models are named after candiate methods (SVM or KFD) and candiate kernels, namely linear kernel (linear), 2nd-order homogeneous polynomial kernel (poly), Gaussian RBF kernel (rbf) or Kendall kernel (kdt), and whether feature selection is combined (TOP) or not (ALL).}
+\caption{Prediction accuracy (\%) of different methods across biomedical datasets (ordered by decreasing average accuracy across datasets). Models are named after candiate methods (SVM or KFD) and candiate kernels, namely linear kernel (linear), 2nd-order homogeneous polynomial kernel (poly), Gaussian RBF kernel (rbf) or Kendall kernel (kdt), and whether feature selection is combined (TOP) or not (ALL). Prediction accuracy of the best-performing models for each dataset is in boldface.}
 \label{tab2:exprresult}
 \begin{center}
 \begin{scriptsize}
 \begin{tabular}{|c|c|cccccccccc|}
 \hline
 		 & Average & BC1 & BC2 & BC3 & CT & LA1 & LC2 & MB & OC & PC1 & PC2 \\\hline
-SVMkdtALL & 79.39 & 78.95 & 71.31 & 67.34 & 85.78 & 70.98 & 97.99 & 63.67 & 99.48 & 100 & 58.4 \\
-SVMlinearTOP & 77.16 & 84.21 & 69.29 & 67.11 & 84.19 & 63.92 & 97.32 & 65.17 & 99.41 & 85.29 & 55.7 \\
-SVMlinearALL & 76.09 & 78.95 & 71.67 & 64.27 & 86.73 & 70.23 & 97.99 & 62.67 & 99.64 & 73.53 & 55.17 \\
-SVMkdtTOP & 75.5 & 52.63 & 70.61 & 65.81 & 85.46 & 67.7 & 97.99 & 58.33 & 99.92 & 97.06 & 59.47 \\
+SVMkdtALL & 79.39 & 78.95 & 71.31 & 67.34 & 85.78 & \textbf{70.98} & 97.99 & 63.67 & 99.48 & \textbf{100.00} & 58.40 \\
+SVMlinearTOP & 77.16 & \textbf{84.21} & 69.29 & 67.11 & 84.19 & 63.92 & 97.32 & \textbf{65.17} & 99.41 & 85.29 & 55.70 \\
+SVMlinearALL & 76.09 & 78.95 & \textbf{71.67} & 64.27 & 86.73 & 70.23 & 97.99 & 62.67 & 99.64 & 73.53 & 55.17 \\
+SVMkdtTOP & 75.50 & 52.63 & 70.61 & 65.81 & 85.46 & 67.70 & 97.99 & 58.33 & 99.92 & 97.06 & 59.47 \\
 SVMpolyALL & 74.54 & 68.42 & 71.62 & 63.66 & 78.43 & 70.53 & 98.66 & 61.17 & 99.28 & 79.41 & 54.23 \\
-KFDkdtALL & 74.33 & 63.16 & 59.41 & 67.22 & 85.46 & 59.08 & 99.33 & 59.33 & 98.73 & 97.06 & 54.57 \\
-kTSP & 74.03 & 57.89 & 58.22 & 64.47 & 87.23 & 61.7 & 97.99 & 56 & 99.92 & 100 & 56.83 \\
-SVMpolyTOP & 73.99 & 63.16 & 69.44 & 66.26 & 79.14 & 65.98 & 99.33 & 60 & 99.21 & 88.24 & 49.1 \\
-KFDlinearALL & 71.81 & 63.16 & 60.43 & 67.52 & 77.26 & 57.24 & 97.99 & 59.5 & 100 & 73.53 & 61.43 \\
-KFDpolyALL & 71.39 & 63.16 & 60.48 & 67.38 & 75.1 & 58.52 & 97.99 & 60.33 & 100 & 73.53 & 57.43 \\
-TSP & 69.71 & 68.42 & 49.58 & 57.8 & 85.61 & 58.96 & 95.97 & 52.67 & 99.8 & 76.47 & 51.83 \\
-SVMrbfALL & 69.31 & 63.16 & 71.41 & 65.87 & 81.18 & 70.84 & 93.96 & 63.83 & 98.85 & 26.47 & 57.5 \\
-KFDrbfALL & 66.5 & 63.16 & 60.38 & 66.17 & 84.33 & 58.62 & 97.32 & 60.17 & 98.34 & 26.47 & 50 \\
-APMV & 61.91 & 84.21 & 65.98 & 33.96 & 64.49 & 33.6 & 89.93 & 42.17 & 85.19 & 73.53 & 46 \\\hline
+KFDkdtALL & 74.33 & 63.16 & 59.41 & 67.22 & 85.46 & 59.08 & \textbf{99.33} & 59.33 & 98.73 & 97.06 & 54.57 \\
+kTSP & 74.03 & 57.89 & 58.22 & 64.47 & \textbf{87.23} & 61.70 & 97.99 & 56.00 & 99.92 & \textbf{100.00} & 56.83 \\
+SVMpolyTOP & 73.99 & 63.16 & 69.44 & 66.26 & 79.14 & 65.98 & \textbf{99.33} & 60.00 & 99.21 & 88.24 & 49.10 \\
+KFDlinearALL & 71.81 & 63.16 & 60.43 & \textbf{67.52} & 77.26 & 57.24 & 97.99 & 59.50 & \textbf{100.00} & 73.53 & \textbf{61.43} \\
+KFDpolyALL & 71.39 & 63.16 & 60.48 & 67.38 & 75.10 & 58.52 & 97.99 & 60.33 & \textbf{100.00} & 73.53 & 57.43 \\
+TSP & 69.71 & 68.42 & 49.58 & 57.80 & 85.61 & 58.96 & 95.97 & 52.67 & 99.80 & 76.47 & 51.83 \\
+SVMrbfALL & 69.31 & 63.16 & 71.41 & 65.87 & 81.18 & 70.84 & 93.96 & 63.83 & 98.85 & 26.47 & 57.50 \\
+KFDrbfALL & 66.50 & 63.16 & 60.38 & 66.17 & 84.33 & 58.62 & 97.32 & 60.17 & 98.34 & 26.47 & 50.00 \\
+APMV & 61.91 & \textbf{84.21} & 65.98 & 33.96 & 64.49 & 33.60 & 89.93 & 42.17 & 85.19 & 73.53 & 46.00 \\\hline
 \end{tabular}
 \end{scriptsize}
 \end{center}
