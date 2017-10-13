@@ -53,6 +53,14 @@
 \newcommand{\enkeyword}[1]{\gdef\@enkeyword{#1}}
 \newcommand*{\@enkeyword}[1]{\par}
 
+%% English title
+\newcommand*{\entitle}[1]{\gdef\@entitle{#1}}
+\newcommand*{\@entitle}{Thesis Title}
+
+%% French title
+\newcommand*{\frtitle}[1]{\gdef\@frtitle{#1}}
+\newcommand*{\@frtitle}{Titre franc\c{c}ais}
+
 \ifLuaTeX
 \newfontfamily\pslfont{arial}
 \newenvironment{pslfontenv}{\pslfont}{\par}
@@ -115,12 +123,19 @@
       \node[xshift=-82mm, yshift=49mm, anchor=north west] at (o) {
         \begin{minipage}[h]{1.2\linewidth}
           \color{white}\fontsize{16}{19}\selectfont
-          \@title{}\unskip\strut\par
+          \@entitle{}\unskip\strut\par
+        \end{minipage}
+      };
+
+      \node[xshift=-82mm, yshift=33mm, anchor=north west] at (o) {
+        \begin{minipage}[h]{1.2\linewidth}
+          \color{white}\fontsize{12}{14}\selectfont
+          \@frtitle{}\unskip\strut\par
         \end{minipage}
       };
 
       %% doctoral school
-      \node[xshift=-70mm, yshift=24mm, anchor=north west] at (o) {
+      \node[xshift=-70mm, yshift=18mm, anchor=north west] at (o) {
         \begin{minipage}[h]{1.2\linewidth}
           \color{white} \textbf{\fontsize{16}{19}\selectfont \'{E}cole doctorale
             n\textsuperscript{o}\@doctoralschoolnumber{}}\unskip\strut\par
@@ -132,7 +147,7 @@
       };
 
       %% doctoral specialty
-      \node[xshift=-55mm, yshift=2mm, anchor=north west] at (o) {
+      \node[xshift=-55mm, yshift=-5mm, anchor=north west] at (o) {
         \begin{minipage}[h]{1.2\linewidth}
           \color{white}
           \textbf{\fontsize{16}{19}\selectfont Sp\'{e}cialit\'{e}}
@@ -155,7 +170,7 @@
       };
 
       %% jury
-      \node[xshift=28mm, yshift=-18.5mm, anchor=north west] at (o) {
+      \node[xshift=28mm, yshift=-28.5mm, anchor=north west] at (o) {
         \begin{minipage}[h]{1.2\linewidth}
           \color{white}
           \fontsize{11}{13}\selectfont
